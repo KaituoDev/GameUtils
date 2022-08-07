@@ -33,13 +33,14 @@ import org.bukkit.scoreboard.Team;
 import java.io.IOException;
 import java.util.List;
 
+import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAMES;
 import static fun.kaituo.GameUtils.getGamePlayerIsIn;
 
 public class GameUtilsListener implements Listener {
     GameUtils plugin;
     ItemStack menu;
     FileConfiguration c;
-
+    
     public GameUtilsListener(GameUtils plugin) {
         this.plugin = plugin;
         this.menu = new ItemStack(Material.CLOCK, 1);
@@ -47,7 +48,7 @@ public class GameUtilsListener implements Listener {
         itemMeta.setDisplayName("§e● §b§l菜单 §e●");
         itemMeta.setLore(List.of("§f请右键打开!"));
         menu.setItemMeta(itemMeta);
-        c=plugin.getConfig();
+        c = plugin.getConfig();
     }
     //Chat is now handled by trchat
     /*
@@ -74,8 +75,8 @@ public class GameUtilsListener implements Listener {
     }
 
      */
-
-
+    
+    
     private void resetPlayer(Player p) {
         if (!p.getGameMode().equals(GameMode.CREATIVE)) {
             p.setGameMode(GameMode.ADVENTURE);
@@ -101,8 +102,8 @@ public class GameUtilsListener implements Listener {
             p.setInvisible(false);
         }, 1);
     }
-
-
+    
+    
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent pje) {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -112,17 +113,17 @@ public class GameUtilsListener implements Listener {
             pje.getPlayer().sendMessage("§6欢迎， §e" + pje.getPlayer().getName() + "§6！");
         }, 20);
     }
-
+    
     @EventHandler
     public void onPlayerEndGame(PlayerEndGameEvent pege) {
         resetPlayer(pege.getPlayer());
     }
-
+    
     @EventHandler
     public void onPlayerChangeGame(PlayerChangeGameEvent pcge) {
         resetPlayer(pcge.getPlayer());
     }
-
+    
     @EventHandler
     public void fixRespawn(PlayerJoinEvent pje) {
         Player p = pje.getPlayer();
@@ -132,7 +133,7 @@ public class GameUtilsListener implements Listener {
             p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 89, 0.5, 0, 0));
         }
     }
-
+    
     @EventHandler
     public void preventFireworkDamage(EntityDamageByEntityEvent edbee) {
         if (!c.getBoolean("no-firework-damage")) {
@@ -144,7 +145,7 @@ public class GameUtilsListener implements Listener {
             }
         }
     }
-
+    
     @EventHandler
     public void preventDroppingMenu(PlayerDropItemEvent pdie) {
         if (!c.getBoolean("no-drop-menu")) {
@@ -154,7 +155,7 @@ public class GameUtilsListener implements Listener {
             pdie.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void preventDestroyingPainting(HangingBreakByEntityEvent hbbee) {
         if (!c.getBoolean("no-destroy-painting")) {
@@ -163,11 +164,11 @@ public class GameUtilsListener implements Listener {
         if (!(hbbee.getRemover() instanceof Player)) {
             return;
         }
-        if (((Player) hbbee.getRemover()).getGameMode().equals(GameMode.ADVENTURE)) {
+        if (((Player)hbbee.getRemover()).getGameMode().equals(GameMode.ADVENTURE)) {
             hbbee.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void preventManipulatingArmorStand(PlayerArmorStandManipulateEvent pasme) {
         if (!c.getBoolean("no-armourstand-manipulation")) {
@@ -177,21 +178,20 @@ public class GameUtilsListener implements Listener {
             pasme.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void preventItemFrameRotation(PlayerInteractEntityEvent piee) {
         if (!c.getBoolean("no-item-frame-rotation")) {
             return;
         }
         if (!piee.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (piee.getRightClicked() instanceof ItemFrame)) {
-            if (piee.getRightClicked().getMetadata("rotatable").size() > 0 &&
-                    piee.getRightClicked().getMetadata("rotatable").get(0).asBoolean()) {
+            if (ROTATABLE_ITEM_FRAMES.contains(piee.getRightClicked())) {
                 return;
             }
             piee.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void preventBlockInteraction(PlayerInteractEvent pie) {
         if (!c.getBoolean("no-block-interaction")) {
@@ -213,7 +213,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
     }
-
+    
     @EventHandler
     public void setStandInvulnerable(EntitySpawnEvent ese) {
         if (!c.getBoolean("invulnerable-armourstand-on-spawn")) {
@@ -223,7 +223,7 @@ public class GameUtilsListener implements Listener {
             ese.getEntity().setInvulnerable(true);
         }
     }
-
+    
     @EventHandler
     public void editPaintingAndItemFrame(HangingPlaceEvent hpe) {
         if (!c.getBoolean("invulnerable-painting-on-spawn")) {
@@ -235,14 +235,14 @@ public class GameUtilsListener implements Listener {
                 break;
             case ITEM_FRAME:
                 if (!hpe.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                    hpe.getEntity().setMetadata("rotatable", new FixedMetadataValue(plugin, true));
+                    ROTATABLE_ITEM_FRAMES.add((ItemFrame)hpe.getEntity());
                 }
                 break;
             default:
                 break;
         }
     }
-
+    
     @EventHandler
     public void cancelSpawn(CreatureSpawnEvent cse) { //防止鸡蛋生成鸡
         if (!c.getBoolean("no-chicken-from-egg")) {
@@ -252,7 +252,7 @@ public class GameUtilsListener implements Listener {
             cse.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void preventSnowFormation(BlockFormEvent bfe) {
         if (!c.getBoolean("no-snow-and-ice-formation")) {
@@ -262,7 +262,7 @@ public class GameUtilsListener implements Listener {
             bfe.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent pqe) throws IOException {
         Game game = getGamePlayerIsIn(pqe.getPlayer());
@@ -270,7 +270,7 @@ public class GameUtilsListener implements Listener {
             game.savePlayerQuitData(pqe.getPlayer());
         }
     }
-
+    
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent ede) {
         if (!c.getBoolean("parkour-no-fall-damage")) {
