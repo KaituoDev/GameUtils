@@ -23,15 +23,15 @@ import static fun.kaituo.GameUtils.world;
 
 public class GameUtilsCommandExecutor implements CommandExecutor {
     GameUtils plugin;
-
+    
     public GameUtilsCommandExecutor(GameUtils plugin) {
         this.plugin = plugin;
     }
-
+    
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("changebiome")) {
-
+            
             if (!(sender instanceof Player)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
                 return true;
@@ -40,16 +40,16 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c你没有权限执行这个指令！");
                 return true;
             }
-
+            
             if (args.length != 3) {
                 sender.sendMessage("§c指令参数错误！使用方法为/changebiome <biome>/auto radius <circular/square>");
                 return true;
             }
             World world = Bukkit.getWorld("world");
-            Location l = ((Player) sender).getLocation();
-            int x = (int) Math.floor(l.getX());
-            int y = (int) Math.floor(l.getY());
-            int z = (int) Math.floor(l.getZ());
+            Location l = ((Player)sender).getLocation();
+            int x = (int)Math.floor(l.getX());
+            int y = (int)Math.floor(l.getY());
+            int z = (int)Math.floor(l.getZ());
             int radius = Integer.parseInt(args[1]);
             int r = radius - 1;
             if (!args[2].equalsIgnoreCase("circular") && !args[2].equalsIgnoreCase("square")) {
@@ -132,7 +132,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                         e.printStackTrace();
                         Bukkit.broadcastMessage("§c[changebiome]发生内部错误！");
                     }
-
+                    
                 }
                 return true;
             } catch (Exception e) {
@@ -149,11 +149,11 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 return true;
             }
             if (args.length == 0) {
-                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player) sender, GameUtils.getGamePlayerIsIn((Player) sender), null));
+                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player)sender, GameUtils.getGamePlayerIsIn((Player)sender), null));
             } else if (args.length == 1) {
                 Game game = GameUtils.getGameByName(args[0]);
                 if (game != null) {
-                    Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player) sender, GameUtils.getGamePlayerIsIn((Player) sender), game));
+                    Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player)sender, GameUtils.getGamePlayerIsIn((Player)sender), game));
                 } else {
                     sender.sendMessage("§c该游戏不存在！");
                 }
@@ -165,7 +165,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
             }
-            Player p = (Player) sender;
+            Player p = (Player)sender;
             PlayerQuitData pqd = GameUtils.getPlayerQuitData(p.getUniqueId());
             if (pqd != null) {
                 pqd.getGame().rejoin(p);
@@ -227,7 +227,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
             }
             switch (args.length) {
                 case 3:
-                    for (ItemFrame itemFrame: world.getEntitiesByClass(ItemFrame.class)) {
+                    for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             List<MetadataValue> values = itemFrame.getMetadata("rotatable");
                             if (values.size() == 0 || !values.get(0).asBoolean()) {
@@ -241,14 +241,14 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     sender.sendMessage("§c该物品展示框不存在！");
                     return true;
                 case 4:
-                    for (ItemFrame itemFrame: world.getEntitiesByClass(ItemFrame.class)) {
+                    for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (args[3].equals("true")) {
                                 itemFrame.setMetadata("rotatable", new FixedMetadataValue(plugin, true));
-                                sender.sendMessage("该物品展示框可旋转！");
+                                sender.sendMessage("该物品展示框现在可旋转！");
                             } else if (args[3].equals("false")) {
                                 itemFrame.setMetadata("rotatable", new FixedMetadataValue(plugin, false));
-                                sender.sendMessage("该物品展示框不可旋转！");
+                                sender.sendMessage("该物品展示框现在不可旋转！");
                             } else {
                                 sender.sendMessage("§c指令格式错误！");
                             }
@@ -257,7 +257,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     }
                     sender.sendMessage("§c该物品展示框不存在！");
                     return true;
-                default :
+                default:
                     sender.sendMessage("§c指令格式错误！");
                     return true;
             }

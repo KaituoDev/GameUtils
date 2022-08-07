@@ -6,7 +6,7 @@
 
     <groupId>fun.kaituo</groupId>
     <artifactId>GameUtils</artifactId>
-    <version>1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>GameUtils</name>
@@ -26,7 +26,6 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -59,7 +58,6 @@
             </plugin>
         </plugins>
         <defaultGoal>install</defaultGoal>
-        <outputDirectory>../out/production/${project.name}}</outputDirectory>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
@@ -67,6 +65,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <finalName>GameUtils</finalName>
     </build>
 
     <repositories>

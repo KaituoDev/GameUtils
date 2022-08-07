@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.util.RayTraceResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +18,7 @@ public class GameUtilsTabCompleter implements TabCompleter {
     List<String> biomeNames;
     List<String> modes;
     List<String> booleans;
-
+    
     public GameUtilsTabCompleter() {
         biomeNames = new ArrayList<>();
         modes = new ArrayList<>();
@@ -31,7 +32,7 @@ public class GameUtilsTabCompleter implements TabCompleter {
         booleans.add("true");
         booleans.add("false");
     }
-
+    
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("changebiome")) {
@@ -42,14 +43,38 @@ public class GameUtilsTabCompleter implements TabCompleter {
             }
         } else if (command.getName().equalsIgnoreCase("changegame")) {
             if (args.length == 1) {
-                return (List<String>) GameUtils.getRegisteredGames(true);
+                return (List<String>)GameUtils.getRegisteredGames(true);
             }
         } else if (command.getName().equalsIgnoreCase("rotatable")) {
             if (!(commandSender instanceof Player)) {
                 return new ArrayList<>();
             }
-            Player p = (Player) commandSender;
-            Location loc = p.getTargetBlockExact(5, FluidCollisionMode.NEVER).getLocation();
+            Player p = (Player)commandSender;
+            RayTraceResult result = p.rayTraceBlocks(5, FluidCollisionMode.NEVER);
+            Location loc;
+            switch (result.getHitBlockFace()) {
+                case EAST:
+                    loc = result.getHitBlock().getLocation().add(1, 0, 0);
+                    break;
+                case WEST:
+                    loc = result.getHitBlock().getLocation().add(-1, 0, 0);
+                    break;
+                case NORTH:
+                    loc = result.getHitBlock().getLocation().add(0, 0, -1);
+                    break;
+                case SOUTH:
+                    loc = result.getHitBlock().getLocation().add(0, 0, 1);
+                    break;
+                case UP:
+                    loc = result.getHitBlock().getLocation().add(0, 1, 0);
+                    break;
+                case DOWN:
+                    loc = result.getHitBlock().getLocation().add(0, -1, 0);
+                    break;
+                default:
+                    loc = result.getHitBlock().getLocation();
+                    break;
+            }
             String locStr = loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ();
             List<String> locations = new ArrayList<>();
             locations.add(locStr);
