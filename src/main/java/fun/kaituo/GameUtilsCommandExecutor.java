@@ -19,6 +19,7 @@ import org.bukkit.util.RayTraceResult;
 
 import java.util.List;
 
+import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAMES;
 import static fun.kaituo.GameUtils.world;
 
 public class GameUtilsCommandExecutor implements CommandExecutor {
@@ -229,8 +230,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 case 3:
                     for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
-                            List<MetadataValue> values = itemFrame.getMetadata("rotatable");
-                            if (values.size() == 0 || !values.get(0).asBoolean()) {
+                            if (ROTATABLE_ITEM_FRAMES.contains(itemFrame)) {
                                 sender.sendMessage("该物品展示框不可旋转！");
                             } else {
                                 sender.sendMessage("该物品展示框可旋转！");
@@ -244,10 +244,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (args[3].equals("true")) {
-                                itemFrame.setMetadata("rotatable", new FixedMetadataValue(plugin, true));
+                                ROTATABLE_ITEM_FRAMES.add(itemFrame);
                                 sender.sendMessage("该物品展示框现在可旋转！");
                             } else if (args[3].equals("false")) {
-                                itemFrame.setMetadata("rotatable", new FixedMetadataValue(plugin, false));
+                                ROTATABLE_ITEM_FRAMES.remove(itemFrame);
                                 sender.sendMessage("该物品展示框现在不可旋转！");
                             } else {
                                 sender.sendMessage("§c指令格式错误！");
