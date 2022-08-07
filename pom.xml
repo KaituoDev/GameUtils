@@ -65,7 +65,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>GameUtils</finalName>
     </build>
 
     <repositories>
