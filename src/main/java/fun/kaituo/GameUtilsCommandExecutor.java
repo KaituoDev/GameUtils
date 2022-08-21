@@ -13,15 +13,12 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.RayTraceResult;
-
-import java.util.List;
 
 import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAMES;
 import static fun.kaituo.GameUtils.world;
 
+@SuppressWarnings({ "deprecation", "ConstantConditions" })
 public class GameUtilsCommandExecutor implements CommandExecutor {
     GameUtils plugin;
     
@@ -46,10 +43,8 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c指令参数错误！使用方法为/changebiome <biome>/auto radius <circular/square>");
                 return true;
             }
-            World world = Bukkit.getWorld("world");
             Location l = ((Player)sender).getLocation();
             int x = (int)Math.floor(l.getX());
-            int y = (int)Math.floor(l.getY());
             int z = (int)Math.floor(l.getZ());
             int radius = Integer.parseInt(args[1]);
             int r = radius - 1;
@@ -163,10 +158,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("rejoin")) {
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player p)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
+                return true;
             }
-            Player p = (Player)sender;
             PlayerQuitData pqd = GameUtils.getPlayerQuitData(p.getUniqueId());
             if (pqd != null) {
                 pqd.getGame().rejoin(p);
@@ -202,7 +197,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                                 return true;
                             }
                         }
-                        ArmorStand stand = (ArmorStand)Bukkit.getWorld("world").spawnEntity(l, EntityType.ARMOR_STAND);
+                        ArmorStand stand = (ArmorStand)world.spawnEntity(l, EntityType.ARMOR_STAND);
                         stand.setInvisible(true);
                         stand.setCustomName("开始游戏");
                         stand.setGravity(false);
@@ -227,7 +222,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 return true;
             }
             switch (args.length) {
-                case 3:
+                case 3 -> {
                     for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (ROTATABLE_ITEM_FRAMES.contains(itemFrame)) {
@@ -240,7 +235,8 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     }
                     sender.sendMessage("§c该物品展示框不存在！");
                     return true;
-                case 4:
+                }
+                case 4 -> {
                     for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (args[3].equals("true")) {
@@ -257,9 +253,11 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     }
                     sender.sendMessage("§c该物品展示框不存在！");
                     return true;
-                default:
+                }
+                default -> {
                     sender.sendMessage("§c指令格式错误！");
                     return true;
+                }
             }
         } else {
             return false;

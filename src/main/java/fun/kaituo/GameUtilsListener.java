@@ -24,8 +24,6 @@ import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
@@ -36,6 +34,7 @@ import java.util.List;
 import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAMES;
 import static fun.kaituo.GameUtils.getGamePlayerIsIn;
 
+@SuppressWarnings({ "ConstantConditions", "deprecation" })
 public class GameUtilsListener implements Listener {
     GameUtils plugin;
     ItemStack menu;
@@ -98,9 +97,7 @@ public class GameUtilsListener implements Listener {
         }
         p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0, false, false));
         p.setInvisible(true);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            p.setInvisible(false);
-        }, 1);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> p.setInvisible(false), 1);
     }
     
     
@@ -185,7 +182,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         if (!piee.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (piee.getRightClicked() instanceof ItemFrame)) {
-            if (ROTATABLE_ITEM_FRAMES.contains(piee.getRightClicked())) {
+            if (ROTATABLE_ITEM_FRAMES.contains((ItemFrame)piee.getRightClicked())) {
                 return;
             }
             piee.setCancelled(true);
@@ -210,7 +207,6 @@ public class GameUtilsListener implements Listener {
         }
         if (block.getType().equals(Material.COMPOSTER)) {
             pie.setCancelled(true);
-            return;
         }
     }
     
