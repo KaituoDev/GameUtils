@@ -9,26 +9,27 @@ public class PlayerEndGameEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     Player player;
     Game game;
-
-
+    
+    
     public PlayerEndGameEvent(Player p, Game game) {
         this.player = p;
         this.game = game;
     }
-
+    
+    @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
-
+    
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
     }
-
+    
     public Player getPlayer() {
         return player;
     }
-
+    
     public Game getGame() {
         return game;
     }

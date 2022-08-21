@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("ConstantConditions")
 public class GameUtilsTabCompleter implements TabCompleter {
     List<String> biomeNames;
     List<String> modes;
@@ -43,53 +43,35 @@ public class GameUtilsTabCompleter implements TabCompleter {
             }
         } else if (command.getName().equalsIgnoreCase("changegame")) {
             if (args.length == 1) {
-                return (List<String>)GameUtils.getRegisteredGames(true);
+                return GameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
             }
         } else if (command.getName().equalsIgnoreCase("rotatable")) {
-            if (!(commandSender instanceof Player)) {
+            if (!(commandSender instanceof Player p)) {
                 return new ArrayList<>();
             }
-            Player p = (Player)commandSender;
             RayTraceResult result = p.rayTraceBlocks(5, FluidCollisionMode.NEVER);
-            Location loc;
-            switch (result.getHitBlockFace()) {
-                case EAST:
-                    loc = result.getHitBlock().getLocation().add(1, 0, 0);
-                    break;
-                case WEST:
-                    loc = result.getHitBlock().getLocation().add(-1, 0, 0);
-                    break;
-                case NORTH:
-                    loc = result.getHitBlock().getLocation().add(0, 0, -1);
-                    break;
-                case SOUTH:
-                    loc = result.getHitBlock().getLocation().add(0, 0, 1);
-                    break;
-                case UP:
-                    loc = result.getHitBlock().getLocation().add(0, 1, 0);
-                    break;
-                case DOWN:
-                    loc = result.getHitBlock().getLocation().add(0, -1, 0);
-                    break;
-                default:
-                    loc = result.getHitBlock().getLocation();
-                    break;
-            }
+            assert result != null;
+            Location loc = switch (result.getHitBlockFace()) {
+                case EAST -> result.getHitBlock().getLocation().add(1, 0, 0);
+                case WEST -> result.getHitBlock().getLocation().add(-1, 0, 0);
+                case NORTH -> result.getHitBlock().getLocation().add(0, 0, -1);
+                case SOUTH -> result.getHitBlock().getLocation().add(0, 0, 1);
+                case UP -> result.getHitBlock().getLocation().add(0, 1, 0);
+                case DOWN -> result.getHitBlock().getLocation().add(0, -1, 0);
+                default -> result.getHitBlock().getLocation();
+            };
             String locStr = loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ();
             List<String> locations = new ArrayList<>();
             locations.add(locStr);
-            switch (args.length) {
-                case 1:
-                    return locations.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
-                case 2:
-                    return locations.stream().filter(s -> s.startsWith(args[0] + " " + args[1])).collect(Collectors.toList());
-                case 3:
-                    return locations.stream().filter(s -> s.startsWith(args[0] + " " + args[1] + " " + args[2])).collect(Collectors.toList());
-                case 4:
-                    return booleans.stream().filter(s -> s.startsWith(args[3])).collect(Collectors.toList());
-                default:
-                    return new ArrayList<>();
-            }
+            return switch (args.length) {
+                case 1 -> locations.stream().filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
+                case 2 ->
+                        locations.stream().filter(s -> s.startsWith(args[0] + " " + args[1])).collect(Collectors.toList());
+                case 3 ->
+                        locations.stream().filter(s -> s.startsWith(args[0] + " " + args[1] + " " + args[2])).collect(Collectors.toList());
+                case 4 -> booleans.stream().filter(s -> s.startsWith(args[3])).collect(Collectors.toList());
+                default -> new ArrayList<>();
+            };
         }
         return null;
     }

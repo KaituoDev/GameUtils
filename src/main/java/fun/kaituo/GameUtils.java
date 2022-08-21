@@ -16,6 +16,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("ConstantConditions")
 public class GameUtils extends JavaPlugin implements Listener {
     private static final HashMap<Game, BoundingBox> gameBoundingBoxHashMap = new HashMap<>();
     private static final HashMap<Game, String> gameNameHashMap = new HashMap<>();
@@ -55,12 +56,8 @@ public class GameUtils extends JavaPlugin implements Listener {
         return null;
     }
     
-    public static List<?> getRegisteredGames(boolean string) {
-        if (string) {
-            return Arrays.asList(gameNameHashMap.values().toArray());
-        } else {
-            return gameNameHashMap.keySet().stream().toList();
-        }
+    public static List<Game> getRegisteredGames() {
+        return gameNameHashMap.keySet().stream().toList();
     }
     
     public static PlayerQuitData getPlayerQuitData(UUID uuid) {
@@ -75,6 +72,7 @@ public class GameUtils extends JavaPlugin implements Listener {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void onEnable() {
         saveDefaultConfig();
         File dir = new File("plugins/GameUtils/world");
