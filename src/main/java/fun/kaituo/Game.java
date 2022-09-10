@@ -172,4 +172,9 @@ public abstract class Game {
     protected abstract void savePlayerQuitData(Player p) throws IOException;
     
     protected abstract void rejoin(Player p);
+    
+    //Better messages
+    protected void shout(String message) {
+        Bukkit.broadcastMessage(this.fullName + " " + message);
+    }
 }
