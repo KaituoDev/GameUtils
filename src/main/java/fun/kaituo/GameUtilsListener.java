@@ -31,7 +31,7 @@ import org.bukkit.scoreboard.Team;
 import java.io.IOException;
 import java.util.List;
 
-import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAMES;
+import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
 import static fun.kaituo.GameUtils.getGamePlayerIsIn;
 
 @SuppressWarnings({ "ConstantConditions", "deprecation" })
@@ -182,7 +182,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         if (!piee.getPlayer().getGameMode().equals(GameMode.CREATIVE) && (piee.getRightClicked() instanceof ItemFrame)) {
-            if (ROTATABLE_ITEM_FRAMES.contains((ItemFrame)piee.getRightClicked())) {
+            if (ROTATABLE_ITEM_FRAME_UUID_STRINGS.contains(piee.getRightClicked().getUniqueId().toString())) {
                 return;
             }
             piee.setCancelled(true);
@@ -231,7 +231,7 @@ public class GameUtilsListener implements Listener {
                 break;
             case ITEM_FRAME:
                 if (!hpe.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
-                    ROTATABLE_ITEM_FRAMES.add((ItemFrame)hpe.getEntity());
+                    ROTATABLE_ITEM_FRAME_UUID_STRINGS.add(hpe.getEntity().getUniqueId().toString());
                 }
                 break;
             default:

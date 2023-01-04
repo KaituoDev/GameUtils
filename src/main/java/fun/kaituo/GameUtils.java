@@ -21,7 +21,7 @@ public class GameUtils extends JavaPlugin implements Listener {
     private static final HashMap<Game, BoundingBox> gameBoundingBoxHashMap = new HashMap<>();
     private static final HashMap<Game, String> gameNameHashMap = new HashMap<>();
     private static final HashMap<UUID, PlayerQuitData> quitDataMap = new HashMap<>();
-    public static final ArrayList<ItemFrame> ROTATABLE_ITEM_FRAMES = new ArrayList<>();
+    public static final ArrayList<String> ROTATABLE_ITEM_FRAME_UUID_STRINGS = new ArrayList<>();
     public static World world;
     
     //For global game utilities
@@ -94,7 +94,7 @@ public class GameUtils extends JavaPlugin implements Listener {
         try {
             ArrayList<String> rtSaveList = new Yaml().loadAs(new FileReader(rtSave), ArrayList.class);
             if (rtSaveList != null) {
-                ROTATABLE_ITEM_FRAMES.addAll(rtSaveList.stream().map(uuid -> Bukkit.getWorld("world").getEntitiesByClass(ItemFrame.class).stream().filter(e -> e.getUniqueId().toString().equals(uuid)).findFirst().orElse(null)).filter(Objects::nonNull).collect(Collectors.toCollection(ArrayList::new)));
+                ROTATABLE_ITEM_FRAME_UUID_STRINGS.addAll(rtSaveList);
             }
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Failed to load rtsave.yml", e);
@@ -112,14 +112,12 @@ public class GameUtils extends JavaPlugin implements Listener {
         getCommand("rotatable").setTabCompleter(tabCompleter);
         Bukkit.getPluginManager().registerEvents(new GameUtilsListener(this), this);
     }
-    
+
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         HandlerList.unregisterAll((Plugin)this);
         try {
-            ArrayList<String> rtSaveList = new ArrayList<>();
-            ROTATABLE_ITEM_FRAMES.forEach(e -> rtSaveList.add(e.getUniqueId().toString()));
-            new Yaml().dump(rtSaveList, new FileWriter("plugins/GameUtils/rtsave.yml"));
+            new Yaml().dump(ROTATABLE_ITEM_FRAME_UUID_STRINGS, new FileWriter("plugins/GameUtils/rtsave.yml"));
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Failed to save rtsave.yml", e);
         }
