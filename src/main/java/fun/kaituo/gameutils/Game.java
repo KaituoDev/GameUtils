@@ -23,7 +23,7 @@ public abstract class Game {
     protected Random random = new Random();
     protected JavaPlugin plugin;
     protected GameUtils gameUtils;
-    protected World world;
+    protected World world = Bukkit.getWorld("world");
 
     protected String name;
 
@@ -54,7 +54,6 @@ public abstract class Game {
     protected void initializeGame(JavaPlugin gamePlugin, String name, String fullName, Location hubLocation) {
         this.gameUtils = (GameUtils) Bukkit.getPluginManager().getPlugin("GameUtils");
         this.plugin = gamePlugin;
-        this.world = Bukkit.getWorld("world");
         this.name = name;
         this.fullName = fullName;
         this.hubLocation = hubLocation;
