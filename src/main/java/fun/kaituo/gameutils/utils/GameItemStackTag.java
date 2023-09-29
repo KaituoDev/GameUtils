@@ -8,13 +8,14 @@ import java.util.List;
 
 public class GameItemStackTag {
 
+    @SuppressWarnings("unused")
     public void setTeamAllAllow(String teamName) {
         canBeClickedByTeams.add(teamName);
         canBeDroppedByTeams.add(teamName);
         canBeInteractedByTeams.add(teamName);
         canBePickedUpByTeams.add(teamName);
     }
-
+    @SuppressWarnings("unused")
     public void removeTeamAllAllow(String teamName) {
         canBeClickedByTeams.remove(teamName);
         canBeDroppedByTeams.remove(teamName);
