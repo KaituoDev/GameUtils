@@ -54,11 +54,11 @@ public abstract class Game {
     protected void initializeGame(JavaPlugin gamePlugin, String name, String fullName, Location hubLocation) {
         this.gameUtils = (GameUtils) Bukkit.getPluginManager().getPlugin("GameUtils");
         this.plugin = gamePlugin;
+        this.world = Bukkit.getWorld("world");
         this.name = name;
         this.fullName = fullName;
         this.hubLocation = hubLocation;
         this.gameUUID = UUID.randomUUID();
-        this.world = Bukkit.getWorld("world");
     }
 
 
