@@ -1,10 +1,8 @@
 package fun.kaituo.gameutils;
 
 import fun.kaituo.gameutils.event.PlayerEndGameEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import fun.kaituo.gameutils.utils.GameItemStackTagType;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
@@ -20,9 +18,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.persistence.PersistentDataContainer;
 
 import java.io.IOException;
+import java.util.List;
 
 import static fun.kaituo.gameutils.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
 
@@ -66,6 +67,60 @@ public class GameUtilsListener implements Listener {
         gameUtils.resetPlayer(pege.getPlayer());
     }
 
+
+    @EventHandler
+    public void preventIllegalPickup(PlayerPickupItemEvent e) {
+        PersistentDataContainer container = e.getItem().getItemStack().getItemMeta().getPersistentDataContainer();
+        if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
+            return;
+        }
+        List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBePickedUpByTeams;
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void preventIllegalDrop(PlayerDropItemEvent e) {
+        PersistentDataContainer container = e.getItemDrop().getItemStack().getItemMeta().getPersistentDataContainer();
+        if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
+            return;
+        }
+        List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeDroppedByTeams;
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void preventIllegalClick(InventoryClickEvent e) {
+        if (e.getCurrentItem() == null) {
+            return;
+        }
+        if (!(e.getWhoClicked() instanceof Player)) {
+            return;
+        }
+        PersistentDataContainer container = e.getCurrentItem().getItemMeta().getPersistentDataContainer();
+        if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
+            return;
+        }
+        List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeClickedByTeams;
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) e.getWhoClicked()))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void preventIllegalInteract(PlayerInteractEvent e) {
+        if (e.getItem() == null) {
+            return;
+        }
+        PersistentDataContainer container = e.getItem().getItemMeta().getPersistentDataContainer();
+        if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
+            return;
+        }
+        List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeInteractedByTeams;
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+            e.setCancelled(true);
+        }
+    }
     
     @EventHandler
     public void preventFireworkDamage(EntityDamageByEntityEvent edbee) {
