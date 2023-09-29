@@ -174,10 +174,10 @@ public abstract class Game {
     protected abstract void quit(Player p) throws IOException;
 
     //Called when player uses /rejoin command
-    protected abstract void rejoin(Player p);
+    protected abstract boolean rejoin(Player p);
 
     //Called when player joins this game
-    protected abstract void join(Player p);
+    protected abstract boolean join(Player p);
 
     protected abstract void forceStop();
 
