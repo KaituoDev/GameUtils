@@ -75,7 +75,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBePickedUpByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
             e.setCancelled(true);
         }
     }
@@ -86,7 +86,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeDroppedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
             e.setCancelled(true);
         }
     }
@@ -103,7 +103,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeClickedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) e.getWhoClicked()))) {
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) e.getWhoClicked()).getName())) {
             e.setCancelled(true);
         }
     }
@@ -117,7 +117,7 @@ public class GameUtilsListener implements Listener {
             return;
         }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeInteractedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()))) {
+        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
             e.setCancelled(true);
         }
     }
