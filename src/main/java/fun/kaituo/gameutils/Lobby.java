@@ -1,7 +1,6 @@
 package fun.kaituo.gameutils;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -21,14 +20,13 @@ public class Lobby extends Game {
     protected void quit(Player p) {}
 
     @Override
-    protected void rejoin(Player p) {}
+    protected boolean rejoin(Player p) {return true;}
 
     @Override
-    protected void join(Player p) {
-        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            p.setBedSpawnLocation(hubLocation, true);
-            p.teleport(hubLocation);
-        }
+    protected boolean join(Player p) {
+        p.setBedSpawnLocation(hubLocation, true);
+        p.teleport(hubLocation);
+        return true;
     }
 
     @Override

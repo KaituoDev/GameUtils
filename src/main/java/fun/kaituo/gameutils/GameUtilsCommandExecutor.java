@@ -20,18 +20,18 @@ import java.io.IOException;
 
 import static fun.kaituo.gameutils.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
 
-@SuppressWarnings({ "deprecation", "ConstantConditions" })
+@SuppressWarnings({"deprecation", "ConstantConditions"})
 public class GameUtilsCommandExecutor implements CommandExecutor {
     GameUtils gameUtils;
-    
+
     public GameUtilsCommandExecutor(GameUtils gameUtils) {
         this.gameUtils = gameUtils;
     }
-    
+
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (cmd.getName().equalsIgnoreCase("changebiome")) {
-            
+
             if (!(sender instanceof Player)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
                 return true;
@@ -40,14 +40,14 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c你没有权限执行这个指令！");
                 return true;
             }
-            
+
             if (args.length != 3) {
                 sender.sendMessage("§c指令参数错误！使用方法为/changebiome <biome>/auto radius <circular/square>");
                 return true;
             }
-            Location l = ((Player)sender).getLocation();
-            int x = (int)Math.floor(l.getX());
-            int z = (int)Math.floor(l.getZ());
+            Location l = ((Player) sender).getLocation();
+            int x = (int) Math.floor(l.getX());
+            int z = (int) Math.floor(l.getZ());
             int radius = Integer.parseInt(args[1]);
             int r = radius - 1;
             if (!args[2].equalsIgnoreCase("circular") && !args[2].equalsIgnoreCase("square")) {
@@ -130,7 +130,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                         e.printStackTrace();
                         Bukkit.broadcastMessage("§c[changebiome]发生内部错误！");
                     }
-                    
+
                 }
                 return true;
             } catch (Exception e) {
@@ -164,9 +164,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 }
             }
             gameUtils.resetPlayer(p);
-            toGame.join(p);
-            gameUtils.setPlayerGame(p, toGame);
-            Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+            if (toGame.join(p)) {
+                gameUtils.setPlayerGame(p, toGame);
+                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+            }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("rejoin")) {
             if (!(sender instanceof Player p)) {
@@ -182,9 +183,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 }
                 Game fromGame = gameUtils.getPlayerGame(p);
                 gameUtils.resetPlayer(p);
-                toGame.rejoin(p);
-                gameUtils.setPlayerGame(p, toGame);
-                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+                if (toGame.rejoin(p)) {
+                    gameUtils.setPlayerGame(p, toGame);
+                    Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+                }
             } else {
                 sender.sendMessage("§c无法重新加入，游戏不存在或者不支持重新加入");
             }
@@ -210,7 +212,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c你没有权限执行这个指令！");
                 return true;
             }
-            RayTraceResult result = ((Player)sender).rayTraceBlocks(5, FluidCollisionMode.NEVER);
+            RayTraceResult result = ((Player) sender).rayTraceBlocks(5, FluidCollisionMode.NEVER);
             if (result != null) {
                 Block b = result.getHitBlock();
                 if (b != null) {
@@ -219,7 +221,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                         l.setX(l.getX() + 0.5);
                         l.setY(l.getY() - 1);
                         l.setZ(l.getZ() + 0.5);
-                        switch (((Directional)b.getBlockData()).getFacing()) {
+                        switch (((Directional) b.getBlockData()).getFacing()) {
                             case NORTH -> l.setZ(l.getZ() + 0.2);
                             case SOUTH -> l.setZ(l.getZ() - 0.2);
                             case EAST -> l.setX(l.getX() - 0.2);
@@ -229,7 +231,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                                 return true;
                             }
                         }
-                        ArmorStand stand = (ArmorStand)gameUtils.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
+                        ArmorStand stand = (ArmorStand) gameUtils.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
                         stand.setInvisible(true);
                         stand.setCustomName("开始游戏");
                         stand.setGravity(false);
@@ -249,7 +251,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c此指令必须由玩家执行！");
                 return true;
             }
-            if (!((Player)sender).getGameMode().equals(GameMode.CREATIVE)) {
+            if (!((Player) sender).getGameMode().equals(GameMode.CREATIVE)) {
                 sender.sendMessage("§c此指令必须在创造模式下执行！");
                 return true;
             }
