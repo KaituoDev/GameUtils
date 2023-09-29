@@ -1,4 +1,4 @@
-package fun.kaituo;
+package fun.kaituo.gameutils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -48,7 +48,8 @@ public class PlayerQuitData {
             }
         }
     }
-    
+
+    @SuppressWarnings("")
     public void restoreBasicData(Player p) {
         try {
             Files.copy(new File("plugins/GameUtils/" + p.getUniqueId() + ".dat").toPath(), new File("world/playerdata/" + p.getUniqueId() + ".dat").toPath(), StandardCopyOption.REPLACE_EXISTING);

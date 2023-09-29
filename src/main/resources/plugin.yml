@@ -1,25 +1,29 @@
 api-version: 1.13
 name: GameUtils
-main: fun.kaituo.GameUtils
-version: 1.2.0
+main: fun.kaituo.gameutils.GameUtils
+version: 1.3.0
 authors: [ YFshadaow, LeChocolatChaud ]
 commands:
+  join:
+    description: Join a game
+    default: true
+  rejoin:
+    description: Rejoin game
+    default: true
+  forcestop:
+    description: Force stop a game
+    default: op
+    aliases: [ fs ]
   changebiome:
-    description: ChangBiome
+    description: Chang biome
     default: op
     aliases: [ cb ]
-  changegame:
-    description: changeGame
-    default: op
   placestand:
-    description: place stand
+    description: Place an armor stand in front of start buttons to prevent grief clicking
     default: op
     aliases: [ ps ]
-  rejoin:
-    description: rejoin game
-    default: true
   rotatable:
     description: set item frame rotatable
     usage: /rotatable <x> <y> <z> [true|false]
-    default: true
+    default: op
     aliases: [ rt ]

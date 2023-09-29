@@ -1,4 +1,4 @@
-package fun.kaituo;
+package fun.kaituo.gameutils;
 
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
@@ -9,17 +9,20 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("ConstantConditions")
 public class GameUtilsTabCompleter implements TabCompleter {
+    GameUtils gameUtils;
     List<String> biomeNames;
     List<String> modes;
     List<String> booleans;
     
-    public GameUtilsTabCompleter() {
+    public GameUtilsTabCompleter(GameUtils gameUtils) {
+        this.gameUtils = gameUtils;
         biomeNames = new ArrayList<>();
         modes = new ArrayList<>();
         booleans = new ArrayList<>();
@@ -34,16 +37,20 @@ public class GameUtilsTabCompleter implements TabCompleter {
     }
     
     @Override
-    public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (command.getName().equalsIgnoreCase("changebiome")) {
             if (args.length == 1) {
                 return biomeNames;
             } else if (args.length == 3) {
                 return modes;
             }
-        } else if (command.getName().equalsIgnoreCase("changegame")) {
+        } else if (command.getName().equalsIgnoreCase("join")) {
             if (args.length == 1) {
-                return GameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
+                return gameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
+            }
+        } else if (command.getName().equalsIgnoreCase("forcestop")) {
+            if (args.length == 1) {
+                return gameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
             }
         } else if (command.getName().equalsIgnoreCase("rotatable")) {
             if (!(commandSender instanceof Player p)) {

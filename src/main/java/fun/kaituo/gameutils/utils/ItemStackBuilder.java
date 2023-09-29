@@ -1,4 +1,4 @@
-package fun.kaituo.utils;
+package fun.kaituo.gameutils.utils;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

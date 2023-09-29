@@ -1,6 +1,6 @@
-package fun.kaituo;
+package fun.kaituo.gameutils;
 
-import fun.kaituo.event.PlayerChangeGameEvent;
+import fun.kaituo.gameutils.event.PlayerChangeGameEvent;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -15,19 +15,21 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 
-import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
-import static fun.kaituo.GameUtils.world;
+import javax.annotation.Nonnull;
+import java.io.IOException;
+
+import static fun.kaituo.gameutils.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
 
 @SuppressWarnings({ "deprecation", "ConstantConditions" })
 public class GameUtilsCommandExecutor implements CommandExecutor {
-    GameUtils plugin;
+    GameUtils gameUtils;
     
-    public GameUtilsCommandExecutor(GameUtils plugin) {
-        this.plugin = plugin;
+    public GameUtilsCommandExecutor(GameUtils gameUtils) {
+        this.gameUtils = gameUtils;
     }
     
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (cmd.getName().equalsIgnoreCase("changebiome")) {
             
             if (!(sender instanceof Player)) {
@@ -70,7 +72,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                                         continue;
                                     }
                                 }
-                                world.setBiome((x + xOffset), (z + zOffset), Biome.valueOf(args[0].toUpperCase()));
+                                gameUtils.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(args[0].toUpperCase()));
                             }
                         }
                         Bukkit.broadcastMessage("§a[changebiome]生物群系设置操作完成！");
@@ -98,22 +100,22 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                                 int k = 319;
                                 boolean isBlockGotten = false;
                                 while (!isBlockGotten) {
-                                    if (world.getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.WATER)) {
+                                    if (gameUtils.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.WATER)) {
                                         isBlockGotten = true;
                                         sender.sendMessage((x + xOffset) + " " + (z + zOffset) + " " + "river");
-                                        world.setBiome((x + xOffset), (z + zOffset), Biome.RIVER);
-                                    } else if (world.getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.LAVA)) {
+                                        gameUtils.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.RIVER);
+                                    } else if (gameUtils.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.LAVA)) {
                                         isBlockGotten = true;
                                         sender.sendMessage((x + xOffset) + " " + (z + zOffset) + " " + "badlands");
-                                        world.setBiome((x + xOffset), (z + zOffset), Biome.BADLANDS);
-                                    } else if (world.getBlockAt((x + xOffset), k, (z + zOffset)).getType().isSolid()) {
+                                        gameUtils.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.BADLANDS);
+                                    } else if (gameUtils.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().isSolid()) {
                                         isBlockGotten = true;
-                                        FileConfiguration config = plugin.getConfig();
-                                        Material material = world.getBlockAt((x + xOffset), k, (z + zOffset)).getType();
+                                        FileConfiguration config = gameUtils.getConfig();
+                                        Material material = gameUtils.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType();
                                         if (config.contains("change-biome-settings." + material.toString().toLowerCase())) {
-                                            world.setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings." + material.toString().toLowerCase()).toUpperCase()));
+                                            gameUtils.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings." + material.toString().toLowerCase()).toUpperCase()));
                                         } else {
-                                            world.setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings.default").toUpperCase()));
+                                            gameUtils.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings.default").toUpperCase()));
                                         }
                                     }
                                     k--;
@@ -135,39 +137,69 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 sender.sendMessage("§c指令执行错误！使用方法为/changebiome <biome>/auto radius <circular/square> ！请检查生物群系名称是否正确！");
                 return true;
             }
-        } else if (cmd.getName().equalsIgnoreCase("changegame")) {
-            if (!(sender instanceof Player)) {
+        } else if (cmd.getName().equalsIgnoreCase("join")) {
+            if (!(sender instanceof Player p)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
                 return true;
             }
-            if (!sender.isOp()) {
-                sender.sendMessage("§c你没有权限执行这个指令！");
+            if (args.length != 1) {
+                p.sendMessage("§c指令格式错误！");
                 return true;
             }
-            if (args.length == 0) {
-                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player)sender, GameUtils.getGamePlayerIsIn((Player)sender), null));
-            } else if (args.length == 1) {
-                Game game = GameUtils.getGameByName(args[0]);
-                if (game != null) {
-                    Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent((Player)sender, GameUtils.getGamePlayerIsIn((Player)sender), game));
-                } else {
-                    sender.sendMessage("§c该游戏不存在！");
-                }
-            } else {
-                sender.sendMessage("§c指令格式错误！");
+            Game toGame = gameUtils.getGame(args[0]);
+            if (toGame == null) {
+                p.sendMessage("§c该游戏不存在！");
+                return true;
             }
+            Game fromGame = gameUtils.getPlayerGame(p);
+            if (fromGame == toGame) {
+                p.sendMessage("§b你已经在此游戏中了！");
+                return true;
+            }
+            if (fromGame != null) {
+                try {
+                    fromGame.quit(p);
+                } catch (IOException e) {
+                    gameUtils.getLogger().warning("§c退出游戏失败！可能是保存PlayerQuitData失败");
+                }
+            }
+            gameUtils.resetPlayer(p);
+            toGame.join(p);
+            gameUtils.setPlayerGame(p, toGame);
+            Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
             return true;
         } else if (cmd.getName().equalsIgnoreCase("rejoin")) {
             if (!(sender instanceof Player p)) {
                 sender.sendMessage("§c此指令必须由玩家执行！");
                 return true;
             }
-            PlayerQuitData pqd = GameUtils.getPlayerQuitData(p.getUniqueId());
+            PlayerQuitData pqd = gameUtils.getPlayerQuitData(p.getUniqueId());
             if (pqd != null) {
-                pqd.getGame().rejoin(p);
+                Game toGame = pqd.getGame();
+                if (toGame == null) {
+                    p.sendMessage("§c目标游戏不存在！");
+                    return true;
+                }
+                Game fromGame = gameUtils.getPlayerGame(p);
+                gameUtils.resetPlayer(p);
+                toGame.rejoin(p);
+                gameUtils.setPlayerGame(p, toGame);
+                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
             } else {
                 sender.sendMessage("§c无法重新加入，游戏不存在或者不支持重新加入");
             }
+            return true;
+        } else if (cmd.getName().equalsIgnoreCase("forcestop")) {
+            if (args.length != 1) {
+                sender.sendMessage("§c指令格式错误！");
+                return true;
+            }
+            Game game = gameUtils.getGame(args[0]);
+            if (game == null) {
+                sender.sendMessage("§c该游戏不存在！");
+                return true;
+            }
+            game.forceStop();
             return true;
         } else if (cmd.getName().equalsIgnoreCase("placestand")) {
             if (!(sender instanceof Player)) {
@@ -197,7 +229,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                                 return true;
                             }
                         }
-                        ArmorStand stand = (ArmorStand)world.spawnEntity(l, EntityType.ARMOR_STAND);
+                        ArmorStand stand = (ArmorStand)gameUtils.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
                         stand.setInvisible(true);
                         stand.setCustomName("开始游戏");
                         stand.setGravity(false);
@@ -223,7 +255,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
             }
             switch (args.length) {
                 case 3 -> {
-                    for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
+                    for (ItemFrame itemFrame : gameUtils.getWorld().getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (ROTATABLE_ITEM_FRAME_UUID_STRINGS.contains(itemFrame.getUniqueId().toString())) {
                                 sender.sendMessage("该物品展示框不可旋转！");
@@ -237,7 +269,7 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                     return true;
                 }
                 case 4 -> {
-                    for (ItemFrame itemFrame : world.getEntitiesByClass(ItemFrame.class)) {
+                    for (ItemFrame itemFrame : gameUtils.getWorld().getEntitiesByClass(ItemFrame.class)) {
                         if (itemFrame.getLocation().getBlockX() == Integer.parseInt(args[0]) && itemFrame.getLocation().getBlockY() == Integer.parseInt(args[1]) && itemFrame.getLocation().getBlockZ() == Integer.parseInt(args[2])) {
                             if (args[3].equals("true")) {
                                 ROTATABLE_ITEM_FRAME_UUID_STRINGS.add(itemFrame.getUniqueId().toString());
