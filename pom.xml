@@ -20,7 +20,7 @@
         <repository>
             <id>Minigames-Kaituo</id>
             <name>Kaituo</name>
-            <url>https://nexus.kaituo.fun/repository/maven-releases/</url>
+            <url>https://maven.kaituo.fun/maven-releases/</url>
         </repository>
     </distributionManagement>
 
