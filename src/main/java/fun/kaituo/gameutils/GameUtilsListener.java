@@ -1,7 +1,6 @@
-package fun.kaituo;
+package fun.kaituo.gameutils;
 
-import fun.kaituo.event.PlayerChangeGameEvent;
-import fun.kaituo.event.PlayerEndGameEvent;
+import fun.kaituo.gameutils.event.PlayerEndGameEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -22,114 +21,51 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Team;
 
 import java.io.IOException;
-import java.util.List;
 
-import static fun.kaituo.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
-import static fun.kaituo.GameUtils.getGamePlayerIsIn;
+import static fun.kaituo.gameutils.GameUtils.ROTATABLE_ITEM_FRAME_UUID_STRINGS;
 
-@SuppressWarnings({ "ConstantConditions", "deprecation" })
+@SuppressWarnings({ "ConstantConditions"})
 public class GameUtilsListener implements Listener {
-    GameUtils plugin;
-    ItemStack menu;
+    GameUtils gameUtils;
     FileConfiguration c;
     
-    public GameUtilsListener(GameUtils plugin) {
-        this.plugin = plugin;
-        this.menu = new ItemStack(Material.CLOCK, 1);
-        ItemMeta itemMeta = menu.getItemMeta();
-        itemMeta.setDisplayName("§e● §b§l菜单 §e●");
-        itemMeta.setLore(List.of("§f请右键打开!"));
-        menu.setItemMeta(itemMeta);
-        c = plugin.getConfig();
+    public GameUtilsListener(GameUtils gameUtils) {
+        this.gameUtils = gameUtils;
+        c = gameUtils.getConfig();
     }
-    //Chat is now handled by trchat
-    /*
-    @EventHandler
-    public void AsyncPlayerChat(AsyncPlayerChatEvent apce) {
-        String msg = apce.getMessage();
-        Player from = apce.getPlayer();
-        for (Player to : Bukkit.getServer().getOnlinePlayers()) {
-            if (msg.equals(to.getName())) {
-                if (from != to) {
-                    to.playSound(to.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    from.playSound(from.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                    apce.setMessage(msg.replaceAll(to.getName(), ChatColor.GREEN + "@" + to.getName()));
-                }
-            }
-        }
-        String gamePrefix = "";
-        if (getGamePlayerIsIn(from) != null) {
-            gamePrefix = "§7[" + getGamePlayerIsIn(from).getFullName() + "§7] §r";
-        } else {
-            gamePrefix = "§7[§3空闲§7] §r";
-        }
-        apce.setFormat(gamePrefix + "%1$s： %2$s");
-    }
-
-     */
-    
-    
-    private void resetPlayer(Player p) {
-        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            p.setGameMode(GameMode.ADVENTURE);
-            p.getInventory().clear();
-            p.getInventory().setItem(0, menu);
-            for (PotionEffect effect : p.getActivePotionEffects()) {
-                p.removePotionEffect(effect.getType());
-            }
-        }
-        p.resetPlayerTime();
-        p.resetPlayerWeather();
-        p.setMaximumNoDamageTicks(20);
-        p.resetMaxHealth();
-        p.setHealth(20);
-        p.setLevel(0);
-        p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-        for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
-            team.removePlayer(p);
-        }
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0, false, false));
-        p.setInvisible(true);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> p.setInvisible(false), 1);
-    }
-    
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent pje) {
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            if (!pje.getPlayer().isOnline()) {
+        Player p = pje.getPlayer();
+        Bukkit.getScheduler().runTaskLater(gameUtils, () -> {
+            if (!p.isOnline()) {
                 return;
             }
-            pje.getPlayer().sendMessage("§6欢迎， §e" + pje.getPlayer().getName() + "§6！");
+            p.sendMessage("§6欢迎， §e" + p.getName() + "§6！");
         }, 20);
+
+        gameUtils.resetPlayer(p);
+        Lobby.getInstance().join(p);
+        gameUtils.setPlayerGame(p, Lobby.getInstance());
+
+    }
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent pqe) throws IOException {
+        Player p = pqe.getPlayer();
+        Game game = gameUtils.getPlayerGame(p);
+        if (game != null) {
+            game.quit(p);
+        }
+        gameUtils.removePlayerGame(p);
     }
     
     @EventHandler
     public void onPlayerEndGame(PlayerEndGameEvent pege) {
-        resetPlayer(pege.getPlayer());
+        gameUtils.resetPlayer(pege.getPlayer());
     }
-    
-    @EventHandler
-    public void onPlayerChangeGame(PlayerChangeGameEvent pcge) {
-        resetPlayer(pcge.getPlayer());
-    }
-    
-    @EventHandler
-    public void fixRespawn(PlayerJoinEvent pje) {
-        Player p = pje.getPlayer();
-        resetPlayer(p);
-        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            p.setBedSpawnLocation(new Location(Bukkit.getWorld("world"), 0.5, 89, 0.5, 0, 0), true);
-            p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 89, 0.5, 0, 0));
-        }
-    }
+
     
     @EventHandler
     public void preventFireworkDamage(EntityDamageByEntityEvent edbee) {
@@ -142,16 +78,7 @@ public class GameUtilsListener implements Listener {
             }
         }
     }
-    
-    @EventHandler
-    public void preventDroppingMenu(PlayerDropItemEvent pdie) {
-        if (!c.getBoolean("no-drop-menu")) {
-            return;
-        }
-        if (pdie.getItemDrop().getItemStack().getItemMeta().getDisplayName().equals("§e● §b§l菜单 §e●")) {
-            pdie.setCancelled(true);
-        }
-    }
+
     
     @EventHandler
     public void preventDestroyingPainting(HangingBreakByEntityEvent hbbee) {
@@ -226,16 +153,14 @@ public class GameUtilsListener implements Listener {
             return;
         }
         switch (hpe.getEntity().getType()) {
-            case PAINTING:
-                hpe.getEntity().setInvulnerable(true);
-                break;
-            case ITEM_FRAME:
+            case PAINTING -> hpe.getEntity().setInvulnerable(true);
+            case ITEM_FRAME -> {
                 if (!hpe.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
                     ROTATABLE_ITEM_FRAME_UUID_STRINGS.add(hpe.getEntity().getUniqueId().toString());
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
     
@@ -259,13 +184,7 @@ public class GameUtilsListener implements Listener {
         }
     }
     
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent pqe) throws IOException {
-        Game game = getGamePlayerIsIn(pqe.getPlayer());
-        if (game != null) {
-            game.savePlayerQuitData(pqe.getPlayer());
-        }
-    }
+
     
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent ede) {

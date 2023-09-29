@@ -1,18 +1,19 @@
-package fun.kaituo.event;
+package fun.kaituo.gameutils.event;
 
-import fun.kaituo.Game;
+import fun.kaituo.gameutils.Game;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
-public class PlayerEndGameEvent extends Event {
+import javax.annotation.Nonnull;
+
+public class PlayerEndGameEvent extends PlayerEvent {
     private static final HandlerList HANDLERS = new HandlerList();
-    Player player;
     Game game;
     
     
     public PlayerEndGameEvent(Player p, Game game) {
-        this.player = p;
+        super(p);
         this.game = game;
     }
     
@@ -22,14 +23,12 @@ public class PlayerEndGameEvent extends Event {
     }
     
     @Override
+    @Nonnull
     public HandlerList getHandlers() {
         return HANDLERS;
     }
-    
-    public Player getPlayer() {
-        return player;
-    }
-    
+
+    @SuppressWarnings("unused")
     public Game getGame() {
         return game;
     }
