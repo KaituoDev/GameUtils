@@ -1,9 +1,7 @@
 package fun.kaituo.gameutils;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.World;
+import com.google.gson.Gson;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -16,12 +14,26 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 @SuppressWarnings("ConstantConditions")
 public class GameUtils extends JavaPlugin implements Listener {
+
+    public static final Gson gson = new Gson();
+
+    private final NamespacedKey namespacedKey = new NamespacedKey(this, "minigame");
+
+    @SuppressWarnings("unused")
+    public NamespacedKey getNamespacedKey() {
+        return namespacedKey;
+    }
 
     ItemStack menu;
 
