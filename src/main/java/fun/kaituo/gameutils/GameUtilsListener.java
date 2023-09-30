@@ -21,6 +21,7 @@ import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.scoreboard.Team;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,8 +75,13 @@ public class GameUtilsListener implements Listener {
         if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
             return;
         }
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer());
+        if (team == null) {
+            e.setCancelled(true);
+            return;
+        }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBePickedUpByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
+        if (!allowedTeamNames.contains(team.getName())) {
             e.setCancelled(true);
         }
     }
@@ -85,8 +91,13 @@ public class GameUtilsListener implements Listener {
         if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
             return;
         }
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer());
+        if (team == null) {
+            e.setCancelled(true);
+            return;
+        }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeDroppedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
+        if (!allowedTeamNames.contains(team.getName())) {
             e.setCancelled(true);
         }
     }
@@ -98,12 +109,20 @@ public class GameUtilsListener implements Listener {
         if (!(e.getWhoClicked() instanceof Player)) {
             return;
         }
+        if (e.getCurrentItem().getItemMeta() == null) {
+            return;
+        }
         PersistentDataContainer container = e.getCurrentItem().getItemMeta().getPersistentDataContainer();
         if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
             return;
         }
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) e.getWhoClicked());
+        if (team == null) {
+            e.setCancelled(true);
+            return;
+        }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeClickedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam((Player) e.getWhoClicked()).getName())) {
+        if (!allowedTeamNames.contains(team.getName())) {
             e.setCancelled(true);
         }
     }
@@ -116,8 +135,13 @@ public class GameUtilsListener implements Listener {
         if (!container.has(gameUtils.getNamespacedKey(), new GameItemStackTagType())) {
             return;
         }
+        Team team = Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer());
+        if (team == null) {
+            e.setCancelled(true);
+            return;
+        }
         List<String> allowedTeamNames = container.get(gameUtils.getNamespacedKey(), new GameItemStackTagType()).canBeInteractedByTeams;
-        if (!allowedTeamNames.contains(Bukkit.getScoreboardManager().getMainScoreboard().getPlayerTeam(e.getPlayer()).getName())) {
+        if (!allowedTeamNames.contains(team.getName())) {
             e.setCancelled(true);
         }
     }

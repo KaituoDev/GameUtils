@@ -1,6 +1,8 @@
 package fun.kaituo.gameutils;
 
 import com.google.gson.Gson;
+import fun.kaituo.gameutils.utils.GameItemStackTag;
+import fun.kaituo.gameutils.utils.ItemStackBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -116,12 +118,12 @@ public class GameUtils extends JavaPlugin implements Listener {
     
     public void onEnable() {
         saveDefaultConfig();
-
-        this.menu = new ItemStack(Material.CLOCK, 1);
-        ItemMeta itemMeta = menu.getItemMeta();
-        itemMeta.setDisplayName("§e● §b§l菜单 §e●");
-        itemMeta.setLore(List.of("§f请右键打开!"));
-        menu.setItemMeta(itemMeta);
+        this.menu = new ItemStackBuilder(Material.CLOCK)
+                .setAmount(1)
+                .setDisplayName("§e● §b§l菜单 §e●")
+                .setLore("§f请右键打开!")
+                .setGameItemStackTag(namespacedKey, new GameItemStackTag())
+                .build();
 
         File dir = new File("plugins/GameUtils/world");
         if (!dir.exists()) {
