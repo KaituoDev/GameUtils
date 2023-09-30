@@ -167,6 +167,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
             if (toGame.join(p)) {
                 gameUtils.setPlayerGame(p, toGame);
                 Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+            } else {
+                Lobby.getInstance().join(p);
+                gameUtils.setPlayerGame(p, Lobby.getInstance());
+                Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, Lobby.getInstance()));
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("rejoin")) {
@@ -186,6 +190,10 @@ public class GameUtilsCommandExecutor implements CommandExecutor {
                 if (toGame.rejoin(p)) {
                     gameUtils.setPlayerGame(p, toGame);
                     Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, toGame));
+                } else {
+                    Lobby.getInstance().join(p);
+                    gameUtils.setPlayerGame(p, Lobby.getInstance());
+                    Bukkit.getPluginManager().callEvent(new PlayerChangeGameEvent(p, fromGame, Lobby.getInstance()));
                 }
             } else {
                 sender.sendMessage("§c无法重新加入，游戏不存在或者不支持重新加入");
