@@ -40,17 +40,17 @@ public class GameUtilsTabCompleter implements TabCompleter {
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (command.getName().equalsIgnoreCase("changebiome")) {
             if (args.length == 1) {
-                return biomeNames;
+                return biomeNames.stream().filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).toList();
             } else if (args.length == 3) {
-                return modes;
+                return modes.stream().filter(s -> s.toLowerCase().startsWith(args[2].toLowerCase())).toList();
             }
         } else if (command.getName().equalsIgnoreCase("join")) {
             if (args.length == 1) {
-                return gameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
+                return gameUtils.getRegisteredGames().stream().map(Game::getName).filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
             }
         } else if (command.getName().equalsIgnoreCase("forcestop")) {
             if (args.length == 1) {
-                return gameUtils.getRegisteredGames().stream().map(Game::getName).collect(Collectors.toList());
+                return gameUtils.getRegisteredGames().stream().map(Game::getName).filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
             }
         } else if (command.getName().equalsIgnoreCase("rotatable")) {
             if (!(commandSender instanceof Player p)) {
