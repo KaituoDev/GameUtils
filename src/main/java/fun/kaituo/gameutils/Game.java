@@ -96,7 +96,7 @@ public abstract class Game {
     protected void spawnFirework(Player p) {
         Location loc = p.getLocation();
         loc.setY(loc.getY() + 0.9);
-        Firework fw = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
+        Firework fw = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK_ROCKET);
         fw.addScoreboardTag("gameFirework");
         FireworkMeta fwm = fw.getFireworkMeta();
         fwm.setPower(2);

@@ -18,40 +18,13 @@
 
     <distributionManagement>
         <repository>
-            <id>Minigames-Kaituo</id>
-            <name>Kaituo</name>
-            <url>https://maven.kaituo.fun/maven-releases/</url>
+            <id>kaituo-repo</id>
+            <url>https://maven.kaituo.fun/maven-snapshots</url>
         </repository>
     </distributionManagement>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-            </extension>
-        </extensions>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>wagon-maven-plugin</artifactId>
-                <version>2.0.2</version>
-                <executions>
-                    <execution>
-                        <id>upload-assembly</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>upload-single</goal>
-                        </goals>
-                        <configuration>
-                            <serverId>kaituo-minigame-ftp</serverId> <!-- references the server declaration -->
-                            <fromFile>${project.build.directory}/${project.artifactId}-${project.version}.jar</fromFile>
-                            <url>ftp://mc.kaituo.fun:22000</url>
-                            <toFile>${project.artifactId}.jar</toFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -82,6 +55,33 @@
                 <artifactId>maven-help-plugin</artifactId>
                 <version>3.2.0</version>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>upload-to-sftp</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>scp</executable>
+                    <arguments>
+                        <argument>-o</argument>
+                        <argument>StrictHostKeyChecking=no</argument>
+                        <argument>-P</argument>
+                        <argument>22001</argument>
+                        <argument>-i</argument>
+                        <argument>${user.home}\.ssh\id</argument>
+                        <argument>${project.build.directory}/${project.artifactId}-${project.version}.jar</argument>
+                        <argument>root@mc.kaituo.fun:/</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
         </plugins>
         <defaultGoal>install</defaultGoal>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.2-R0.1-SNAPSHOT</version>
+            <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
