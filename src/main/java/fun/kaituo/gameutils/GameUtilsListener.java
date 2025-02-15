@@ -56,6 +56,10 @@ public class GameUtilsListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent pqe) throws IOException {
         Player p = pqe.getPlayer();
+        Team t = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(p.getName());
+        if (t != null) {
+            t.removeEntry(p.getName());
+        }
         Game game = gameUtils.getPlayerGame(p);
         if (game != null) {
             game.quit(p);
