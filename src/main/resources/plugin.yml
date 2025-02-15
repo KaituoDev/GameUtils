@@ -1,7 +1,7 @@
-api-version: 1.13
-name: GameUtils
+api-version: 1.21
+name: ${project.name}
 main: fun.kaituo.gameutils.GameUtils
-version: 1.3.1
+version: ${project.version}
 authors: [ YFshadaow, LeChocolatChaud ]
 commands:
   join:
@@ -15,7 +15,7 @@ commands:
     default: op
     aliases: [ fs ]
   changebiome:
-    description: Chang biome
+    description: Change biome
     default: op
     aliases: [ cb ]
   placestand:
