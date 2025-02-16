@@ -15,7 +15,7 @@ import org.bukkit.util.RayTraceResult;
 
 import javax.annotation.Nonnull;
 
-public class PlaceStandCommand implements CommandExecutor {
+public class PlaceStand implements CommandExecutor {
     public static final String PERMISSION = "gameutils.command.placestand";
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {

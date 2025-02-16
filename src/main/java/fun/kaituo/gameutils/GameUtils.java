@@ -2,9 +2,9 @@ package fun.kaituo.gameutils;
 
 import fun.kaituo.gameutils.command.ChangeBiome;
 import fun.kaituo.gameutils.command.ForceStop;
-import fun.kaituo.gameutils.command.JoinCommand;
-import fun.kaituo.gameutils.command.PlaceStandCommand;
-import fun.kaituo.gameutils.command.TpGameCommand;
+import fun.kaituo.gameutils.command.Join;
+import fun.kaituo.gameutils.command.PlaceStand;
+import fun.kaituo.gameutils.command.TpGame;
 import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
@@ -78,7 +78,7 @@ public class GameUtils extends JavaPlugin {
         if (joinCommand == null) {
             getLogger().warning("Command not found: join. Did you add it to plugin.yml?");
         } else {
-            JoinCommand join = new JoinCommand(this);
+            Join join = new Join(this);
             joinCommand.setExecutor(join);
             joinCommand.setTabCompleter(join);
         }
@@ -87,7 +87,7 @@ public class GameUtils extends JavaPlugin {
         if (tpgameCommand == null) {
             getLogger().warning("Command not found: tpgame. Did you add it to plugin.yml?");
         } else {
-            TpGameCommand tpgame = new TpGameCommand(this);
+            TpGame tpgame = new TpGame(this);
             tpgameCommand.setExecutor(tpgame);
             tpgameCommand.setTabCompleter(tpgame);
         }
@@ -105,7 +105,7 @@ public class GameUtils extends JavaPlugin {
         if (placeStandCommand == null) {
             getLogger().warning("Command not found: placestand. Did you add it to plugin.yml?");
         } else {
-            PlaceStandCommand placeStand = new PlaceStandCommand();
+            PlaceStand placeStand = new PlaceStand();
             placeStandCommand.setExecutor(placeStand);
         }
 
