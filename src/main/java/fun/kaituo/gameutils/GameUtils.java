@@ -1,179 +1,112 @@
 package fun.kaituo.gameutils;
 
-import com.google.gson.Gson;
-import fun.kaituo.gameutils.utils.GameItemStackTag;
-import fun.kaituo.gameutils.utils.ItemStackBuilder;
-import org.bukkit.*;
+import fun.kaituo.gameutils.command.ChangeBiomeCommand;
+import fun.kaituo.gameutils.command.ForceStopCommand;
+import fun.kaituo.gameutils.command.JoinCommand;
+import fun.kaituo.gameutils.command.PlaceStandCommand;
+import fun.kaituo.gameutils.command.TpGameCommand;
+import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.util.Misc;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scoreboard.Team;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 
-@SuppressWarnings("ConstantConditions")
+
 public class GameUtils extends JavaPlugin implements Listener {
+    private final Set<Game> games = new HashSet<>();
+    private final Map<UUID, Game> uuidGameMap = new HashMap<>();
 
-    public static final Gson gson = new Gson();
+    private Game lobby;
 
-    private final NamespacedKey namespacedKey = new NamespacedKey(this, "minigame");
-
-    @SuppressWarnings("unused")
-    public NamespacedKey getNamespacedKey() {
-        return namespacedKey;
+    public Set<Game> getGames() {
+        return games;
     }
 
-    ItemStack menu;
-
-    private final HashMap<Player, Game> playerGameMap = new HashMap<>();
-    private final HashMap<String, Game> nameGameMap = new HashMap<>();
-    private final HashMap<UUID, PlayerQuitData> quitDataMap = new HashMap<>();
-    public static final ArrayList<String> ROTATABLE_ITEM_FRAME_UUID_STRINGS = new ArrayList<>();
-    private World world;
-
-    public World getWorld() {
-        return world;
+    public Game getLobby() {
+        return lobby;
     }
 
-    //For global game utilities
-    public void registerGame(Game game) {
-        nameGameMap.put(game.getName(), game);
+    public @Nullable Game getGame(Player p) {
+        return uuidGameMap.get(p.getUniqueId());
     }
 
-    @SuppressWarnings("unused")
-    public void unregisterGame(Game game) {
-        nameGameMap.remove(game.getName());
-    }
-    
-    public Game getPlayerGame(Player p) {
-        return playerGameMap.get(p);
-    }
-    
-    public Game getGame(String name) {
-        return nameGameMap.get(name);
+    public void join(Player p, @Nonnull Game game) {
+        game.getState().join(p);
+        uuidGameMap.put(p.getUniqueId(), game);
     }
 
-    public void setPlayerGame(Player p, Game game) {
-        playerGameMap.put(p, game);
-    }
-
-    public void removePlayerGame(Player p) {
-        playerGameMap.remove(p);
-    }
-    
-    public List<Game> getRegisteredGames() {
-        return nameGameMap.values().stream().toList();
-    }
-    
-    public PlayerQuitData getPlayerQuitData(UUID uuid) {
-        return quitDataMap.get(uuid);
-    }
-
-    @SuppressWarnings({"unused"})
-    public void setPlayerQuitData(UUID uuid, PlayerQuitData quitData) {
-        if (quitData != null) {
-            quitDataMap.put(uuid, quitData);
-        } else {
-            quitDataMap.remove(uuid);
+    public void quit(Player p) {
+        Game currentGame = getGame(p);
+        if (currentGame != null) {
+            currentGame.getState().quit(p);
+            uuidGameMap.remove(p.getUniqueId());
         }
     }
-    @SuppressWarnings("deprecation")
-    public void resetPlayer(Player p) {
-        if (!p.getGameMode().equals(GameMode.CREATIVE)) {
-            p.setGameMode(GameMode.ADVENTURE);
-            p.getInventory().clear();
-            p.getInventory().setItem(0, menu);
-            for (PotionEffect effect : p.getActivePotionEffects()) {
-                p.removePotionEffect(effect.getType());
-            }
+
+    public boolean registerGame(Game game) {
+        if (games.contains(game)) {
+            getLogger().warning(String.format("Attempting to register duplicated game: %s", game.getName()));
+            return false;
         }
-        p.resetPlayerTime();
-        p.resetPlayerWeather();
-        p.setMaximumNoDamageTicks(20);
-        p.resetMaxHealth();
-        p.setHealth(20);
-        p.setLevel(0);
-        p.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-        for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
-            team.removePlayer(p);
-        }
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0, false, false));
-        p.setInvisible(true);
-        Bukkit.getScheduler().runTaskLater(this, () -> p.setInvisible(false), 1);
+        games.add(game);
+        return true;
     }
-    
+
+    public boolean unregisterGame(Game game) {
+        if (!games.contains(game)) {
+            getLogger().warning(String.format("Attempting to unregister non-existent game: %s", game.getName()));
+            return false;
+        }
+        games.remove(game);
+        return true;
+    }
+
+    private void registerCommands() {
+        ChangeBiomeCommand changeBiomeCommand = new ChangeBiomeCommand(this);
+        getCommand("changebiome").setExecutor(changeBiomeCommand);
+        getCommand("changebiome").setTabCompleter(changeBiomeCommand);
+
+        PlaceStandCommand placeStandCommand = new PlaceStandCommand();
+        getCommand("placestand").setExecutor(placeStandCommand);
+
+        TpGameCommand tpGameCommand = new TpGameCommand(this);
+        getCommand("tpgame").setExecutor(tpGameCommand);
+        getCommand("tpgame").setTabCompleter(tpGameCommand);
+
+        ForceStopCommand forceStopCommand = new ForceStopCommand(this);
+        getCommand("forcestop").setExecutor(forceStopCommand);
+        getCommand("forcestop").setTabCompleter(forceStopCommand);
+
+        JoinCommand joinCommand = new JoinCommand(this);
+    }
+
+    @Override
     public void onEnable() {
-        saveDefaultConfig();
-        this.menu = new ItemStackBuilder(Material.CLOCK)
-                .setAmount(1)
-                .setDisplayName("§e● §b§l菜单 §e●")
-                .setLore("§f请右键打开!")
-                .setGameItemStackTag(namespacedKey, new GameItemStackTag())
-                .build();
-
-        File dir = new File("plugins/GameUtils/world");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        dir = new File("plugins/GameUtils/uhc");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File rtSave = new File("plugins/GameUtils/rtsave.yml");
-        if (!rtSave.exists()) {
-            try {
-                rtSave.createNewFile();
-            } catch (Exception e) {
-                getLogger().log(Level.SEVERE, "Failed to create rtsave.yml", e);
+        registerCommands();
+        // Get the lobby plugin after startup finishes
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            Plugin lobby = Bukkit.getPluginManager().getPlugin("Lobby");
+            if (lobby == null) {
+                getLogger().warning("Lobby plugin not found!");
+                return;
             }
-        }
-        try {
-            ArrayList<String> rtSaveList = new Yaml().loadAs(new FileReader(rtSave), ArrayList.class);
-            if (rtSaveList != null) {
-                ROTATABLE_ITEM_FRAME_UUID_STRINGS.addAll(rtSaveList);
+            if (!(lobby instanceof Game)) {
+                getLogger().warning("Lobby plugin is not a Game!");
+                return;
             }
-        } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "Failed to load rtsave.yml", e);
-        }
-        world = Bukkit.getWorld("world");
-        GameUtilsCommandExecutor executor = new GameUtilsCommandExecutor(this);
-        GameUtilsTabCompleter tabCompleter = new GameUtilsTabCompleter(this);
-        getCommand("changebiome").setExecutor(executor);
-        getCommand("changebiome").setTabCompleter(tabCompleter);
-        getCommand("join").setExecutor(executor);
-        getCommand("join").setTabCompleter(tabCompleter);
-        getCommand("rejoin").setExecutor(executor);
-        getCommand("placestand").setExecutor(executor);
-        getCommand("forcestop").setExecutor(executor);
-        getCommand("forcestop").setTabCompleter(tabCompleter);
-        getCommand("rotatable").setExecutor(executor);
-        getCommand("rotatable").setTabCompleter(tabCompleter);
-        Bukkit.getPluginManager().registerEvents(new GameUtilsListener(this), this);
-
-        registerGame(Lobby.getInstance());
-    }
-
-    public void onDisable() {
-        Bukkit.getScheduler().cancelTasks(this);
-        HandlerList.unregisterAll((Plugin)this);
-        try {
-            new Yaml().dump(ROTATABLE_ITEM_FRAME_UUID_STRINGS, new FileWriter("plugins/GameUtils/rtsave.yml"));
-        } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "Failed to save rtsave.yml", e);
-        }
+            this.lobby = (Game) lobby;
+        }, 1);
+        // Inject into Misc.class to enable miscellaneous utilities
+        Misc.setPlugin(this);
     }
 }
