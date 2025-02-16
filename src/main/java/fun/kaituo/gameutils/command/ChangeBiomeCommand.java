@@ -65,11 +65,11 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
             try {
                 for (int xOffset = -r; xOffset <= r; xOffset++) {
                     if (xOffset == Math.round(-r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 25%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
                     } else if (xOffset == 0) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 50%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
                     } else if (xOffset == Math.round(r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 75%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
                     }
                     for (int zOffset = -r; zOffset <= r; zOffset++) {
                         if (isCircular) {
@@ -80,7 +80,7 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
                         p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(args[0].toUpperCase()));
                     }
                 }
-                Bukkit.broadcastMessage("§a[changebiome]生物群系设置操作完成！");
+                Bukkit.broadcastMessage("§a[changebiome] §f生物群系设置操作完成！");
             } catch (Exception e) {
                 sender.sendMessage("§c生物群系ID错误！");
                 e.printStackTrace();
@@ -90,11 +90,11 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
             try {
                 for (int xOffset = -r; xOffset <= r; xOffset++) {
                     if (xOffset == Math.round(-r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 25%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
                     } else if (xOffset == 0) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 50%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
                     } else if (xOffset == Math.round(r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome]服务器主线程冻结中，生物群系设置操作进度为 75%");
+                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
                     }
                     for (int zOffset = -r; zOffset <= r; zOffset++) {
                         if (isCircular) {
@@ -130,10 +130,10 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
                         }
                     }
                 }
-                Bukkit.broadcastMessage("§a[changebiome]生物群系自动设置操作完成！");
+                Bukkit.broadcastMessage("§a[changebiome] §f生物群系自动设置操作完成！");
             } catch (Exception e) {
                 e.printStackTrace();
-                Bukkit.broadcastMessage("§c[changebiome]发生内部错误！");
+                Bukkit.broadcastMessage("§a[changebiome] §c发生内部错误！");
             }
         }
         return true;
