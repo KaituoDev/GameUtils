@@ -57,7 +57,7 @@ public abstract class Game extends JavaPlugin {
             throw new RuntimeException("Game already registered");
         }
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this.state::tick, 1, 1);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> state.tick(), 1, 1);
 
         displayName = "§f未知游戏";
         location = new Location(Bukkit.getWorld("world"), 0.5, 89, 0.5, 0, 0);
