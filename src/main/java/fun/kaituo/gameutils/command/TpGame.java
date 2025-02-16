@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TpGameCommand implements CommandExecutor, TabCompleter {
+public class TpGame implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.tpgame";
     private final GameUtils gameUtils;
 
-    public TpGameCommand(GameUtils gameUtils) {
+    public TpGame(GameUtils gameUtils) {
         this.gameUtils = gameUtils;
     }
 

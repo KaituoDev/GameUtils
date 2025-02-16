@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class JoinCommand implements CommandExecutor, TabCompleter {
+public class Join implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.join";
     private final GameUtils gameUtils;
 
-    public JoinCommand(GameUtils gameUtils) {
+    public Join(GameUtils gameUtils) {
         this.gameUtils = gameUtils;
     }
 
