@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ForceStopCommand implements CommandExecutor, TabCompleter {
+public class ForceStop implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.forcestop";
     private final GameUtils gameUtils;
 
-    public ForceStopCommand(GameUtils gameUtils) {
+    public ForceStop(GameUtils gameUtils) {
         this.gameUtils = gameUtils;
     }
 

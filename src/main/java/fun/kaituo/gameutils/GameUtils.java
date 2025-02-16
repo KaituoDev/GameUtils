@@ -1,20 +1,21 @@
 package fun.kaituo.gameutils;
 
-import fun.kaituo.gameutils.command.ChangeBiomeCommand;
-import fun.kaituo.gameutils.command.ForceStopCommand;
+import fun.kaituo.gameutils.command.ChangeBiome;
+import fun.kaituo.gameutils.command.ForceStop;
 import fun.kaituo.gameutils.command.JoinCommand;
 import fun.kaituo.gameutils.command.PlaceStandCommand;
 import fun.kaituo.gameutils.command.TpGameCommand;
 import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
+import fun.kaituo.gameutils.listener.ProtectionListener;
 import fun.kaituo.gameutils.util.Misc;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Set;
 import java.util.UUID;
 
 
-public class GameUtils extends JavaPlugin implements Listener {
+public class GameUtils extends JavaPlugin {
     private final Set<Game> games = new HashSet<>();
     private final Map<UUID, Game> uuidGameMap = new HashMap<>();
 
@@ -36,21 +37,17 @@ public class GameUtils extends JavaPlugin implements Listener {
         return lobby;
     }
 
-    public @Nullable Game getGame(Player p) {
+    public @Nonnull Game getGame(Player p) {
         return uuidGameMap.get(p.getUniqueId());
     }
 
     public void join(Player p, @Nonnull Game game) {
-        game.getState().join(p);
+        game.getState().addPlayer(p);
         uuidGameMap.put(p.getUniqueId(), game);
     }
 
-    public void quit(Player p) {
-        Game currentGame = getGame(p);
-        if (currentGame != null) {
-            currentGame.getState().quit(p);
-            uuidGameMap.remove(p.getUniqueId());
-        }
+    public boolean isPlayerFirstTimeJoin(Player p) {
+        return !uuidGameMap.containsKey(p.getUniqueId());
     }
 
     public boolean registerGame(Game game) {
@@ -71,28 +68,62 @@ public class GameUtils extends JavaPlugin implements Listener {
         return true;
     }
 
+    private void registerEvents() {
+        Bukkit.getPluginManager().registerEvents(new PlayerLogInLogOutListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ProtectionListener(this), this);
+    }
+
     private void registerCommands() {
-        ChangeBiomeCommand changeBiomeCommand = new ChangeBiomeCommand(this);
-        getCommand("changebiome").setExecutor(changeBiomeCommand);
-        getCommand("changebiome").setTabCompleter(changeBiomeCommand);
+        PluginCommand joinCommand = getCommand("join");
+        if (joinCommand == null) {
+            getLogger().warning("Command not found: join. Did you add it to plugin.yml?");
+        } else {
+            JoinCommand join = new JoinCommand(this);
+            joinCommand.setExecutor(join);
+            joinCommand.setTabCompleter(join);
+        }
 
-        PlaceStandCommand placeStandCommand = new PlaceStandCommand();
-        getCommand("placestand").setExecutor(placeStandCommand);
+        PluginCommand tpgameCommand = getCommand("tpgame");
+        if (tpgameCommand == null) {
+            getLogger().warning("Command not found: tpgame. Did you add it to plugin.yml?");
+        } else {
+            TpGameCommand tpgame = new TpGameCommand(this);
+            tpgameCommand.setExecutor(tpgame);
+            tpgameCommand.setTabCompleter(tpgame);
+        }
 
-        TpGameCommand tpGameCommand = new TpGameCommand(this);
-        getCommand("tpgame").setExecutor(tpGameCommand);
-        getCommand("tpgame").setTabCompleter(tpGameCommand);
+        PluginCommand forceStopCommand = getCommand("forcestop");
+        if (forceStopCommand == null) {
+            getLogger().warning("Command not found: forcestop. Did you add it to plugin.yml?");
+        } else {
+            ForceStop forceStop = new ForceStop(this);
+            forceStopCommand.setExecutor(forceStop);
+            forceStopCommand.setTabCompleter(forceStop);
+        }
 
-        ForceStopCommand forceStopCommand = new ForceStopCommand(this);
-        getCommand("forcestop").setExecutor(forceStopCommand);
-        getCommand("forcestop").setTabCompleter(forceStopCommand);
+        PluginCommand placeStandCommand = getCommand("placestand");
+        if (placeStandCommand == null) {
+            getLogger().warning("Command not found: placestand. Did you add it to plugin.yml?");
+        } else {
+            PlaceStandCommand placeStand = new PlaceStandCommand();
+            placeStandCommand.setExecutor(placeStand);
+        }
 
-        JoinCommand joinCommand = new JoinCommand(this);
+        PluginCommand changeBiomeCommand = getCommand("changebiome");
+        if (changeBiomeCommand == null) {
+            getLogger().warning("Command not found: changebiome. Did you add it to plugin.yml?");
+        } else {
+            ChangeBiome changeBiome = new ChangeBiome(this);
+            changeBiomeCommand.setExecutor(changeBiome);
+            changeBiomeCommand.setTabCompleter(changeBiome);
+        }
     }
 
     @Override
     public void onEnable() {
         registerCommands();
+        registerEvents();
+
         // Get the lobby plugin after startup finishes
         Bukkit.getScheduler().runTaskLater(this, () -> {
             Plugin lobby = Bukkit.getPluginManager().getPlugin("Lobby");
@@ -106,7 +137,8 @@ public class GameUtils extends JavaPlugin implements Listener {
             }
             this.lobby = (Game) lobby;
         }, 1);
-        // Inject into Misc.class to enable miscellaneous utilities
+
+        // Inject into Misc class to enable miscellaneous utilities
         Misc.setPlugin(this);
     }
 }

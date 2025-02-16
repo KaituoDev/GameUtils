@@ -22,16 +22,15 @@ public class PlaceStandCommand implements CommandExecutor {
         if (!cmd.getName().equalsIgnoreCase("placestand")) {
             return false;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        Player p = (Player) sender;
         if (!sender.hasPermission(PERMISSION)) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }
-        RayTraceResult result = ((Player) sender).rayTraceBlocks(5, FluidCollisionMode.NEVER);
+        RayTraceResult result = p.rayTraceBlocks(5, FluidCollisionMode.NEVER);
         if (result == null) {
             sender.sendMessage("§c请面对橡木按钮！");
             return true;
