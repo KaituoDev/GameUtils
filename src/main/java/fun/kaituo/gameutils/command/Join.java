@@ -69,7 +69,7 @@ public class Join implements CommandExecutor, TabCompleter {
         }
         List<String> matchingNames = new ArrayList<>();
         for (Game game: gameUtils.getGames()) {
-            if (game.getName().equalsIgnoreCase(args[0])) {
+            if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
                 matchingNames.add(game.getName());
             }
         }
