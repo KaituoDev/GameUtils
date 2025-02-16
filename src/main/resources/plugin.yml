@@ -14,37 +14,42 @@ permissions:
         children:
           gameutils.command.join:
             description: Allow player to use /join
-            default: true
-          gameutils.command.changebiome:
-            description: Allow player to use /changebiome
             default: op
           gameutils.command.forcestop:
             description: Allow player to use /forcestop
             default: op
-          gameutils.command.placestand:
-            description: Allow player to use /placestand
-            default: op
           gameutils.command.tpgame:
             description: Allow player to use /tpgame
             default: op
-
+          gameutils.command.placestand:
+            description: Allow player to use /placestand
+            default: true
+          gameutils.command.changebiome:
+            description: Allow player to use /changebiome
+            default: op
 
 commands:
   join:
     description: Join a game
+    usage: /join <game>
     default: true
+    aliases: [ wan, jiaru, play ]
   forcestop:
     description: Force stop a game
+    usage: /forcestop <game>
     default: op
     aliases: [ fs ]
+  tpgame:
+    description: Teleport to the game location
+    usage: /tpgame <game>
+    default: op
+    aliases: [ tpg ]
   changebiome:
     description: Change biome
+    usage: /changebiome <biome>/auto <radius> <square/circular>
     default: op
     aliases: [ cb ]
   placestand:
     description: Place an armor stand in front of start buttons to prevent grief clicking
+    usage: /placestand
     default: op
-  tpgame:
-    description: Teleport to the game location
-    default: op
-    aliases: [ tpg ]

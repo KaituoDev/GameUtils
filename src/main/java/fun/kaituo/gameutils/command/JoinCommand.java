@@ -27,11 +27,10 @@ public class JoinCommand implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        Player p = (Player) sender;
         if (!sender.hasPermission(PERMISSION)) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
@@ -55,7 +54,7 @@ public class JoinCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c找到多个名称为" + gameName + "的游戏，加入已取消！可能是游戏字母相同但大小写不同！");
             return true;
         }
-        gameUtils.quit(p);
+        gameUtils.getGame(p).getState().removePlayer(p);
         gameUtils.join(p, matchingGames.getFirst());
         return true;
     }

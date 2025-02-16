@@ -8,10 +8,9 @@ public interface GameState {
     // Called once when exiting from this state
     void exit();
 
-    // Called when a player joins the game
-    void join(Player p);
-    // Called when a player quits the game
-    void quit(Player p);
+    void addPlayer(Player p);
+
+    void removePlayer(Player p);
 
     void forceStop();
 

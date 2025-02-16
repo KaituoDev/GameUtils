@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
+public class ChangeBiome implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.changebiome";
     private final GameUtils gameUtils;
     private final List<String> biomeNames = new ArrayList<>();
     private final List<String> modes = Arrays.asList("circular", "square");
     private final List<String> exampleRadii = Arrays.asList("16", "32", "64", "128", "256");
 
-    public ChangeBiomeCommand(GameUtils gameUtils) {
+    public ChangeBiome(GameUtils gameUtils) {
         this.gameUtils = gameUtils;
         biomeNames.add("auto");
         for (Biome b : Biome.values()) {
@@ -37,11 +37,10 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
         if (!cmd.getName().equalsIgnoreCase("changebiome")) {
             return false;
         }
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        Player p = (Player) sender;
         if (!sender.hasPermission(PERMISSION)) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
@@ -50,7 +49,7 @@ public class ChangeBiomeCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c指令参数错误！使用方法为/changebiome <biome>/auto radius <circular/square>");
             return true;
         }
-        Location l = ((Player) sender).getLocation();
+        Location l = p.getLocation();
         int x = (int) Math.floor(l.getX());
         int z = (int) Math.floor(l.getZ());
         int radius = Integer.parseInt(args[1]);
