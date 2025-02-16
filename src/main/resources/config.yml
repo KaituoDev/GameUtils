@@ -1,3 +1,15 @@
+no-firework-damage: true
+# composters, vases, etc
+no-special-block-interaction: true
+invulnerable-armourstand-on-spawn: true
+invulnerable-painting-on-spawn: true
+no-chicken-from-egg: true
+no-snow-and-ice-formation: true
+parkour-no-fall-damage: true
+no-item-frame-rotation: true
+no-destroy-painting: true
+no-armourstand-manipulation: true
+
 change-biome-settings:
   default: badlands
   sand: desert
@@ -15,17 +27,5 @@ change-biome-settings:
   podzol: forest
   barrier: forest
   snow: snowy_slopes
-no-firework-damage: true
-no-drop-menu: true
-no-destroy-painting: true
-no-armourstand-manipulation: true
 
-# composters, vases, etc
-no-block-interaction: true
 
-invulnerable-armourstand-on-spawn: true
-invulnerable-painting-on-spawn: true
-no-chicken-from-egg: true
-no-snow-and-ice-formation: true
-parkour-no-fall-damage: true
-no-item-frame-rotation: true

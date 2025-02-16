@@ -1,29 +1,50 @@
 api-version: 1.13
 name: GameUtils
 main: fun.kaituo.gameutils.GameUtils
-version: 1.3.1
+version: 2.0.0
 authors: [ YFshadaow, LeChocolatChaud ]
+permissions:
+  gameutils.*:
+    description: GameUtils admin permission
+    default: op
+    children:
+      gameutils.command.*:
+        description: Allow player to use all GameUtils commands
+        default: op
+        children:
+          gameutils.command.join:
+            description: Allow player to use /join
+            default: true
+          gameutils.command.changebiome:
+            description: Allow player to use /changebiome
+            default: op
+          gameutils.command.forcestop:
+            description: Allow player to use /forcestop
+            default: op
+          gameutils.command.placestand:
+            description: Allow player to use /placestand
+            default: op
+          gameutils.command.tpgame:
+            description: Allow player to use /tpgame
+            default: op
+
+
 commands:
   join:
     description: Join a game
-    default: true
-  rejoin:
-    description: Rejoin game
     default: true
   forcestop:
     description: Force stop a game
     default: op
     aliases: [ fs ]
   changebiome:
-    description: Chang biome
+    description: Change biome
     default: op
     aliases: [ cb ]
   placestand:
     description: Place an armor stand in front of start buttons to prevent grief clicking
     default: op
-    aliases: [ ps ]
-  rotatable:
-    description: set item frame rotatable
-    usage: /rotatable <x> <y> <z> [true|false]
+  tpgame:
+    description: Teleport to the game location
     default: op
-    aliases: [ rt ]
+    aliases: [ tpg ]
