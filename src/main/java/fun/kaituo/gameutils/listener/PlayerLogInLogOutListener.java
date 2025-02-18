@@ -16,16 +16,16 @@ public class PlayerLogInLogOutListener implements Listener {
     @EventHandler
     public void onLogIn(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (GameUtils.getInstance().isPlayerFirstTimeJoin(p)) {
-            GameUtils.getInstance().join(p, GameUtils.getInstance().getLobby());
+        if (GameUtils.inst().isPlayerFirstTimeJoin(p)) {
+            GameUtils.inst().join(p, GameUtils.inst().getLobby());
         } else {
-            Game currentGame = GameUtils.getInstance().getGame(p);
+            Game currentGame = GameUtils.inst().getGame(p);
             currentGame.addPlayer(p);
             currentGame.getState().addPlayer(p);
         }
 
         // Send a welcome message to the player after 1 second
-        Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
             if (!p.isOnline()) {
                 return;
             }
@@ -36,7 +36,7 @@ public class PlayerLogInLogOutListener implements Listener {
     @EventHandler
     public void onLogOut(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        Game currentGame = GameUtils.getInstance().getGame(p);
+        Game currentGame = GameUtils.inst().getGame(p);
         currentGame.getState().removePlayer(p);
         currentGame.removePlayer(p);
     }

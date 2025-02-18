@@ -36,7 +36,7 @@ public class Join implements CommandExecutor, TabCompleter {
         }
         String gameName = args[0];
         List<Game> matchingGames = new ArrayList<>();
-        for (Game game: GameUtils.getInstance().getGames()) {
+        for (Game game: GameUtils.inst().getGames()) {
             if (game.getName().equalsIgnoreCase(gameName)) {
                 matchingGames.add(game);
             }
@@ -49,7 +49,7 @@ public class Join implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c找到多个名称为" + gameName + "的游戏，加入已取消！可能是游戏字母相同但大小写不同！");
             return true;
         }
-        Game currentGame = GameUtils.getInstance().getGame(p);
+        Game currentGame = GameUtils.inst().getGame(p);
         Game newGame = matchingGames.getFirst();
         if (currentGame == newGame) {
             sender.sendMessage("§c你已经在这个游戏中了！");
@@ -57,7 +57,7 @@ public class Join implements CommandExecutor, TabCompleter {
         }
         currentGame.getState().removePlayer(p);
         currentGame.removePlayer(p);
-        GameUtils.getInstance().join(p, newGame);
+        GameUtils.inst().join(p, newGame);
         return true;
     }
 
@@ -70,7 +70,7 @@ public class Join implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         List<String> matchingNames = new ArrayList<>();
-        for (Game game: GameUtils.getInstance().getGames()) {
+        for (Game game: GameUtils.inst().getGames()) {
             if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
                 matchingNames.add(game.getName());
             }

@@ -56,7 +56,7 @@ public abstract class Game extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!GameUtils.getInstance().registerGame(this)) {
+        if (!GameUtils.inst().registerGame(this)) {
             throw new RuntimeException("Game already registered");
         }
 
@@ -64,12 +64,12 @@ public abstract class Game extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::tick, 1, 1);
 
         displayName = "§f未知游戏";
-        location = new Location(Bukkit.getWorld("world"), 0.5, 89, 0.5, 0, 0);
+        location = new Location(GameUtils.inst().getMainWorld(), 0.5, 89, 0.5, 0, 0);
     }
 
     @Override
     public void onDisable() {
-        if (!GameUtils.getInstance().unregisterGame(this)) {
+        if (!GameUtils.inst().unregisterGame(this)) {
             throw new RuntimeException("Attempting to unregister game but not found");
         }
         Bukkit.getScheduler().cancelTasks(this);

@@ -40,21 +40,21 @@ public class Misc {
     @SuppressWarnings("unused")
     public static void spawnFireworks(Player p) {
         for (int i = 0; i < 5; i++) {
-            Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> spawnFirework(p), 8 * i + 1);
+            Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> spawnFirework(p), 8 * i + 1);
         }
     }
 
     @SuppressWarnings("unused")
     protected void displayCountDown(Player p, int countDownSeconds) {
         if (countDownSeconds > 5) {
-            Bukkit.getScheduler().runTask(GameUtils.getInstance(), () -> {
+            Bukkit.getScheduler().runTask(GameUtils.inst(), () -> {
                 p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
             });
         }
         for (int i = 5; i > 0; i--) {
             int finalI = i;
-            Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
+            Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
                 if (!p.isOnline()) {
                     return;
                 }
@@ -63,7 +63,7 @@ public class Misc {
                 p.getInventory().clear();
             }, 20L * countDownSeconds - 20L * i);
         }
-        Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
             if (!p.isOnline()) {
                 return;
             }

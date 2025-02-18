@@ -30,7 +30,7 @@ public class ForceStop implements CommandExecutor, TabCompleter {
         }
         String gameName = args[0];
         List<Game> matchingGames = new ArrayList<>();
-        for (Game game: GameUtils.getInstance().getGames()) {
+        for (Game game: GameUtils.inst().getGames()) {
             if (game.getName().equalsIgnoreCase(gameName)) {
                 matchingGames.add(game);
             }
@@ -58,7 +58,7 @@ public class ForceStop implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         List<String> matchingNames = new ArrayList<>();
-        for (Game game: GameUtils.getInstance().getGames()) {
+        for (Game game: GameUtils.inst().getGames()) {
             if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
                 matchingNames.add(game.getName());
             }
