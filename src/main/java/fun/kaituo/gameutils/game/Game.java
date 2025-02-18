@@ -8,7 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 
 public abstract class Game extends JavaPlugin {
-    protected GameUtils gameUtils;
 
     protected String displayName;
     protected Location location;
@@ -49,11 +48,7 @@ public abstract class Game extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        gameUtils = (GameUtils) Bukkit.getPluginManager().getPlugin("GameUtils");
-        if (gameUtils == null) {
-            throw new RuntimeException("GameUtils not found");
-        }
-        if (!gameUtils.registerGame(this)) {
+        if (!GameUtils.getInstance().registerGame(this)) {
             throw new RuntimeException("Game already registered");
         }
 
@@ -65,7 +60,7 @@ public abstract class Game extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (!gameUtils.unregisterGame(this)) {
+        if (!GameUtils.getInstance().unregisterGame(this)) {
             throw new RuntimeException("Attempting to unregister game but not found");
         }
         Bukkit.getScheduler().cancelTasks(this);

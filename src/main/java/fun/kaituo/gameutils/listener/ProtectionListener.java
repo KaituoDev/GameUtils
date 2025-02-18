@@ -25,8 +25,8 @@ public class ProtectionListener implements Listener {
 
     private final FileConfiguration c;
 
-    public ProtectionListener(GameUtils gameUtils) {
-        this.c = gameUtils.getConfig();
+    public ProtectionListener() {
+        this.c = GameUtils.getInstance().getConfig();
     }
 
     @EventHandler

@@ -19,13 +19,11 @@ import java.util.List;
 
 public class ChangeBiome implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.changebiome";
-    private final GameUtils gameUtils;
     private final List<String> biomeNames = new ArrayList<>();
     private final List<String> modes = Arrays.asList("circular", "square");
     private final List<String> exampleRadii = Arrays.asList("16", "32", "64", "128", "256");
 
-    public ChangeBiome(GameUtils gameUtils) {
-        this.gameUtils = gameUtils;
+    public ChangeBiome() {
         biomeNames.add("auto");
         for (Biome b : Biome.values()) {
             biomeNames.add(b.name().toLowerCase());
@@ -114,7 +112,7 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
                                 p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.BADLANDS);
                             } else if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().isSolid()) {
                                 isSurfaceBlockObtained = true;
-                                FileConfiguration config = gameUtils.getConfig();
+                                FileConfiguration config = GameUtils.getInstance().getConfig();
                                 Material material = p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType();
                                 if (config.contains("change-biome-settings." + material.toString().toLowerCase())) {
                                     p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings." + material.toString().toLowerCase()).toUpperCase()));

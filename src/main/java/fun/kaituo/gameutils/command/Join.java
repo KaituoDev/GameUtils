@@ -15,11 +15,6 @@ import java.util.List;
 
 public class Join implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.join";
-    private final GameUtils gameUtils;
-
-    public Join(GameUtils gameUtils) {
-        this.gameUtils = gameUtils;
-    }
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
@@ -41,7 +36,7 @@ public class Join implements CommandExecutor, TabCompleter {
         }
         String gameName = args[0];
         List<Game> matchingGames = new ArrayList<>();
-        for (Game game: gameUtils.getGames()) {
+        for (Game game: GameUtils.getInstance().getGames()) {
             if (game.getName().equalsIgnoreCase(gameName)) {
                 matchingGames.add(game);
             }
@@ -54,8 +49,14 @@ public class Join implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c找到多个名称为" + gameName + "的游戏，加入已取消！可能是游戏字母相同但大小写不同！");
             return true;
         }
-        gameUtils.getGame(p).getState().removePlayer(p);
-        gameUtils.join(p, matchingGames.getFirst());
+        Game currentGame = GameUtils.getInstance().getGame(p);
+        Game newGame = matchingGames.getFirst();
+        if (currentGame == newGame) {
+            sender.sendMessage("§c你已经在这个游戏中了！");
+            return true;
+        }
+        currentGame.getState().removePlayer(p);
+        GameUtils.getInstance().join(p, newGame);
         return true;
     }
 
@@ -68,7 +69,7 @@ public class Join implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         List<String> matchingNames = new ArrayList<>();
-        for (Game game: gameUtils.getGames()) {
+        for (Game game: GameUtils.getInstance().getGames()) {
             if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
                 matchingNames.add(game.getName());
             }

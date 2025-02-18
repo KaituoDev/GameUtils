@@ -8,7 +8,6 @@ import fun.kaituo.gameutils.command.TpGame;
 import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
-import fun.kaituo.gameutils.util.Misc;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
@@ -24,6 +23,11 @@ import java.util.UUID;
 
 
 public class GameUtils extends JavaPlugin {
+    private static GameUtils instance;
+    public static GameUtils getInstance() {
+        return instance;
+    }
+
     private final Set<Game> games = new HashSet<>();
     private final Map<UUID, Game> uuidGameMap = new HashMap<>();
 
@@ -69,8 +73,8 @@ public class GameUtils extends JavaPlugin {
     }
 
     private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(new PlayerLogInLogOutListener(this), this);
-        Bukkit.getPluginManager().registerEvents(new ProtectionListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerLogInLogOutListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ProtectionListener(), this);
     }
 
     private void registerCommands() {
@@ -78,7 +82,7 @@ public class GameUtils extends JavaPlugin {
         if (joinCommand == null) {
             getLogger().warning("Command not found: join. Did you add it to plugin.yml?");
         } else {
-            Join join = new Join(this);
+            Join join = new Join();
             joinCommand.setExecutor(join);
             joinCommand.setTabCompleter(join);
         }
@@ -87,7 +91,7 @@ public class GameUtils extends JavaPlugin {
         if (tpgameCommand == null) {
             getLogger().warning("Command not found: tpgame. Did you add it to plugin.yml?");
         } else {
-            TpGame tpgame = new TpGame(this);
+            TpGame tpgame = new TpGame();
             tpgameCommand.setExecutor(tpgame);
             tpgameCommand.setTabCompleter(tpgame);
         }
@@ -96,7 +100,7 @@ public class GameUtils extends JavaPlugin {
         if (forceStopCommand == null) {
             getLogger().warning("Command not found: forcestop. Did you add it to plugin.yml?");
         } else {
-            ForceStop forceStop = new ForceStop(this);
+            ForceStop forceStop = new ForceStop();
             forceStopCommand.setExecutor(forceStop);
             forceStopCommand.setTabCompleter(forceStop);
         }
@@ -113,7 +117,7 @@ public class GameUtils extends JavaPlugin {
         if (changeBiomeCommand == null) {
             getLogger().warning("Command not found: changebiome. Did you add it to plugin.yml?");
         } else {
-            ChangeBiome changeBiome = new ChangeBiome(this);
+            ChangeBiome changeBiome = new ChangeBiome();
             changeBiomeCommand.setExecutor(changeBiome);
             changeBiomeCommand.setTabCompleter(changeBiome);
         }
@@ -121,6 +125,9 @@ public class GameUtils extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Prepare the static instance
+        GameUtils.instance = this;
+
         registerCommands();
         registerEvents();
 
@@ -137,8 +144,5 @@ public class GameUtils extends JavaPlugin {
             }
             this.lobby = (Game) lobby;
         }, 1);
-
-        // Inject into Misc class to enable miscellaneous utilities
-        Misc.setPlugin(this);
     }
 }

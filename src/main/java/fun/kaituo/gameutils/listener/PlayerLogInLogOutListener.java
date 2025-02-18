@@ -12,25 +12,20 @@ import org.bukkit.event.player.PlayerQuitEvent;
 // Note: This class does not listen for joining or quitting a GAME!
 // It listens for players joining or quitting the SERVER.
 public class PlayerLogInLogOutListener implements Listener {
-    private final GameUtils gameUtils;
-
-    public PlayerLogInLogOutListener(GameUtils gameUtils) {
-        this.gameUtils = gameUtils;
-    }
 
     @EventHandler
     public void onLogIn(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (gameUtils.isPlayerFirstTimeJoin(p)) {
-            gameUtils.join(p, gameUtils.getLobby());
+        if (GameUtils.getInstance().isPlayerFirstTimeJoin(p)) {
+            GameUtils.getInstance().join(p, GameUtils.getInstance().getLobby());
         } else {
-            Game currentGame = gameUtils.getGame(p);
+            Game currentGame = GameUtils.getInstance().getGame(p);
             currentGame.getState().addPlayer(p);
         }
 
-        gameUtils.join(p, gameUtils.getLobby());
+        GameUtils.getInstance().join(p, GameUtils.getInstance().getLobby());
         // Send a welcome message to the player after 1 second
-        Bukkit.getScheduler().runTaskLater(gameUtils, () -> {
+        Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
             if (!p.isOnline()) {
                 return;
             }
@@ -41,7 +36,7 @@ public class PlayerLogInLogOutListener implements Listener {
     @EventHandler
     public void onLogOut(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        Game currentGame = gameUtils.getGame(p);
+        Game currentGame = GameUtils.getInstance().getGame(p);
         currentGame.getState().removePlayer(p);
     }
 }
