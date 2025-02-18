@@ -21,10 +21,6 @@ public class Misc {
             Color.NAVY, Color.OLIVE, Color.ORANGE, Color.PURPLE, Color.RED, Color.SILVER,
             Color.TEAL, Color.WHITE, Color.YELLOW
     };
-    private static GameUtils plugin;
-    public static void setPlugin(GameUtils plugin) {
-        Misc.plugin = plugin;
-    }
 
     public static void spawnFirework(Player p) {
         Location loc = p.getLocation();
@@ -43,28 +39,22 @@ public class Misc {
 
     @SuppressWarnings("unused")
     public static void spawnFireworks(Player p) {
-        if (plugin == null) {
-            throw new RuntimeException("Miscellaneous utilities cannot be used unless the plugin is set");
-        }
         for (int i = 0; i < 5; i++) {
-            Bukkit.getScheduler().runTaskLater(plugin, () -> spawnFirework(p), 8 * i + 1);
+            Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> spawnFirework(p), 8 * i + 1);
         }
     }
 
     @SuppressWarnings("unused")
     protected void displayCountDown(Player p, int countDownSeconds) {
-        if (plugin == null) {
-            throw new RuntimeException("Miscellaneous utilities cannot be used unless the plugin is set");
-        }
         if (countDownSeconds > 5) {
-            Bukkit.getScheduler().runTask(plugin, () -> {
+            Bukkit.getScheduler().runTask(GameUtils.getInstance(), () -> {
                 p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
             });
         }
         for (int i = 5; i > 0; i--) {
             int finalI = i;
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
                 if (!p.isOnline()) {
                     return;
                 }
@@ -73,7 +63,7 @@ public class Misc {
                 p.getInventory().clear();
             }, 20L * countDownSeconds - 20L * i);
         }
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+        Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
             if (!p.isOnline()) {
                 return;
             }

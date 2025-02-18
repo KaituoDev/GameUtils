@@ -15,11 +15,6 @@ import java.util.List;
 
 public class TpGame implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.tpgame";
-    private final GameUtils gameUtils;
-
-    public TpGame(GameUtils gameUtils) {
-        this.gameUtils = gameUtils;
-    }
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
@@ -41,7 +36,7 @@ public class TpGame implements CommandExecutor, TabCompleter {
         }
         String gameName = args[0];
         List<Game> matchingGames = new ArrayList<>();
-        for (Game game: gameUtils.getGames()) {
+        for (Game game: GameUtils.getInstance().getGames()) {
             if (game.getName().equalsIgnoreCase(gameName)) {
                 matchingGames.add(game);
             }
@@ -67,7 +62,7 @@ public class TpGame implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         List<String> matchingNames = new ArrayList<>();
-        for (Game game: gameUtils.getGames()) {
+        for (Game game: GameUtils.getInstance().getGames()) {
             if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
                 matchingNames.add(game.getName());
             }
