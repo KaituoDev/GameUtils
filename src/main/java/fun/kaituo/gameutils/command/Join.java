@@ -56,6 +56,7 @@ public class Join implements CommandExecutor, TabCompleter {
             return true;
         }
         currentGame.getState().removePlayer(p);
+        currentGame.removePlayer(p);
         GameUtils.getInstance().join(p, newGame);
         return true;
     }
