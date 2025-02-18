@@ -2,12 +2,15 @@ package fun.kaituo.gameutils.listener;
 
 import fun.kaituo.gameutils.GameUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 public class LayoutSignClickListener implements Listener {
     private static final int MAX_X_OFFSET = 7;
@@ -37,6 +40,12 @@ public class LayoutSignClickListener implements Listener {
         }
         if (Math.abs(b.getLocation().getY() - centerSignLocation.getY()) > MAX_Y_OFFSET) {
             return;
+        }
+        ItemStack handItem = e.getPlayer().getInventory().getItem(EquipmentSlot.HAND);
+        if (handItem != null) {
+            if (!handItem.getType().equals(Material.AIR)) {
+                return;
+            }
         }
         e.setCancelled(true);
         int xOffset = b.getLocation().getBlockX() - centerSignLocation.getBlockX();
