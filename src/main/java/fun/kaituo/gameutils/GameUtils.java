@@ -3,12 +3,15 @@ package fun.kaituo.gameutils;
 import fun.kaituo.gameutils.command.ChangeBiome;
 import fun.kaituo.gameutils.command.ForceStop;
 import fun.kaituo.gameutils.command.Join;
+import fun.kaituo.gameutils.command.Layout;
 import fun.kaituo.gameutils.command.PlaceStand;
 import fun.kaituo.gameutils.command.TpGame;
 import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.listener.LayoutSignClickListener;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -24,12 +27,18 @@ import java.util.UUID;
 
 public class GameUtils extends JavaPlugin {
     private static GameUtils instance;
-    public static GameUtils getInstance() {
+    public static GameUtils inst() {
         return instance;
     }
 
     private final Set<Game> games = new HashSet<>();
     private final Map<UUID, Game> uuidGameMap = new HashMap<>();
+
+    private World world;
+
+    public World getMainWorld() {
+        return world;
+    }
 
     private Game lobby;
 
@@ -76,6 +85,7 @@ public class GameUtils extends JavaPlugin {
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new PlayerLogInLogOutListener(), this);
         Bukkit.getPluginManager().registerEvents(new ProtectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new LayoutSignClickListener(), this);
     }
 
     private void registerCommands() {
@@ -122,12 +132,22 @@ public class GameUtils extends JavaPlugin {
             changeBiomeCommand.setExecutor(changeBiome);
             changeBiomeCommand.setTabCompleter(changeBiome);
         }
+
+        PluginCommand layoutCommand = getCommand("layout");
+        if (layoutCommand == null) {
+            getLogger().warning("Command not found: layout. Did you add it to plugin.yml?");
+        } else {
+            Layout layout = new Layout();
+            layoutCommand.setExecutor(layout);
+        }
+
     }
 
     @Override
     public void onEnable() {
         // Prepare the static instance
         GameUtils.instance = this;
+        this.world = Bukkit.getWorld("world");
 
         registerCommands();
         registerEvents();
