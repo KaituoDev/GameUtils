@@ -46,6 +46,7 @@ public class GameUtils extends JavaPlugin {
     }
 
     public void join(Player p, @Nonnull Game game) {
+        game.addPlayer(p);
         game.getState().addPlayer(p);
         uuidGameMap.put(p.getUniqueId(), game);
     }

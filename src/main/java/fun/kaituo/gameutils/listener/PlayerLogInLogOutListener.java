@@ -20,10 +20,10 @@ public class PlayerLogInLogOutListener implements Listener {
             GameUtils.getInstance().join(p, GameUtils.getInstance().getLobby());
         } else {
             Game currentGame = GameUtils.getInstance().getGame(p);
+            currentGame.addPlayer(p);
             currentGame.getState().addPlayer(p);
         }
 
-        GameUtils.getInstance().join(p, GameUtils.getInstance().getLobby());
         // Send a welcome message to the player after 1 second
         Bukkit.getScheduler().runTaskLater(GameUtils.getInstance(), () -> {
             if (!p.isOnline()) {
@@ -38,5 +38,6 @@ public class PlayerLogInLogOutListener implements Listener {
         Player p = e.getPlayer();
         Game currentGame = GameUtils.getInstance().getGame(p);
         currentGame.getState().removePlayer(p);
+        currentGame.removePlayer(p);
     }
 }

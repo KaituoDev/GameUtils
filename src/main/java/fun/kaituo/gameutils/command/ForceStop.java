@@ -44,6 +44,7 @@ public class ForceStop implements CommandExecutor, TabCompleter {
             return true;
         }
         matchingGames.getFirst().getState().forceStop();
+        matchingGames.getFirst().forceStop();
         return true;
     }
 
