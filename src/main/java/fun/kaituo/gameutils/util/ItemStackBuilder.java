@@ -1,7 +1,6 @@
-package fun.kaituo.gameutils.utils;
+package fun.kaituo.gameutils.util;
 
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -64,11 +63,6 @@ public class ItemStackBuilder {
     
     public ItemStackBuilder setUnbreakable(boolean unbreakable) {
         this.meta.setUnbreakable(unbreakable);
-        return this;
-    }
-
-    public ItemStackBuilder setGameItemStackTag(NamespacedKey namespacedKey, GameItemStackTag gameItemStackTag) {
-        this.meta.getPersistentDataContainer().set(namespacedKey, new GameItemStackTagType(), gameItemStackTag);
         return this;
     }
     

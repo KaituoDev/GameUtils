@@ -1,29 +1,63 @@
-api-version: 1.21
-name: ${project.name}
+api-version: 1.13
+name: GameUtils
 main: fun.kaituo.gameutils.GameUtils
-version: ${project.version}
+version: 2.0.0
 authors: [ YFshadaow, LeChocolatChaud ]
+permissions:
+  gameutils.*:
+    description: GameUtils admin permission
+    default: op
+    children:
+      gameutils.command.*:
+        description: Allow player to use all GameUtils commands
+        default: op
+        children:
+          gameutils.command.join:
+            description: Allow player to use /join
+            default: op
+          gameutils.command.forcestop:
+            description: Allow player to use /forcestop
+            default: op
+          gameutils.command.tpgame:
+            description: Allow player to use /tpgame
+            default: op
+          gameutils.command.placestand:
+            description: Allow player to use /placestand
+            default: true
+          gameutils.command.changebiome:
+            description: Allow player to use /changebiome
+            default: op
+          gameutils.command.layout:
+            description: Allow player to use /layout
+            default: op
+
 commands:
   join:
     description: Join a game
+    usage: /join <game>
     default: true
-  rejoin:
-    description: Rejoin game
-    default: true
+    aliases: [ wan, jiaru, play ]
   forcestop:
     description: Force stop a game
+    usage: /forcestop <game>
     default: op
     aliases: [ fs ]
+  tpgame:
+    description: Teleport to the game location
+    usage: /tpgame <game>
+    default: op
+    aliases: [ tpg ]
   changebiome:
     description: Change biome
+    usage: /changebiome <biome>/auto <radius> <square/circular>
     default: op
     aliases: [ cb ]
   placestand:
     description: Place an armor stand in front of start buttons to prevent grief clicking
+    usage: /placestand
     default: op
-    aliases: [ ps ]
-  rotatable:
-    description: set item frame rotatable
-    usage: /rotatable <x> <y> <z> [true|false]
+  layout:
+    description: Show the layout of the games
+    usage: /layout
     default: op
-    aliases: [ rt ]
+    aliases: [ buju ]
