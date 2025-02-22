@@ -2,6 +2,7 @@ package fun.kaituo.gameutils.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -11,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
@@ -60,6 +63,15 @@ public abstract class AbstractSignListener implements Listener {
             return;
         }
         Player p = e.getPlayer();
+        // Allow use of ink sac and glow ink sac
+        ItemStack handItem = p.getInventory().getItem(EquipmentSlot.HAND);
+        if (handItem != null) {
+            if (handItem.getType().equals(Material.INK_SAC) || handItem.getType().equals(Material.GLOW_INK_SAC)) {
+                return;
+            }
+        }
+
+        e.setCancelled(true);
         if (e.getPlayer().isSneaking()) {
             onSneakingRightClick(e);
             p.playSound(p, Sound.UI_BUTTON_CLICK, 0.5f, 1);
@@ -69,7 +81,7 @@ public abstract class AbstractSignListener implements Listener {
         }
     }
 
-    private void update() {
+    public void update() {
         Sign sign = (Sign) location.getBlock().getState();
         for (int i = 0; i < 4; i++) {
             sign.getSide(Side.FRONT).setLine(i, lines.get(i));
