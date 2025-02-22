@@ -2,6 +2,7 @@ package fun.kaituo.gameutils;
 
 import fun.kaituo.gameutils.command.ChangeBiome;
 import fun.kaituo.gameutils.command.ForceStop;
+import fun.kaituo.gameutils.command.GameItem;
 import fun.kaituo.gameutils.command.Join;
 import fun.kaituo.gameutils.command.Layout;
 import fun.kaituo.gameutils.command.PlaceStand;
@@ -139,6 +140,15 @@ public class GameUtils extends JavaPlugin {
         } else {
             Layout layout = new Layout();
             layoutCommand.setExecutor(layout);
+        }
+
+        PluginCommand gameItemCommand = getCommand("gameitem");
+        if (gameItemCommand == null) {
+            getLogger().warning("Command not found: gameitem. Did you add it to plugin.yml?");
+        } else {
+            GameItem gameItem = new GameItem();
+            gameItemCommand.setExecutor(gameItem);
+            gameItemCommand.setTabCompleter(gameItem);
         }
 
     }

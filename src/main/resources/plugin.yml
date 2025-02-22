@@ -30,6 +30,9 @@ permissions:
           gameutils.command.layout:
             description: Allow player to use /layout
             default: op
+          gameutils.command.gameitem:
+            description: Allow player to use /gameitem
+            default: op
 
 commands:
   join:
@@ -61,3 +64,8 @@ commands:
     usage: /layout
     default: op
     aliases: [ buju ]
+  gameitem:
+    description: Save the item in main hand to the config file of current game
+    usage: /gameitem <save/get/remove> <key>
+    default: op
+    aliases: [ gi ]

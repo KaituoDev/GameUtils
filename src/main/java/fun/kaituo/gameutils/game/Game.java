@@ -3,12 +3,17 @@ package fun.kaituo.gameutils.game;
 import fun.kaituo.gameutils.GameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Set;
 
 public abstract class Game extends JavaPlugin {
+    public static final String ITEM_SAVE_PATH = "items.";
 
     protected String displayName;
     protected Location location;
@@ -53,6 +58,38 @@ public abstract class Game extends JavaPlugin {
         this.state = state;
         this.state.enter();
     }
+
+    public void saveItem(String id, ItemStack item) {
+        getConfig().createSection(ITEM_SAVE_PATH + id, item.serialize());
+        saveConfig();
+    }
+
+    public @Nullable ItemStack getItem(String id) {
+        ConfigurationSection section = getConfig().getConfigurationSection(ITEM_SAVE_PATH + id);
+        if (section == null) {
+            return null;
+        }
+        return ItemStack.deserialize(section.getValues(true));
+    }
+
+    public boolean removeItem(String id) {
+        ConfigurationSection section = getConfig().getConfigurationSection(ITEM_SAVE_PATH + id);
+        if (section == null) {
+            return false;
+        }
+        getConfig().set(ITEM_SAVE_PATH + id, null);
+        saveConfig();
+        return true;
+    }
+
+    public @Nonnull Set<String> getItemIds() {
+        ConfigurationSection section = getConfig().getConfigurationSection(ITEM_SAVE_PATH);
+        if (section == null) {
+            return Set.of();
+        }
+        return section.getKeys(false);
+    }
+
 
     @Override
     public void onEnable() {
