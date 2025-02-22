@@ -39,7 +39,9 @@ public class GameItem implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c指令参数错误！使用方法为/gameitem <save/get/remove> <物品ID>");
             return true;
         }
-        if (!actions.contains(args[0])) {
+        if (!args[0].equalsIgnoreCase("save") &&
+            !args[0].equalsIgnoreCase("get") &&
+            !args[0].equalsIgnoreCase("remove")) {
             sender.sendMessage("§c指令参数错误！使用方法为/gameitem <save/get/remove> <物品ID>");
             return true;
 
