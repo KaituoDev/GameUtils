@@ -84,10 +84,8 @@ public class GameItem implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             return actions;
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("get") || args[0].equalsIgnoreCase("remove")) {
-                Game game = GameUtils.inst().getGame((Player) sender);
-                return new ArrayList<>(game.getItemIds());
-            }
+            Game game = GameUtils.inst().getGame((Player) sender);
+            return new ArrayList<>(game.getItemIds());
         }
         return new ArrayList<>();
     }
