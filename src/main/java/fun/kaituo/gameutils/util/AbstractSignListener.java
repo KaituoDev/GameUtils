@@ -62,6 +62,7 @@ public abstract class AbstractSignListener implements Listener {
             e.getPlayer().sendMessage("§c此位置应当是告示牌！");
             return;
         }
+        update();
         Player p = e.getPlayer();
         // Allow use of ink sac and glow ink sac
         ItemStack handItem = p.getInventory().getItem(EquipmentSlot.HAND);
@@ -70,15 +71,13 @@ public abstract class AbstractSignListener implements Listener {
                 return;
             }
         }
-
         e.setCancelled(true);
         if (e.getPlayer().isSneaking()) {
             onSneakingRightClick(e);
-            p.playSound(p, Sound.UI_BUTTON_CLICK, 0.5f, 1);
         } else {
             onRightClick(e);
-            p.playSound(p, Sound.UI_BUTTON_CLICK, 0.5f, 1);
         }
+        p.playSound(p, Sound.UI_BUTTON_CLICK, 0.5f, 1);
     }
 
     public void update() {
