@@ -74,6 +74,6 @@ commands:
     aliases: [ gi ]
   gameloc:
     description: Save the location to the config file of current game
-    usage: /gameloc <save/get/remove> <key>
+    usage: /gameloc <save/get/remove> <key> [block/player]
     default: op
     aliases: [ gl ]
