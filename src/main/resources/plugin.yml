@@ -33,6 +33,9 @@ permissions:
           gameutils.command.gameitem:
             description: Allow player to use /gameitem
             default: op
+          gameutils.command.gameloc:
+            description: Allow player to use /gameloc
+            default: op
 
 commands:
   join:
@@ -69,3 +72,8 @@ commands:
     usage: /gameitem <save/get/remove> <key>
     default: op
     aliases: [ gi ]
+  gameloc:
+    description: Save the location to the config file of current game
+    usage: /gameloc <save/get/remove> <key>
+    default: op
+    aliases: [ gl ]

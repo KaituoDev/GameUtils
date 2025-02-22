@@ -3,6 +3,7 @@ package fun.kaituo.gameutils;
 import fun.kaituo.gameutils.command.ChangeBiome;
 import fun.kaituo.gameutils.command.ForceStop;
 import fun.kaituo.gameutils.command.GameItem;
+import fun.kaituo.gameutils.command.GameLoc;
 import fun.kaituo.gameutils.command.Join;
 import fun.kaituo.gameutils.command.Layout;
 import fun.kaituo.gameutils.command.PlaceStand;
@@ -151,6 +152,14 @@ public class GameUtils extends JavaPlugin {
             gameItemCommand.setTabCompleter(gameItem);
         }
 
+        PluginCommand gameLocCommand = getCommand("gameloc");
+        if (gameLocCommand == null) {
+            getLogger().warning("Command not found: gameloc. Did you add it to plugin.yml?");
+        } else {
+            GameLoc gameLoc = new GameLoc();
+            gameLocCommand.setExecutor(gameLoc);
+            gameLocCommand.setTabCompleter(gameLoc);
+        }
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.Set;
 
 public abstract class Game extends JavaPlugin {
     public static final String ITEM_SAVE_PATH = "items.";
-
+    public static final String LOC_SAVE_PATH = "locations.";
     protected String displayName;
     protected Location location;
     protected GameState state;
@@ -90,6 +90,36 @@ public abstract class Game extends JavaPlugin {
         return section.getKeys(false);
     }
 
+    public void saveLoc(String id, Location loc) {
+        getConfig().createSection(LOC_SAVE_PATH + id, loc.serialize());
+        saveConfig();
+    }
+
+    public @Nullable Location getLoc(String id) {
+        ConfigurationSection section = getConfig().getConfigurationSection(LOC_SAVE_PATH + id);
+        if (section == null) {
+            return null;
+        }
+        return Location.deserialize(section.getValues(true));
+    }
+
+    public boolean removeLoc(String id) {
+        ConfigurationSection section = getConfig().getConfigurationSection(LOC_SAVE_PATH + id);
+        if (section == null) {
+            return false;
+        }
+        getConfig().set(LOC_SAVE_PATH + id, null);
+        saveConfig();
+        return true;
+    }
+
+    public @Nonnull Set<String> getLocIds() {
+        ConfigurationSection section = getConfig().getConfigurationSection(LOC_SAVE_PATH);
+        if (section == null) {
+            return Set.of();
+        }
+        return section.getKeys(false);
+    }
 
     @Override
     public void onEnable() {
