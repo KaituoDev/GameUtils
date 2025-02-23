@@ -99,13 +99,13 @@ public class GameLoc implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         if (args.length == 1) {
-            return actions;
+            return actions.stream().filter(action -> action.toLowerCase().startsWith(args[0].toLowerCase())).toList();
         } else if (args.length == 2) {
             Game game = GameUtils.inst().getGame((Player) sender);
-            return new ArrayList<>(game.getLocIds());
+            return game.getLocIds().stream().filter(id -> id.toLowerCase().startsWith(args[1].toLowerCase())).toList();
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("save")) {
-                return saveModes;
+                return saveModes.stream().filter(mode -> mode.toLowerCase().startsWith(args[2].toLowerCase())).toList();
             }
         }
         return new ArrayList<>();
