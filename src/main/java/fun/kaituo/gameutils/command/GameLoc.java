@@ -37,13 +37,13 @@ public class GameLoc implements CommandExecutor, TabCompleter {
             return true;
         }
         if (args.length != 2 && args.length != 3) {
-            sender.sendMessage("§c指令参数错误！使用方法为/gameloc <save/get/remove> <位置ID> [block/player]");
+            sender.sendMessage("§c指令参数错误！使用方法为/gameloc <save/tp/remove> <位置ID> [block/player]");
             return true;
         }
         if (!args[0].equalsIgnoreCase("save") &&
             !args[0].equalsIgnoreCase("tp") &&
             !args[0].equalsIgnoreCase("remove")) {
-            sender.sendMessage("§c指令参数错误！使用方法为/gameloc <save/get/remove> <位置ID> [block/player]");
+            sender.sendMessage("§c指令参数错误！使用方法为/gameloc <save/tp/remove> <位置ID> [block/player]");
             return true;
         }
         Game game = GameUtils.inst().getGame(p);
