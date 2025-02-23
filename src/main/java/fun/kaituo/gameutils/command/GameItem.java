@@ -82,10 +82,10 @@ public class GameItem implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         if (args.length == 1) {
-            return actions;
+            return actions.stream().filter(action -> action.toLowerCase().startsWith(args[0].toLowerCase())).toList();
         } else if (args.length == 2) {
             Game game = GameUtils.inst().getGame((Player) sender);
-            return new ArrayList<>(game.getItemIds());
+            return game.getItemIds().stream().filter(id -> id.toLowerCase().startsWith(args[1].toLowerCase())).toList();
         }
         return new ArrayList<>();
     }
