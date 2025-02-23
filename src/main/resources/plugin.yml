@@ -36,6 +36,9 @@ permissions:
           gameutils.command.gameloc:
             description: Allow player to use /gameloc
             default: op
+          gameutils.command.gameinv:
+            description: Allow player to use /gameinv
+            default: op
 
 commands:
   join:
@@ -71,9 +74,14 @@ commands:
     description: Save the item in main hand to the config file of current game
     usage: /gameitem <save/get/remove> <key>
     default: op
-    aliases: [ gi ]
+    aliases: [ gitem ]
   gameloc:
     description: Save the location to the config file of current game
-    usage: /gameloc <save/get/remove> <key> [block/player]
+    usage: /gameloc <save/tp/remove> <key> [block/player]
     default: op
-    aliases: [ gl ]
+    aliases: [ gloc ]
+  gameinv:
+    description: Save the current inventory to the config file of current game
+    usage: /gameinv <save/apply/remove> <key>
+    default: op
+    aliases: [ ginv ]
