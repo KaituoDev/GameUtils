@@ -12,7 +12,7 @@ no-destroy-painting: true
 no-armourstand-manipulation: true
 
 change-biome-settings:
-  default: badlands
+  default: plains
   sand: desert
   grass_block: forest
   oak_log: forest

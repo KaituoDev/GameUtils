@@ -45,7 +45,7 @@ public abstract class Game extends JavaPlugin {
     }
 
     @SuppressWarnings("unused")
-    public GameState getState() {
+    public @Nullable GameState getState() {
         return state;
     }
 
@@ -160,7 +160,11 @@ public abstract class Game extends JavaPlugin {
             throw new RuntimeException("Game already registered");
         }
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> state.tick(), 1, 1);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            if (state != null) {
+                state.tick();
+            }
+        }, 1, 1);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::tick, 1, 1);
 
         displayName = "§f未知游戏";

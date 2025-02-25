@@ -11,6 +11,7 @@ import fun.kaituo.gameutils.command.PlaceStand;
 import fun.kaituo.gameutils.command.Rotatable;
 import fun.kaituo.gameutils.command.TpGame;
 import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.game.GameState;
 import fun.kaituo.gameutils.listener.LayoutSignClickListener;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
@@ -60,7 +61,10 @@ public class GameUtils extends JavaPlugin {
 
     public void join(Player p, @Nonnull Game game) {
         game.addPlayer(p);
-        game.getState().addPlayer(p);
+        GameState state = game.getState();
+        if (state != null) {
+            state.addPlayer(p);
+        }
         uuidGameMap.put(p.getUniqueId(), game);
     }
 

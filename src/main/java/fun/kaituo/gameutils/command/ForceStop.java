@@ -2,6 +2,7 @@ package fun.kaituo.gameutils.command;
 
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.game.GameState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,8 +45,12 @@ public class ForceStop implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c找到多个名称为" + gameName + "的游戏，强制停止未执行！可能是游戏字母相同但大小写不同！");
             return true;
         }
-        matchingGames.getFirst().getState().forceStop();
-        matchingGames.getFirst().forceStop();
+        Game game = matchingGames.getFirst();
+        GameState state = game.getState();
+        if (state != null) {
+            state.forceStop();
+        }
+        game.forceStop();
         return true;
     }
 
