@@ -2,6 +2,7 @@ package fun.kaituo.gameutils.listener;
 
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
+import fun.kaituo.gameutils.game.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +22,10 @@ public class PlayerLogInLogOutListener implements Listener {
         } else {
             Game currentGame = GameUtils.inst().getGame(p);
             currentGame.addPlayer(p);
-            currentGame.getState().addPlayer(p);
+            GameState state = currentGame.getState();
+            if (state != null) {
+                state.addPlayer(p);
+            }
         }
 
         // Send a welcome message to the player after 1 second
@@ -37,7 +41,10 @@ public class PlayerLogInLogOutListener implements Listener {
     public void onLogOut(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         Game currentGame = GameUtils.inst().getGame(p);
-        currentGame.getState().removePlayer(p);
+        GameState state = currentGame.getState();
+        if (state != null) {
+            state.removePlayer(p);
+        }
         currentGame.removePlayer(p);
     }
 }
