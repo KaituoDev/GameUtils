@@ -10,8 +10,9 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+
+import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
 public class Join implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.join";
@@ -69,13 +70,7 @@ public class Join implements CommandExecutor, TabCompleter {
         if (args.length != 1) {
             return new ArrayList<>();
         }
-        List<String> matchingNames = new ArrayList<>();
-        for (Game game: GameUtils.inst().getGames()) {
-            if (game.getName().toLowerCase().startsWith(args[0].toLowerCase())) {
-                matchingNames.add(game.getName());
-            }
-        }
-        matchingNames.sort(Comparator.naturalOrder());
-        return matchingNames;
+        List<String> gameNames = GameUtils.inst().getGames().stream().map(Game::getName).toList();
+        return getMatchingCompletions(args[0], gameNames);
     }
 }
