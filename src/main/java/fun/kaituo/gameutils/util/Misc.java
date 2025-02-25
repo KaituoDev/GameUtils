@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("unused")
@@ -51,7 +52,7 @@ public class Misc {
     }
 
     @SuppressWarnings("unused")
-    protected void displayCountDown(Player p, int countDownSeconds) {
+    public static void displayCountDown(Player p, int countDownSeconds) {
         if (countDownSeconds > 5) {
             Bukkit.getScheduler().runTask(GameUtils.inst(), () -> {
                 p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
@@ -76,6 +77,11 @@ public class Misc {
             p.sendTitle("§e游戏开始！", null, 2, 16, 2);
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 2f);
         }, 20L * countDownSeconds);
+    }
+
+    public static List<String> getMatchingCompletions(String partialArg, List<String> completions) {
+        return completions.stream().filter(completion ->
+                completion.toLowerCase().startsWith(partialArg.toLowerCase())).toList();
     }
 
 }

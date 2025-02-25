@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
+
 public class GameInv implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.gameinv";
     private final List<String> actions = Arrays.asList("save", "apply", "remove");
@@ -72,10 +74,10 @@ public class GameInv implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         if (args.length == 1) {
-            return actions.stream().filter(action -> action.toLowerCase().startsWith(args[0].toLowerCase())).toList();
+            return getMatchingCompletions(args[0], actions);
         } else if (args.length == 2) {
             Game game = GameUtils.inst().getGame((Player) sender);
-            return game.getInvIds().stream().filter(id -> id.toLowerCase().startsWith(args[1].toLowerCase())).toList();
+            return getMatchingCompletions(args[1], new ArrayList<>(game.getInvIds()));
         }
         return new ArrayList<>();
     }

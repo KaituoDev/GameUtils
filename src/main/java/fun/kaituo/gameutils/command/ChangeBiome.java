@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
+
 public class ChangeBiome implements CommandExecutor, TabCompleter {
     public static final String PERMISSION = "gameutils.command.changebiome";
     private final List<String> biomeNames = new ArrayList<>();
@@ -142,11 +144,11 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         if (args.length == 1) {
-            return biomeNames.stream().filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).toList();
+            return getMatchingCompletions(args[0], biomeNames);
         } else if (args.length == 2) {
-            return exampleRadii.stream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).toList();
+            return getMatchingCompletions(args[1], exampleRadii);
         } else if (args.length == 3) {
-            return modes.stream().filter(s -> s.toLowerCase().startsWith(args[2].toLowerCase())).toList();
+            return getMatchingCompletions(args[2], modes);
         }
         return new ArrayList<>();
     }

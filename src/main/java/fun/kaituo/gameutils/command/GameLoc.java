@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
+
 public class GameLoc implements CommandExecutor, TabCompleter {
 
     public static final String PERMISSION = "gameutils.command.gameloc";
@@ -99,13 +101,13 @@ public class GameLoc implements CommandExecutor, TabCompleter {
             return new ArrayList<>();
         }
         if (args.length == 1) {
-            return actions.stream().filter(action -> action.toLowerCase().startsWith(args[0].toLowerCase())).toList();
+            return getMatchingCompletions(args[0], actions);
         } else if (args.length == 2) {
             Game game = GameUtils.inst().getGame((Player) sender);
-            return game.getLocIds().stream().filter(id -> id.toLowerCase().startsWith(args[1].toLowerCase())).toList();
+            return getMatchingCompletions(args[1], new ArrayList<>(game.getLocIds()));
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("save")) {
-                return saveModes.stream().filter(mode -> mode.toLowerCase().startsWith(args[2].toLowerCase())).toList();
+                return getMatchingCompletions(args[2], saveModes);
             }
         }
         return new ArrayList<>();
