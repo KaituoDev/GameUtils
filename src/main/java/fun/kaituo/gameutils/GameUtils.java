@@ -191,6 +191,8 @@ public class GameUtils extends JavaPlugin {
         GameUtils.instance = this;
         this.world = Bukkit.getWorld("world");
 
+        saveDefaultConfig();
+
         registerCommands();
         registerEvents();
 
