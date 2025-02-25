@@ -32,6 +32,7 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase("changebiome")) {
@@ -61,79 +62,71 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
         boolean isCircular = args[2].equalsIgnoreCase("circular");
 
         if (!args[0].equalsIgnoreCase("auto")) {
-            try {
-                for (int xOffset = -r; xOffset <= r; xOffset++) {
-                    if (xOffset == Math.round(-r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
-                    } else if (xOffset == 0) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
-                    } else if (xOffset == Math.round(r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
-                    }
-                    for (int zOffset = -r; zOffset <= r; zOffset++) {
-                        if (isCircular) {
-                            if (Math.sqrt(Math.pow(xOffset, 2) + Math.pow(zOffset, 2)) > r) {
-                                continue;
-                            }
-                        }
-                        p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(args[0].toUpperCase()));
-                    }
+            for (int xOffset = -r; xOffset <= r; xOffset++) {
+                if (xOffset == Math.round(-r / 2D)) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
+                } else if (xOffset == 0) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
+                } else if (xOffset == Math.round(r / 2D)) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
                 }
-                Bukkit.broadcastMessage("§a[changebiome] §f生物群系设置操作完成！");
-            } catch (Exception e) {
-                sender.sendMessage("§c生物群系ID错误！");
-                e.printStackTrace();
+                for (int zOffset = -r; zOffset <= r; zOffset++) {
+                    if (isCircular) {
+                        if (Math.sqrt(Math.pow(xOffset, 2) + Math.pow(zOffset, 2)) > r) {
+                            continue;
+                        }
+                    }
+                    p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(args[0].toUpperCase()));
+                }
             }
+            Bukkit.broadcastMessage("§a[changebiome] §f生物群系设置操作完成！");
             return true;
         } else {
-            try {
-                for (int xOffset = -r; xOffset <= r; xOffset++) {
-                    if (xOffset == Math.round(-r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
-                    } else if (xOffset == 0) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
-                    } else if (xOffset == Math.round(r / 2D)) {
-                        Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
+            for (int xOffset = -r; xOffset <= r; xOffset++) {
+                if (xOffset == Math.round(-r / 2D)) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 25%");
+                } else if (xOffset == 0) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 50%");
+                } else if (xOffset == Math.round(r / 2D)) {
+                    Bukkit.broadcastMessage("§a[changebiome] §f服务器主线程冻结中，生物群系设置操作进度为 75%");
+                }
+                for (int zOffset = -r; zOffset <= r; zOffset++) {
+                    if (isCircular) {
+                        if (Math.sqrt(Math.pow(xOffset, 2) + Math.pow(zOffset, 2)) > r) {
+                            continue;
+                        }
                     }
-                    for (int zOffset = -r; zOffset <= r; zOffset++) {
-                        if (isCircular) {
-                            if (Math.sqrt(Math.pow(xOffset, 2) + Math.pow(zOffset, 2)) > r) {
-                                continue;
+                    int k = 319;
+                    boolean isSurfaceBlockObtained = false;
+                    while (!isSurfaceBlockObtained) {
+                        if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.WATER)) {
+                            isSurfaceBlockObtained = true;
+                            p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.RIVER);
+                        } else if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.LAVA)) {
+                            isSurfaceBlockObtained = true;
+                            p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.BADLANDS);
+                        } else if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().isSolid()) {
+                            isSurfaceBlockObtained = true;
+                            FileConfiguration config = GameUtils.inst().getConfig();
+                            Material material = p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType();
+                            if (config.contains("change-biome-settings." + material.toString().toLowerCase())) {
+                                String biomeName = config.getString("change-biome-settings." + material.toString().toLowerCase());
+                                assert biomeName != null;
+                                p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(biomeName.toUpperCase()));
+                            } else {
+                                String defaultBiomeName = config.getString("change-biome-settings.default");
+                                assert defaultBiomeName != null;
+                                p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(defaultBiomeName.toUpperCase()));
                             }
                         }
-                        int k = 319;
-                        boolean isSurfaceBlockObtained = false;
-                        while (!isSurfaceBlockObtained) {
-                            if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.WATER)) {
-                                isSurfaceBlockObtained = true;
-                                sender.sendMessage((x + xOffset) + " " + (z + zOffset) + " " + "river");
-                                p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.RIVER);
-                            } else if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().equals(Material.LAVA)) {
-                                isSurfaceBlockObtained = true;
-                                sender.sendMessage((x + xOffset) + " " + (z + zOffset) + " " + "badlands");
-                                p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.BADLANDS);
-                            } else if (p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType().isSolid()) {
-                                isSurfaceBlockObtained = true;
-                                FileConfiguration config = GameUtils.inst().getConfig();
-                                Material material = p.getWorld().getBlockAt((x + xOffset), k, (z + zOffset)).getType();
-                                if (config.contains("change-biome-settings." + material.toString().toLowerCase())) {
-                                    p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings." + material.toString().toLowerCase()).toUpperCase()));
-                                } else {
-                                    p.getWorld().setBiome((x + xOffset), (z + zOffset), Biome.valueOf(config.getString("change-biome-settings.default").toUpperCase()));
-                                }
-                            }
-                            k--;
-                            if (k == -65) {
-                                break;
-                            }
+                        k--;
+                        if (k == -65) {
+                            break;
                         }
                     }
                 }
-                Bukkit.broadcastMessage("§a[changebiome] §f生物群系自动设置操作完成！");
-            } catch (Exception e) {
-                e.printStackTrace();
-                Bukkit.broadcastMessage("§a[changebiome] §c发生内部错误！");
             }
+            Bukkit.broadcastMessage("§a[changebiome] §f生物群系自动设置操作完成！");
         }
         return true;
     }
