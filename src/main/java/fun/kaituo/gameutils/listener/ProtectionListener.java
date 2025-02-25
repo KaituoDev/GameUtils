@@ -21,6 +21,8 @@ import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import static fun.kaituo.gameutils.command.Rotatable.isRotatable;
+
 public class ProtectionListener implements Listener {
 
     private final FileConfiguration c;
@@ -69,10 +71,10 @@ public class ProtectionListener implements Listener {
         if (!c.getBoolean("no-item-frame-rotation")) {
             return;
         }
-        if (!(piee.getRightClicked() instanceof ItemFrame)) {
+        if (!(piee.getRightClicked() instanceof ItemFrame frame)) {
             return;
         }
-        if (!piee.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+        if (!piee.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !isRotatable(frame)) {
             piee.setCancelled(true);
         }
     }
@@ -116,6 +118,17 @@ public class ProtectionListener implements Listener {
             return;
         }
         if (ese.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+            ese.getEntity().setInvulnerable(true);
+        }
+    }
+
+    @EventHandler
+    public void invulnerableItemFrame(EntitySpawnEvent ese) {
+        if (!c.getBoolean("invulnerable-item-frame-on-spawn")) {
+            return;
+        }
+        if (ese.getEntity().getType().equals(EntityType.ITEM_FRAME)
+                || ese.getEntity().getType().equals(EntityType.GLOW_ITEM_FRAME)) {
             ese.getEntity().setInvulnerable(true);
         }
     }
