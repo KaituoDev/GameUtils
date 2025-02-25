@@ -14,7 +14,7 @@ permissions:
         children:
           gameutils.command.join:
             description: Allow player to use /join
-            default: op
+            default: true
           gameutils.command.forcestop:
             description: Allow player to use /forcestop
             default: op
@@ -23,7 +23,7 @@ permissions:
             default: op
           gameutils.command.placestand:
             description: Allow player to use /placestand
-            default: true
+            default: op
           gameutils.command.changebiome:
             description: Allow player to use /changebiome
             default: op
@@ -39,49 +39,47 @@ permissions:
           gameutils.command.gameinv:
             description: Allow player to use /gameinv
             default: op
+          gameutils.command.rotatable:
+            description: Allow player to use /rotatable
+            default: op
 
 commands:
   join:
     description: Join a game
     usage: /join <game>
-    default: true
     aliases: [ wan, jiaru, play ]
   forcestop:
     description: Force stop a game
     usage: /forcestop <game>
-    default: op
     aliases: [ fs ]
   tpgame:
     description: Teleport to the game location
     usage: /tpgame <game>
-    default: op
     aliases: [ tpg ]
   changebiome:
     description: Change biome
     usage: /changebiome <biome>/auto <radius> <square/circular>
-    default: op
     aliases: [ cb ]
   placestand:
     description: Place an armor stand in front of start buttons to prevent grief clicking
     usage: /placestand
-    default: op
   layout:
     description: Show the layout of the games
     usage: /layout
-    default: op
     aliases: [ buju ]
   gameitem:
     description: Save the item in main hand to the config file of current game
     usage: /gameitem <save/get/remove> <key>
-    default: op
     aliases: [ gitem ]
   gameloc:
     description: Save the location to the config file of current game
     usage: /gameloc <save/tp/remove> <key> [block/player]
-    default: op
     aliases: [ gloc ]
   gameinv:
     description: Save the current inventory to the config file of current game
     usage: /gameinv <save/apply/remove> <key>
-    default: op
     aliases: [ ginv ]
+  rotatable:
+    description: Set the facing item frame to be rotatable / not rotatable
+    usage: /rotatable <true/false>
+    aliases: [ rt ]

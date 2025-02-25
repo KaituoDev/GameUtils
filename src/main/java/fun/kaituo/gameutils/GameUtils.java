@@ -8,6 +8,7 @@ import fun.kaituo.gameutils.command.GameLoc;
 import fun.kaituo.gameutils.command.Join;
 import fun.kaituo.gameutils.command.Layout;
 import fun.kaituo.gameutils.command.PlaceStand;
+import fun.kaituo.gameutils.command.Rotatable;
 import fun.kaituo.gameutils.command.TpGame;
 import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.LayoutSignClickListener;
@@ -169,6 +170,14 @@ public class GameUtils extends JavaPlugin {
             GameInv gameInv = new GameInv();
             gameInvCommand.setExecutor(gameInv);
             gameInvCommand.setTabCompleter(gameInv);
+        }
+
+        PluginCommand rotatableCommand = getCommand("rotatable");
+        if (rotatableCommand == null) {
+            getLogger().warning("Command not found: rotatable. Did you add it to plugin.yml?");
+        } else {
+            Rotatable rotatable = new Rotatable();
+            rotatableCommand.setExecutor(rotatable);
         }
     }
 

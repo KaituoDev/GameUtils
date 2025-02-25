@@ -3,6 +3,7 @@ no-firework-damage: true
 no-special-block-interaction: true
 invulnerable-armourstand-on-spawn: true
 invulnerable-painting-on-spawn: true
+invulnerable-item-frame-on-spawn: true
 no-chicken-from-egg: true
 no-snow-and-ice-formation: true
 parkour-no-fall-damage: true
