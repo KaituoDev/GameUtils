@@ -2,7 +2,6 @@ package fun.kaituo.gameutils.command;
 
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
-import fun.kaituo.gameutils.game.GameState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -56,10 +55,6 @@ public class Join implements CommandExecutor, TabCompleter {
         if (currentGame == newGame) {
             sender.sendMessage("§c你已经在这个游戏中了！");
             return true;
-        }
-        GameState state = currentGame.getState();
-        if (state != null) {
-            state.removePlayer(p);
         }
         currentGame.removePlayer(p);
         GameUtils.inst().join(p, newGame);

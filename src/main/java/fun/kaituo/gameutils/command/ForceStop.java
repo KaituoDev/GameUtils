@@ -2,7 +2,6 @@ package fun.kaituo.gameutils.command;
 
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
-import fun.kaituo.gameutils.game.GameState;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,10 +45,6 @@ public class ForceStop implements CommandExecutor, TabCompleter {
             return true;
         }
         Game game = matchingGames.getFirst();
-        GameState state = game.getState();
-        if (state != null) {
-            state.forceStop();
-        }
         game.forceStop();
         return true;
     }
