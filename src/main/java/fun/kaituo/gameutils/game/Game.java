@@ -21,12 +21,27 @@ public abstract class Game extends JavaPlugin {
     protected Location location;
     protected GameState state;
 
-    // Some operations might be applicable to the whole game no matter the state,
-    // Do them in the following functions
-    public abstract void addPlayer(Player p);
-    public abstract void removePlayer(Player p);
-    public abstract void forceStop();
-    public abstract void tick();
+    public void addPlayer(Player p) {
+        if (state != null) {
+            state.addPlayer(p);
+        }
+    }
+
+    public void removePlayer(Player p) {
+        if (state != null) {
+            state.removePlayer(p);
+        }
+    }
+    public void forceStop() {
+        if (state != null) {
+            state.forceStop();
+        }
+    }
+    public void tick() {
+        if (state != null) {
+            state.tick();
+        }
+    }
 
     @SuppressWarnings("unused")
     public String getDisplayName() {
@@ -159,12 +174,6 @@ public abstract class Game extends JavaPlugin {
         if (!GameUtils.inst().registerGame(this)) {
             throw new RuntimeException("Game already registered");
         }
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            if (state != null) {
-                state.tick();
-            }
-        }, 1, 1);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, this::tick, 1, 1);
 
         displayName = "§f未知游戏";

@@ -8,7 +8,6 @@ public interface GameState {
     // Called once when exiting from this state
     void exit();
 
-    // Called every tick. Use this function to transit to another state
     void tick();
 
     void addPlayer(Player p);
