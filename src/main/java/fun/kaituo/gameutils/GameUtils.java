@@ -1,15 +1,6 @@
 package fun.kaituo.gameutils;
 
-import fun.kaituo.gameutils.command.ChangeBiome;
-import fun.kaituo.gameutils.command.ForceStop;
-import fun.kaituo.gameutils.command.GameInv;
-import fun.kaituo.gameutils.command.GameItem;
-import fun.kaituo.gameutils.command.GameLoc;
-import fun.kaituo.gameutils.command.Join;
-import fun.kaituo.gameutils.command.Layout;
-import fun.kaituo.gameutils.command.PlaceStand;
-import fun.kaituo.gameutils.command.Rotatable;
-import fun.kaituo.gameutils.command.TpGame;
+import fun.kaituo.gameutils.command.GameUtilsCommand;
 import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.LayoutSignClickListener;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
@@ -17,16 +8,15 @@ import fun.kaituo.gameutils.listener.ProtectionListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.lang.reflect.Constructor;
+import java.util.*;
 
 
 public class GameUtils extends JavaPlugin {
@@ -91,92 +81,30 @@ public class GameUtils extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LayoutSignClickListener(), this);
     }
 
+    private void registerCommand(Class<? extends GameUtilsCommand> commandClass) {
+        try {
+            Constructor<? extends GameUtilsCommand> constructor = commandClass.getConstructor();
+            GameUtilsCommand command = constructor.newInstance();
+            PluginCommand pluginCommand = getCommand(command.getName());
+            if (pluginCommand == null) {
+                getLogger().warning("Could not find command: " + command.getName() + ", did you forget to register it in plugin.yml?");
+                return;
+            }
+            pluginCommand.setExecutor(command);
+            if (command instanceof TabCompleter) {
+                pluginCommand.setTabCompleter((TabCompleter) command);
+            }
+        } catch (Exception e) {
+            getLogger().warning("Failed to register command class: " + commandClass.getSimpleName());
+            throw new RuntimeException(e);
+        }
+    }
+
     private void registerCommands() {
-        PluginCommand joinCommand = getCommand("join");
-        if (joinCommand == null) {
-            getLogger().warning("Command not found: join. Did you add it to plugin.yml?");
-        } else {
-            Join join = new Join();
-            joinCommand.setExecutor(join);
-            joinCommand.setTabCompleter(join);
-        }
-
-        PluginCommand tpgameCommand = getCommand("tpgame");
-        if (tpgameCommand == null) {
-            getLogger().warning("Command not found: tpgame. Did you add it to plugin.yml?");
-        } else {
-            TpGame tpgame = new TpGame();
-            tpgameCommand.setExecutor(tpgame);
-            tpgameCommand.setTabCompleter(tpgame);
-        }
-
-        PluginCommand forceStopCommand = getCommand("forcestop");
-        if (forceStopCommand == null) {
-            getLogger().warning("Command not found: forcestop. Did you add it to plugin.yml?");
-        } else {
-            ForceStop forceStop = new ForceStop();
-            forceStopCommand.setExecutor(forceStop);
-            forceStopCommand.setTabCompleter(forceStop);
-        }
-
-        PluginCommand placeStandCommand = getCommand("placestand");
-        if (placeStandCommand == null) {
-            getLogger().warning("Command not found: placestand. Did you add it to plugin.yml?");
-        } else {
-            PlaceStand placeStand = new PlaceStand();
-            placeStandCommand.setExecutor(placeStand);
-        }
-
-        PluginCommand changeBiomeCommand = getCommand("changebiome");
-        if (changeBiomeCommand == null) {
-            getLogger().warning("Command not found: changebiome. Did you add it to plugin.yml?");
-        } else {
-            ChangeBiome changeBiome = new ChangeBiome();
-            changeBiomeCommand.setExecutor(changeBiome);
-            changeBiomeCommand.setTabCompleter(changeBiome);
-        }
-
-        PluginCommand layoutCommand = getCommand("layout");
-        if (layoutCommand == null) {
-            getLogger().warning("Command not found: layout. Did you add it to plugin.yml?");
-        } else {
-            Layout layout = new Layout();
-            layoutCommand.setExecutor(layout);
-        }
-
-        PluginCommand gameItemCommand = getCommand("gameitem");
-        if (gameItemCommand == null) {
-            getLogger().warning("Command not found: gameitem. Did you add it to plugin.yml?");
-        } else {
-            GameItem gameItem = new GameItem();
-            gameItemCommand.setExecutor(gameItem);
-            gameItemCommand.setTabCompleter(gameItem);
-        }
-
-        PluginCommand gameLocCommand = getCommand("gameloc");
-        if (gameLocCommand == null) {
-            getLogger().warning("Command not found: gameloc. Did you add it to plugin.yml?");
-        } else {
-            GameLoc gameLoc = new GameLoc();
-            gameLocCommand.setExecutor(gameLoc);
-            gameLocCommand.setTabCompleter(gameLoc);
-        }
-
-        PluginCommand gameInvCommand = getCommand("gameinv");
-        if (gameInvCommand == null) {
-            getLogger().warning("Command not found: gameinv. Did you add it to plugin.yml?");
-        } else {
-            GameInv gameInv = new GameInv();
-            gameInvCommand.setExecutor(gameInv);
-            gameInvCommand.setTabCompleter(gameInv);
-        }
-
-        PluginCommand rotatableCommand = getCommand("rotatable");
-        if (rotatableCommand == null) {
-            getLogger().warning("Command not found: rotatable. Did you add it to plugin.yml?");
-        } else {
-            Rotatable rotatable = new Rotatable();
-            rotatableCommand.setExecutor(rotatable);
+        Reflections reflections = new Reflections("fun.kaituo.gameutils.command");
+        Set<Class<? extends GameUtilsCommand>> commandClasses = reflections.getSubTypesOf(GameUtilsCommand.class);
+        for (Class<? extends GameUtilsCommand> commandClass : commandClasses) {
+            registerCommand(commandClass);
         }
     }
 

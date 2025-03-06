@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,11 +18,16 @@ import java.util.List;
 
 import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
-public class ChangeBiome implements CommandExecutor, TabCompleter {
-    public static final String PERMISSION = "gameutils.command.changebiome";
+@SuppressWarnings("unused")
+public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
     private final List<String> biomeNames = new ArrayList<>();
     private final List<String> modes = Arrays.asList("circular", "square");
     private final List<String> exampleRadii = Arrays.asList("16", "32", "64", "128", "256");
+
+    @Override
+    public String getName() {
+        return "changebiome";
+    }
 
     public ChangeBiome() {
         biomeNames.add("auto");
@@ -35,14 +39,14 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
     @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("changebiome")) {
+        if (!cmd.getName().equalsIgnoreCase(getName())) {
             return false;
         }
         if (!(sender instanceof Player p)) {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }
@@ -133,7 +137,7 @@ public class ChangeBiome implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
-        if (!command.getName().equalsIgnoreCase("changebiome")) {
+        if (!command.getName().equalsIgnoreCase(getName())) {
             return new ArrayList<>();
         }
         if (args.length == 1) {

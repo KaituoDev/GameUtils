@@ -3,7 +3,6 @@ package fun.kaituo.gameutils.command;
 import de.tr7zw.nbtapi.NBT;
 import fun.kaituo.gameutils.GameUtils;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.ItemFrame;
@@ -17,8 +16,13 @@ import java.util.List;
 
 import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
-public class Rotatable implements CommandExecutor, TabCompleter {
-    public static final String PERMISSION = "gameutils.command.rotatable";
+@SuppressWarnings("unused")
+public class Rotatable extends GameUtilsCommand implements TabCompleter {
+    @Override
+    public String getName() {
+        return "rotatable";
+    }
+
     private final List<String> booleans = Arrays.asList("true", "false");
 
     public static boolean isRotatable(ItemFrame frame) {
@@ -33,7 +37,7 @@ public class Rotatable implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("rotatable")) {
+        if (!cmd.getName().equalsIgnoreCase(getName())) {
             return false;
         }
 
@@ -41,7 +45,7 @@ public class Rotatable implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }
@@ -86,7 +90,7 @@ public class Rotatable implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
-        if (!command.getName().equalsIgnoreCase("rotatable")) {
+        if (!command.getName().equalsIgnoreCase(getName())) {
             return new ArrayList<>();
         }
         if (args.length != 1) {
