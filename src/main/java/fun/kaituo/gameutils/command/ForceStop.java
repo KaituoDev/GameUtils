@@ -3,7 +3,6 @@ package fun.kaituo.gameutils.command;
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
@@ -13,15 +12,19 @@ import java.util.List;
 
 import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
-public class ForceStop implements CommandExecutor, TabCompleter {
-    public static final String PERMISSION = "gameutils.command.forcestop";
+@SuppressWarnings("unused")
+public class ForceStop extends GameUtilsCommand implements TabCompleter {
+    @Override
+    public String getName() {
+        return "forcestop";
+    }
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase("forcestop")) {
             return false;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }
@@ -52,7 +55,7 @@ public class ForceStop implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
-        if (!command.getName().equalsIgnoreCase("forcestop")) {
+        if (!command.getName().equalsIgnoreCase(getPermissionString())) {
             return new ArrayList<>();
         }
         if (args.length != 1) {

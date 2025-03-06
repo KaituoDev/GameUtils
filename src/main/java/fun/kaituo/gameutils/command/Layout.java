@@ -3,14 +3,18 @@ package fun.kaituo.gameutils.command;
 import fun.kaituo.gameutils.GameUtils;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 
-public class Layout implements CommandExecutor {
-    public static final String PERMISSION = "gameutils.command.layout";
+@SuppressWarnings("unused")
+public class Layout extends GameUtilsCommand {
+    @Override
+    public String getName() {
+        return "layout";
+    }
+
     private final Location LAYOUT_LOCATION;
 
     public Layout() {
@@ -19,10 +23,10 @@ public class Layout implements CommandExecutor {
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("layout")) {
+        if (!cmd.getName().equalsIgnoreCase(getName())) {
             return false;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }

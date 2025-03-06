@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -15,18 +14,23 @@ import org.bukkit.util.RayTraceResult;
 
 import javax.annotation.Nonnull;
 
-public class PlaceStand implements CommandExecutor {
-    public static final String PERMISSION = "gameutils.command.placestand";
+@SuppressWarnings("unused")
+public class PlaceStand extends GameUtilsCommand {
+    @Override
+    public String getName() {
+        return "placestand";
+    }
+
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("placestand")) {
+        if (!cmd.getName().equalsIgnoreCase(getName())) {
             return false;
         }
         if (!(sender instanceof Player p)) {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }

@@ -4,7 +4,6 @@ import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
@@ -18,14 +17,18 @@ import java.util.List;
 
 import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
-public class GameItem implements CommandExecutor, TabCompleter {
-    public static final String PERMISSION = "gameutils.command.gameitem";
-    private final List<String> actions = Arrays.asList("save", "get", "remove");
+@SuppressWarnings("unused")
+public class GameItem extends GameUtilsCommand implements TabCompleter {
+    @Override
+    public String getName() {
+        return "gameitem";
+    }
 
+    private final List<String> actions = Arrays.asList("save", "get", "remove");
 
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("gameitem")) {
+        if (!cmd.getName().equalsIgnoreCase(getName())) {
             return false;
         }
 
@@ -33,7 +36,7 @@ public class GameItem implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c此指令必须由玩家执行！");
             return true;
         }
-        if (!sender.hasPermission(PERMISSION)) {
+        if (!sender.hasPermission(getPermissionString())) {
             sender.sendMessage("§c你没有权限执行这个指令！");
             return true;
         }
@@ -80,7 +83,7 @@ public class GameItem implements CommandExecutor, TabCompleter {
     }
 
     public List<String> onTabComplete(@Nonnull CommandSender sender, Command command, @Nonnull String alias, @Nonnull String[] args) {
-        if (!command.getName().equalsIgnoreCase("gameitem")) {
+        if (!command.getName().equalsIgnoreCase(getName())) {
             return new ArrayList<>();
         }
         if (args.length == 1) {
