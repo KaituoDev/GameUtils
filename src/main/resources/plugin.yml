@@ -15,6 +15,9 @@ permissions:
           gameutils.command.join:
             description: Allow player to use /join
             default: true
+          gameutils.command.joinall:
+            description: Allow player to use /joinall
+            default: op
           gameutils.command.forcestop:
             description: Allow player to use /forcestop
             default: op
@@ -48,6 +51,9 @@ commands:
     description: Join a game
     usage: /join <game>
     aliases: [ wan, jiaru, play ]
+  joinall:
+    description: Join all players to a game
+    usage: /joinall <game>
   forcestop:
     description: Force stop a game
     usage: /forcestop <game>
