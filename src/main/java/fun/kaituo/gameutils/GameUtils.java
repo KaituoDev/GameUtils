@@ -5,6 +5,8 @@ import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.LayoutSignClickListener;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ScanResult;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
@@ -12,11 +14,14 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.reflections.Reflections;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 
 public class GameUtils extends JavaPlugin {
@@ -101,10 +106,19 @@ public class GameUtils extends JavaPlugin {
     }
 
     private void registerCommands() {
-        Reflections reflections = new Reflections("fun.kaituo.gameutils.command");
-        Set<Class<? extends GameUtilsCommand>> commandClasses = reflections.getSubTypesOf(GameUtilsCommand.class);
-        for (Class<? extends GameUtilsCommand> commandClass : commandClasses) {
-            registerCommand(commandClass);
+        try (ScanResult scanResult = new ClassGraph()
+                .acceptPackages("fun.kaituo.gameutils.command") // 指定扫描的包
+                .enableClassInfo()
+                .scan()) {
+
+            Set<Class<? extends GameUtilsCommand>> commandClasses = new HashSet<>(scanResult
+                    .getSubclasses(GameUtilsCommand.class.getName()) // 获取子类
+                    .loadClasses(GameUtilsCommand.class));
+
+            commandClasses.forEach(this::registerCommand);
+        } catch (Exception e) {
+            getLogger().warning("Failed to scan for command classes");
+            throw new RuntimeException(e);
         }
     }
 
