@@ -2,6 +2,8 @@ api-version: 1.13
 name: GameUtils
 main: fun.kaituo.gameutils.GameUtils
 version: 2.0.0
+libraries:
+  - io.github.classgraph:classgraph:4.8.179
 authors: [ YFshadaow, LeChocolatChaud ]
 permissions:
   gameutils.*:
