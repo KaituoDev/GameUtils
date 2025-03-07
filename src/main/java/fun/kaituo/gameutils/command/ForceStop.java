@@ -55,7 +55,7 @@ public class ForceStop extends GameUtilsCommand implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
-        if (!command.getName().equalsIgnoreCase(getPermissionString())) {
+        if (!command.getName().equalsIgnoreCase(getName())) {
             return new ArrayList<>();
         }
         if (args.length != 1) {
