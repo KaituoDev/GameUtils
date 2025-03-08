@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
@@ -154,6 +155,13 @@ public class ProtectionListener implements Listener {
         }
     }
 
-
-
+    @EventHandler
+    public void noSilverfishBurrow(EntityChangeBlockEvent ecbe) {
+        if (!c.getBoolean("no-silverfish-burrow")) {
+            return;
+        }
+        if (ecbe.getEntityType().equals(EntityType.SILVERFISH)) {
+            ecbe.setCancelled(true);
+        }
+    }
 }
