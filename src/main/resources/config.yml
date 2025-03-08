@@ -10,6 +10,7 @@ parkour-no-fall-damage: true
 no-item-frame-rotation: true
 no-destroy-painting: true
 no-armourstand-manipulation: true
+no-silverfish-burrow: true
 
 change-biome-settings:
   default: plains
