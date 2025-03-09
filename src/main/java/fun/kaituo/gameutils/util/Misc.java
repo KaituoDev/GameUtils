@@ -1,6 +1,7 @@
 package fun.kaituo.gameutils.util;
 
 import fun.kaituo.gameutils.GameUtils;
+import fun.kaituo.gameutils.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -13,8 +14,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @SuppressWarnings("unused")
 public class Misc {
@@ -45,38 +48,40 @@ public class Misc {
     }
 
     @SuppressWarnings("unused")
-    public static void spawnFireworks(Player p) {
+    public static Set<Integer> spawnFireworks(Player p, Game game) {
+        Set<Integer> taskIds = new HashSet<>();
         for (int i = 0; i < 5; i++) {
-            Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> spawnFirework(p), 8 * i + 1);
+            taskIds.add(Bukkit.getScheduler().runTaskLater(game, () -> spawnFirework(p), 8 * i + 1).getTaskId());
         }
+        return taskIds;
     }
 
     @SuppressWarnings("unused")
-    public static void displayCountDown(Player p, int countDownSeconds) {
+    public static Set<Integer> displayCountDown(Player p, int countDownSeconds, Game game) {
         if (countDownSeconds > 5) {
-            Bukkit.getScheduler().runTask(GameUtils.inst(), () -> {
-                p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
-            });
+            p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
         }
+        Set<Integer> taskIds = new HashSet<>();
         for (int i = 5; i > 0; i--) {
             int finalI = i;
-            Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
+            taskIds.add(Bukkit.getScheduler().runTaskLater(game, () -> {
                 if (!p.isOnline()) {
                     return;
                 }
                 p.sendTitle("§a游戏还有 " + finalI + " 秒开始", null, 2, 16, 2);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
                 p.getInventory().clear();
-            }, 20L * countDownSeconds - 20L * i);
+            }, 20L * countDownSeconds - 20L * i).getTaskId());
         }
-        Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
+        taskIds.add(Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
             if (!p.isOnline()) {
                 return;
             }
             p.sendTitle("§e游戏开始！", null, 2, 16, 2);
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 2f);
-        }, 20L * countDownSeconds);
+        }, 20L * countDownSeconds).getTaskId());
+        return taskIds;
     }
 
     public static List<String> getMatchingCompletions(String partialArg, List<String> completions) {
