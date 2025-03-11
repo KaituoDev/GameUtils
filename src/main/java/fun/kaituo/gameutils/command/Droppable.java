@@ -50,6 +50,10 @@ public class Droppable extends GameUtilsCommand implements TabCompleter {
             p.sendMessage("§c请使用主手手持物品！");
             return true;
         }
+        if (item.getAmount() == 0) {
+            p.sendMessage("§c请使用主手手持物品！");
+            return true;
+        }
         boolean droppable;
         if (args.length == 0) {
             droppable = !isDroppable(item);
