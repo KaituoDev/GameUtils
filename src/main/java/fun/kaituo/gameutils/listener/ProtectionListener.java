@@ -18,11 +18,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import static fun.kaituo.gameutils.command.Rotatable.isRotatable;
+import static fun.kaituo.gameutils.util.Misc.isClickable;
+import static fun.kaituo.gameutils.util.Misc.isDroppable;
 
 public class ProtectionListener implements Listener {
 
@@ -80,6 +85,26 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void preventItemDrop(PlayerDropItemEvent pdie) {
+        if (!c.getBoolean("no-item-drop")) {
+            return;
+        }
+        if (!pdie.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !isDroppable(pdie.getItemDrop().getItemStack())) {
+            pdie.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void preventItemClick(InventoryClickEvent ice) {
+        if (!c.getBoolean("no-item-click")) {
+            return;
+        }
+        ItemStack item = ice.getCurrentItem();
+        if (!ice.getWhoClicked().getGameMode().equals(GameMode.CREATIVE) && !isClickable(item)) {
+            ice.setCancelled(true);
+        }
+    }
 
     @EventHandler
     public void preventSpecialBlockInteraction(PlayerInteractEvent pie) {
