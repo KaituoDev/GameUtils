@@ -1,5 +1,6 @@
 package fun.kaituo.gameutils.util;
 
+import de.tr7zw.nbtapi.NBT;
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
 import org.bukkit.Bukkit;
@@ -89,4 +90,27 @@ public class Misc {
                 completion.toLowerCase().startsWith(partialArg.toLowerCase())).toList();
     }
 
+    public static boolean isDroppable(ItemStack item) {
+        return NBT.get(item, nbt ->
+            (boolean) nbt.getBoolean("droppable")
+        );
+    }
+
+    public static void setDroppable(ItemStack item, boolean droppable) {
+        NBT.modify(item, nbt -> {
+            nbt.setBoolean("droppable", droppable);
+        });
+    }
+
+    public static boolean isClickable(ItemStack item) {
+        return NBT.get(item, nbt ->
+            (boolean) nbt.getBoolean("clickable")
+        );
+    }
+
+    public static void setClickable(ItemStack item, boolean clickable) {
+        NBT.modify(item, nbt -> {
+            nbt.setBoolean("clickable", clickable);
+        });
+    }
 }

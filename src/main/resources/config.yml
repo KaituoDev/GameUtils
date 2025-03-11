@@ -11,6 +11,8 @@ no-item-frame-rotation: true
 no-destroy-painting: true
 no-armourstand-manipulation: true
 no-silverfish-burrow: true
+no-item-drop: true
+no-item-click: true
 
 change-biome-settings:
   default: plains

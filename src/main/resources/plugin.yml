@@ -47,6 +47,12 @@ permissions:
           gameutils.command.rotatable:
             description: Allow player to use /rotatable
             default: op
+          gameutils.command.droppable:
+            description: Allow player to use /droppable
+            default: op
+          gameutils.command.clickable:
+            description: Allow player to use /clickable
+            default: op
 
 commands:
   join:
@@ -89,5 +95,11 @@ commands:
     aliases: [ ginv ]
   rotatable:
     description: Set the facing item frame to be rotatable / not rotatable
-    usage: /rotatable <true/false>
+    usage: /rotatable [true/false]
     aliases: [ rt ]
+  droppable:
+    description: Set the current item in hand to be droppable / not droppable
+    usage: /droppable [true/false]
+  clickable:
+    description: Set the current item in hand to be clickable / not clickable
+    usage: /clickable [true/false]
