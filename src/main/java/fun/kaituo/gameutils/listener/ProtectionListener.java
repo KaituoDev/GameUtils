@@ -90,7 +90,14 @@ public class ProtectionListener implements Listener {
         if (!c.getBoolean("no-item-drop")) {
             return;
         }
-        if (!pdie.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !isDroppable(pdie.getItemDrop().getItemStack())) {
+        ItemStack item = pdie.getItemDrop().getItemStack();
+        if (item.getType().equals(Material.AIR)) {
+            return;
+        }
+        if (item.getAmount() == 0) {
+            return;
+        }
+        if (!pdie.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !isDroppable(item)) {
             pdie.setCancelled(true);
         }
     }
@@ -101,6 +108,15 @@ public class ProtectionListener implements Listener {
             return;
         }
         ItemStack item = ice.getCurrentItem();
+        if (item == null) {
+            return;
+        }
+        if (item.getType().equals(Material.AIR)) {
+            return;
+        }
+        if (item.getAmount() == 0) {
+            return;
+        }
         if (!ice.getWhoClicked().getGameMode().equals(GameMode.CREATIVE) && !isClickable(item)) {
             ice.setCancelled(true);
         }

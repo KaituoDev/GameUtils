@@ -50,6 +50,10 @@ public class Clickable extends GameUtilsCommand implements TabCompleter {
             p.sendMessage("§c请使用主手手持物品！");
             return true;
         }
+        if (item.getAmount() == 0) {
+            p.sendMessage("§c请使用主手手持物品！");
+            return true;
+        }
         boolean clickable;
         if (args.length == 0) {
             clickable = !isClickable(item);
