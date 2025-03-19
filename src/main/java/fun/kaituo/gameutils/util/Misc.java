@@ -57,32 +57,45 @@ public class Misc {
         return taskIds;
     }
 
+    /**
+     * Display a countdown for the player with given title and subtitle
+     * @param p The player to display the countdown to
+     * @param countdownSeconds The number of seconds to count down
+     * @param countdownTitle The title when the countdown is running. Use %time% as a placeholder for the time left
+     * @param finishTitle The title when the countdown finishes.
+     * @param game The game instance that should schedule the countdown tasks
+     * @return A set of task ids that can be used to cancel the countdown display
+     */
     @SuppressWarnings("unused")
-    public static Set<Integer> displayCountDown(Player p, int countDownSeconds, Game game) {
-        if (countDownSeconds > 5) {
-            p.sendTitle("§a游戏还有 " + countDownSeconds + " 秒开始", null, 2, 16, 2);
+    public static Set<Integer> displayCountdown(Player p, int countdownSeconds, String countdownTitle, String finishTitle, Game game) {
+        if (countdownSeconds > 5) {
+            p.sendTitle(countdownTitle.replace("%time%", String.valueOf(countdownSeconds)), "", 2, 16, 2);
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
         }
         Set<Integer> taskIds = new HashSet<>();
         for (int i = 5; i > 0; i--) {
-            int finalI = i;
+            int countdownSecondsRemaining = i;
             taskIds.add(Bukkit.getScheduler().runTaskLater(game, () -> {
                 if (!p.isOnline()) {
                     return;
                 }
-                p.sendTitle("§a游戏还有 " + finalI + " 秒开始", null, 2, 16, 2);
+                p.sendTitle(countdownTitle.replace("%time%", String.valueOf(countdownSecondsRemaining)), "", 2, 16, 2);
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 1f);
-                p.getInventory().clear();
-            }, 20L * countDownSeconds - 20L * i).getTaskId());
+            }, 20L * countdownSeconds - 20L * i).getTaskId());
         }
         taskIds.add(Bukkit.getScheduler().runTaskLater(GameUtils.inst(), () -> {
             if (!p.isOnline()) {
                 return;
             }
-            p.sendTitle("§e游戏开始！", null, 2, 16, 2);
+            p.sendTitle(finishTitle, "", 2, 16, 2);
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1f, 2f);
-        }, 20L * countDownSeconds).getTaskId());
+        }, 20L * countdownSeconds).getTaskId());
         return taskIds;
+    }
+
+    @SuppressWarnings("unused")
+    public static Set<Integer> displayCountdown(Player p, int countDownSeconds, Game game) {
+        return displayCountdown(p, countDownSeconds, "§a游戏还有 %time% 秒开始", "§e游戏开始！", game);
     }
 
     public static List<String> getMatchingCompletions(String partialArg, List<String> completions) {
