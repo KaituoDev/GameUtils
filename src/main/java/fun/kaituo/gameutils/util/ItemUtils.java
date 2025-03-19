@@ -35,13 +35,16 @@ public class ItemUtils {
     /**
      * Check if an inventory contains a certain amount of a certain item.
      * The amount of input item does not matter.
+     * Warning: This method serves a different purpose from {@link Inventory#contains(ItemStack, int)}
+     * It does not check for the number of ItemStacks that exactly match the input ItemStack.
+     * Instead, it checks for the sum of amount for all ItemStacks that are similar to the input ItemStack.
      * @param inv The inventory to check
      * @param item The item to check for
-     * @param amount The amount of the item to check for
+     * @param itemAmount The amount of the item to check for.
      * @return True if the inventory contains at least the specified amount of the item, false otherwise
      */
-    public static boolean containsItem(Inventory inv, ItemStack item, int amount) {
-        if (amount <= 0) {
+    public static boolean containsItem(Inventory inv, ItemStack item, int itemAmount) {
+        if (itemAmount <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
         if (item.getType().equals(Material.AIR)) {
@@ -57,7 +60,7 @@ public class ItemUtils {
                 total += content.getAmount();
             }
         }
-        return total >= amount;
+        return total >= itemAmount;
     }
 
     /**
@@ -73,21 +76,23 @@ public class ItemUtils {
     /**
      * Remove a certain amount of a certain item from an inventory.
      * The amount of input item does not matter.
+     * Warning: This method does not remove the given number of ItemStacks that exactly match the input ItemStack.
+     * Instead, it removes items that are similar to the input ItemStack until the specified amount is removed.
      * @param inv The inventory to remove the item from
      * @param item The item to remove
-     * @param amount The amount of the item to remove
+     * @param itemAmount The amount of the item to remove
      */
-    public static void removeItem(Inventory inv, @Nonnull ItemStack item, int amount) {
-        if (amount <= 0) {
+    public static void removeItem(Inventory inv, @Nonnull ItemStack item, int itemAmount) {
+        if (itemAmount <= 0) {
             throw new IllegalArgumentException("Cannot remove a non-positive amount of items");
         }
         if (item.getType().equals(Material.AIR)) {
             throw new IllegalArgumentException("Cannot remove air");
         }
-        if (!containsItem(inv, item, amount)) {
+        if (!containsItem(inv, item, itemAmount)) {
             throw new IllegalArgumentException("Inventory does not contain enough of the item");
         }
-        int remaining = amount;
+        int remaining = itemAmount;
         ItemStack[] contents = inv.getContents();
         for (int i = 0; i < inv.getSize(); i += 1) {
             ItemStack content = contents[i];
