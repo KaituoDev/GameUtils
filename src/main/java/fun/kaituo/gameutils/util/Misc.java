@@ -1,5 +1,16 @@
 package fun.kaituo.gameutils.util;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.extent.clipboard.Clipboard;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.function.operation.Operation;
+import com.sk89q.worldedit.function.operation.Operations;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import de.tr7zw.nbtapi.NBT;
 import fun.kaituo.gameutils.GameUtils;
 import fun.kaituo.gameutils.game.Game;
@@ -9,12 +20,15 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -125,5 +139,83 @@ public class Misc {
         NBT.modify(item, nbt -> {
             nbt.setBoolean("clickable", clickable);
         });
+    }
+
+    private static Clipboard getSchematicClipBoard(String schematicName) {
+        File file = new File("plugins/WorldEdit/schematics/" + schematicName + ".schem");
+        ClipboardFormat format = ClipboardFormats.findByFile(file);
+        if (format == null) {
+            throw new IllegalArgumentException("Failed to find schematic file");
+        }
+
+        Clipboard clipboard;
+        try (ClipboardReader reader = format.getReader(new FileInputStream(file))) {
+            clipboard = reader.read();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read schematic file", e);
+        }
+        return clipboard;
+    }
+
+    public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
+        World world = location.getWorld();
+        if (world == null) {
+            throw new IllegalArgumentException("Location's world is null");
+        }
+
+        Clipboard clipboard = getSchematicClipBoard(schematicName);
+
+        try (EditSession editSession = WorldEdit.getInstance().newEditSessionBuilder().world(BukkitAdapter.adapt(world)).build()) {
+            Operation operation = new ClipboardHolder(clipboard)
+                    .createPaste(editSession)
+                    .to(BlockVector3.at(location.getX(), location.getY(), location.getZ()))
+                    .ignoreAirBlocks(ignoreAir)
+                    .copyEntities(copyEntities)
+                    .copyBiomes(copyBiomes)
+                    .build();
+            Operations.complete(operation);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to paste schematic", e);
+        }
+    }
+
+    public static void pasteSchematic(String schematicName, Location location) {
+        pasteSchematic(schematicName, location, true, true, true);
+    }
+
+    public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir) {
+        pasteSchematic(schematicName, location, ignoreAir, true, true);
+    }
+
+    public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities) {
+        pasteSchematic(schematicName, location, ignoreAir, copyEntities, true);
+    }
+
+    public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
+        Clipboard clipboard = getSchematicClipBoard(schematicName);
+        try (EditSession editSession = WorldEdit.getInstance().newEditSessionBuilder().world(BukkitAdapter.adapt(world)).build()) {
+            Operation operation = new ClipboardHolder(clipboard)
+                    .createPaste(editSession)
+                    .to(clipboard.getOrigin())
+                    .ignoreAirBlocks(ignoreAir)
+                    .copyEntities(copyEntities)
+                    .copyBiomes(copyBiomes)
+                    .build();
+            Operations.complete(operation);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to paste schematic", e);
+        }
+    }
+
+    public static void pasteSchematicAtOriginalPosition(String schematicName, World world) {
+        pasteSchematicAtOriginalPosition(schematicName, world, true, true, true);
+    }
+
+    public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir) {
+        pasteSchematicAtOriginalPosition(schematicName, world, ignoreAir, true, true);
+    }
+
+    public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities) {
+        pasteSchematicAtOriginalPosition(schematicName, world, ignoreAir, copyEntities, true);
     }
 }
