@@ -17,6 +17,10 @@ permissions:
           gameutils.command.join:
             description: Allow player to use /join
             default: true
+            children:
+              gameutils.command.join.others:
+                description: Allow player to join other players to a game
+                default: op
           gameutils.command.joinall:
             description: Allow player to use /joinall
             default: op
@@ -57,14 +61,14 @@ permissions:
 commands:
   join:
     description: Join a game
-    usage: /join <game>
+    usage: /join <game> [player]
     aliases: [ wan, jiaru, play ]
   joinall:
     description: Join all players to a game
     usage: /joinall <game>
   forcestop:
     description: Force stop a game
-    usage: /forcestop <game>
+    usage: /forcestop [game]
     aliases: [ fs ]
   tpgame:
     description: Teleport to the game location
