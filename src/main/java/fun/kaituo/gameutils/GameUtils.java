@@ -5,8 +5,10 @@ import fun.kaituo.gameutils.game.Game;
 import fun.kaituo.gameutils.listener.LayoutSignClickListener;
 import fun.kaituo.gameutils.listener.PlayerLogInLogOutListener;
 import fun.kaituo.gameutils.listener.ProtectionListener;
+import fun.kaituo.gameutils.util.HotbarMappingManager;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
@@ -30,6 +32,7 @@ public class GameUtils extends JavaPlugin {
         return instance;
     }
 
+    @Getter
     private final Set<Game> games = new HashSet<>();
     private final Map<UUID, Game> uuidGameMap = new HashMap<>();
 
@@ -39,15 +42,8 @@ public class GameUtils extends JavaPlugin {
         return world;
     }
 
+    @Getter
     private Game lobby;
-
-    public Set<Game> getGames() {
-        return games;
-    }
-
-    public Game getLobby() {
-        return lobby;
-    }
 
     public @Nonnull Game getGame(Player p) {
         return uuidGameMap.get(p.getUniqueId());
@@ -129,6 +125,7 @@ public class GameUtils extends JavaPlugin {
         this.world = Bukkit.getWorld("world");
 
         saveDefaultConfig();
+        HotbarMappingManager.INSTANCE.loadMappings(this);
 
         registerCommands();
         registerEvents();
@@ -146,5 +143,9 @@ public class GameUtils extends JavaPlugin {
             }
             this.lobby = (Game) lobby;
         }, 1);
+    }
+
+    public void onDisable() {
+        HotbarMappingManager.INSTANCE.saveMappings(this);
     }
 }
