@@ -32,4 +32,8 @@ change-biome-settings:
   barrier: forest
   snow: snowy_slopes
 
+hotbar-mappings:
+  33e1187b-d084-4b67-9972-5d9988ef0f4c: '012345678'
+
+
 

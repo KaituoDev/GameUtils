@@ -36,7 +36,14 @@ public class GameInventory implements ConfigurationSerializable {
 
     @SuppressWarnings("unused")
     public GameInventory(Player p) {
-        for (int i = 0; i < PLAYER_INVENTORY_SIZE; i += 1) {
+        HotbarMapping mapping = HotbarMappingManager.INSTANCE.getMapping(p.getUniqueId());
+        for (int i = 0; i < 9; i += 1) {
+            ItemStack item = p.getInventory().getItem(i);
+            if (isValidItem(item)) {
+                contents[mapping.reverseMap(i)] = item.clone();
+            }
+        }
+        for (int i = 9; i < PLAYER_INVENTORY_SIZE; i += 1) {
             ItemStack item = p.getInventory().getItem(i);
             if (isValidItem(item)) {
                 contents[i] = item.clone();
@@ -142,7 +149,16 @@ public class GameInventory implements ConfigurationSerializable {
 
     @SuppressWarnings("unused")
     public void apply(Player p) {
-        for (int i = 0; i < PLAYER_INVENTORY_SIZE; i += 1) {
+        HotbarMapping mapping = HotbarMappingManager.INSTANCE.getMapping(p.getUniqueId());
+        for (int i = 0; i < 9; i += 1) {
+            ItemStack item = getHotbar(i);
+            if (isValidItem(item)) {
+                p.getInventory().setItem(mapping.map(i), item.clone());
+                continue;
+            }
+            p.getInventory().setItem(mapping.map(i), null);
+        }
+        for (int i = 9; i < PLAYER_INVENTORY_SIZE; i += 1) {
             if (isValidItem(contents[i])) {
                 p.getInventory().setItem(i, contents[i].clone());
                 continue;

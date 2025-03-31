@@ -57,6 +57,9 @@ permissions:
           gameutils.command.clickable:
             description: Allow player to use /clickable
             default: op
+          gameutils.command.maphotbar:
+            description: Allow player to use /maphotbar
+            default: true
 
 commands:
   join:
@@ -107,3 +110,7 @@ commands:
   clickable:
     description: Set the current item in hand to be clickable / not clickable
     usage: /clickable [true/false]
+  maphotbar:
+    description: Set the hotbar mapping for the current player
+    usage: /maphotbar <Mapping(eg. 012345678)/reset>
+    aliases: [ mhb ]
