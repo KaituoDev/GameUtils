@@ -15,7 +15,7 @@ import java.util.List;
 import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
 
 @SuppressWarnings("unused")
-public class joinall extends GameUtilsCommand implements TabCompleter {
+public class JoinAll extends GameUtilsCommand implements TabCompleter {
     @Override
     public String getName() {
         return "joinall";
