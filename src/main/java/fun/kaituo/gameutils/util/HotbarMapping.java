@@ -22,6 +22,7 @@ public class HotbarMapping {
      * Check if a mapping string is valid.
      * A valid mapping string is a permutation of "123456789",
      * no repeated digits, and exactly 9 digits.
+     *
      * @param mapping The mapping string to check.
      * @return True if the mapping is valid, false otherwise.
      */
@@ -38,6 +39,7 @@ public class HotbarMapping {
      * Map a slot number to the corresponding slot in the hotbar.
      * Example: map(0) -> 4 means the ItemStack in hotbar slot 0 (the 1st slot)
      * should be put into hotbar slot 4 (the 5th slot) in game.
+     *
      * @param slot The slot number to map.
      * @return The corresponding slot in the hotbar in game.
      */
@@ -52,6 +54,7 @@ public class HotbarMapping {
      * Reverse map a slot in the hotbar to the corresponding slot number.
      * Example: reverseMap(4) -> 0 means the ItemStack in hotbar slot 4 (the 5th slot) in game
      * should be put into GameInventory slot 0.
+     *
      * @param slot The slot in the hotbar to reverse map.
      * @return The corresponding slot number in GameInventory.
      */

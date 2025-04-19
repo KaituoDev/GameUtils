@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
-
 @SuppressWarnings("unused")
 public class GameLoc extends GameUtilsCommand implements TabCompleter {
     @Override

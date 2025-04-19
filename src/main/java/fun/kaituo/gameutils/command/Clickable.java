@@ -1,5 +1,6 @@
 package fun.kaituo.gameutils.command;
 
+import fun.kaituo.gameutils.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,8 +12,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static fun.kaituo.gameutils.util.Misc.*;
 
 @SuppressWarnings("unused")
 public class Clickable extends GameUtilsCommand implements TabCompleter {
@@ -56,11 +55,11 @@ public class Clickable extends GameUtilsCommand implements TabCompleter {
         }
         boolean clickable;
         if (args.length == 0) {
-            clickable = !isClickable(item);
+            clickable = !ItemUtils.isClickable(item);
         } else {
             clickable = Boolean.parseBoolean(args[0]);
         }
-        setClickable(item, clickable);
+        ItemUtils.setClickable(item, clickable);
         p.getInventory().setItemInMainHand(item);
 
         if (clickable) {

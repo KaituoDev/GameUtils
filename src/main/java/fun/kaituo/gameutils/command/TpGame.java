@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
-
 @SuppressWarnings("unused")
 public class TpGame extends GameUtilsCommand implements TabCompleter {
     @Override
@@ -53,7 +51,7 @@ public class TpGame extends GameUtilsCommand implements TabCompleter {
             sender.sendMessage("§c找到多个名称为" + gameName + "的游戏，传送已取消！可能是游戏字母相同但大小写不同！");
             return true;
         }
-        p.teleport(matchingGames.getFirst().getLocation());
+        p.teleport(matchingGames.getFirst().getGameTeleportLocation());
         return true;
     }
 

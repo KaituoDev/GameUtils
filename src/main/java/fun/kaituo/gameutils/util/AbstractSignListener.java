@@ -21,17 +21,26 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Simple wrapper for sign interactions and text alternation.
+ */
 public abstract class AbstractSignListener implements Listener {
-    protected Location location;
-    protected List<String> lines = Arrays.asList("", "", "", "");
-    protected JavaPlugin plugin;
+    protected final Location location;
+    protected final List<String> lines = Arrays.asList("", "", "", "");
+    protected final JavaPlugin plugin;
 
     public AbstractSignListener(JavaPlugin plugin, Location location) {
         this.location = location;
         this.plugin = plugin;
-        Bukkit.getScheduler().runTaskLater(plugin, this::update, 1);
+        Bukkit.getScheduler().runTaskLater(this.plugin, this::update, 1);
     }
 
+    /**
+     * Changes the text at the corresponding line on the front.
+     *
+     * @param index The line index (0-3).
+     * @param line The new line text.
+     */
     @SuppressWarnings("unused")
     public void setLine(int index, @Nonnull String line) {
         if (index < 0 || index >= 4) {
@@ -41,6 +50,12 @@ public abstract class AbstractSignListener implements Listener {
         update();
     }
 
+    /**
+     * Returns the text at the corresponding line on the front.
+     *
+     * @param index The line index (0-3).
+     * @return The text at the corresponding line.
+     */
     @SuppressWarnings("unused")
     public @Nonnull String getLine(int index) {
         if (index < 0 || index >= 4) {
@@ -84,6 +99,9 @@ public abstract class AbstractSignListener implements Listener {
         p.playSound(p, Sound.UI_BUTTON_CLICK, 0.5f, 1);
     }
 
+    /**
+     * Updates the sign according to internal changes.
+     */
     public void update() {
         Sign sign = (Sign) location.getBlock().getState();
         for (int i = 0; i < 4; i++) {
@@ -92,8 +110,18 @@ public abstract class AbstractSignListener implements Listener {
         sign.update();
     }
 
+    /**
+     * Performs actions when the sign is right-clicked.
+     *
+     * @param e The {@link PlayerInteractEvent}.
+     */
     public abstract void onRightClick(PlayerInteractEvent e);
 
+    /**
+     * Performs actions when the sign is shift + right-clicked.
+     *
+     * @param e The {@link PlayerInteractEvent}.
+     */
     public abstract void onSneakingRightClick(PlayerInteractEvent e);
 
 

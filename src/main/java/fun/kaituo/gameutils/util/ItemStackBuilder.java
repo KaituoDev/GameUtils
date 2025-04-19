@@ -1,5 +1,6 @@
 package fun.kaituo.gameutils.util;
 
+import de.tr7zw.nbtapi.NBT;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -10,8 +11,8 @@ import java.util.Arrays;
 
 @SuppressWarnings("unused")
 public class ItemStackBuilder {
-    ItemStack stack;
-    ItemMeta meta;
+    private final ItemStack stack;
+    private final ItemMeta meta;
     
     public ItemStackBuilder(Material material) {
         stack = new ItemStack(material);
@@ -65,7 +66,21 @@ public class ItemStackBuilder {
         this.meta.setUnbreakable(unbreakable);
         return this;
     }
-    
+
+    public ItemStackBuilder setDroppable(boolean droppable) {
+        NBT.modify(this.stack, nbt -> {
+            nbt.setBoolean("droppable", droppable);
+        });
+        return this;
+    }
+
+    public ItemStackBuilder setClickable(boolean clickable) {
+        NBT.modify(this.stack, nbt -> {
+            nbt.setBoolean("clickable", clickable);
+        });
+        return this;
+    }
+
     public ItemStack build() {
         stack.setItemMeta(meta);
         return stack;

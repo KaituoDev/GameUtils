@@ -18,16 +18,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 
+/**
+ * The base toolset for constructing our minigames.
+ */
 public class GameUtils extends JavaPlugin {
-    private static GameUtils instance;
-    public static GameUtils inst() {
+    private static GameUtils instance = null;
+
+    /**
+     * Returns the GameUtils plugin instance.
+     *
+     * @return The GameUtils instance.
+     * @throws IllegalStateException If GameUtils hasn't been enabled.
+     */
+    public @Nonnull static GameUtils inst() {
+        if (instance == null) {
+            throw new IllegalStateException("GameUtils instance has not been enabled");
+        }
         return instance;
     }
 
@@ -46,6 +55,11 @@ public class GameUtils extends JavaPlugin {
 
     private World world;
 
+    /**
+     * Returns the main world of the server, namely the world named 'world'.
+     *
+     * @return The main world.
+     */
     public World getMainWorld() {
         return world;
     }
@@ -62,19 +76,43 @@ public class GameUtils extends JavaPlugin {
         return lobby;
     }
 
+    /**
+     * Returns the game that a player is a participant of.
+     *
+     * @param p The player to be queried.
+     * @return The game the player is in.
+     */
     public @Nonnull Game getGame(Player p) {
         return uuidGameMap.get(p.getUniqueId());
     }
 
+    /**
+     * Adds the player to a game.
+     *
+     * @param p The player to add.
+     * @param game The game to join.
+     */
     public void join(Player p, @Nonnull Game game) {
         game.addPlayer(p);
         uuidGameMap.put(p.getUniqueId(), game);
     }
 
+    /**
+     * Checks if the player is joining the server for the first time.
+     *
+     * @param p The player to be checked.
+     * @return Whether the player hasn't joined the server before.
+     */
     public boolean isPlayerFirstTimeJoin(Player p) {
         return !uuidGameMap.containsKey(p.getUniqueId());
     }
 
+    /**
+     * Registers a game to GameUtils' registry.
+     *
+     * @param game The game to be registered.
+     * @return Whether the registration is successful.
+     */
     public boolean registerGame(Game game) {
         if (games.contains(game)) {
             getLogger().warning(String.format("Attempting to register duplicated game: %s", game.getName()));
@@ -84,6 +122,12 @@ public class GameUtils extends JavaPlugin {
         return true;
     }
 
+    /**
+     * Unregisters a game to GameUtils' registry.
+     *
+     * @param game The game to be unregistered.
+     * @return Whether the unregistration is successful.
+     */
     public boolean unregisterGame(Game game) {
         if (!games.contains(game)) {
             getLogger().warning(String.format("Attempting to unregister non-existent game: %s", game.getName()));

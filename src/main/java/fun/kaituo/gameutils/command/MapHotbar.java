@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static fun.kaituo.gameutils.util.Misc.getMatchingCompletions;
-
 @SuppressWarnings("unused")
 public class MapHotbar extends GameUtilsCommand implements TabCompleter {
     private final List<String> completions = Arrays.asList("reset", "123456789");

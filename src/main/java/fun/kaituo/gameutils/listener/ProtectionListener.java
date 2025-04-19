@@ -1,6 +1,7 @@
 package fun.kaituo.gameutils.listener;
 
 import fun.kaituo.gameutils.GameUtils;
+import fun.kaituo.gameutils.util.ItemUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -26,8 +27,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import static fun.kaituo.gameutils.command.Rotatable.isRotatable;
-import static fun.kaituo.gameutils.util.Misc.isClickable;
-import static fun.kaituo.gameutils.util.Misc.isDroppable;
 
 public class ProtectionListener implements Listener {
 
@@ -97,7 +96,7 @@ public class ProtectionListener implements Listener {
         if (item.getAmount() == 0) {
             return;
         }
-        if (!pdie.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !isDroppable(item)) {
+        if (!pdie.getPlayer().getGameMode().equals(GameMode.CREATIVE) && !ItemUtils.isDroppable(item)) {
             pdie.setCancelled(true);
         }
     }
@@ -117,7 +116,7 @@ public class ProtectionListener implements Listener {
         if (item.getAmount() == 0) {
             return;
         }
-        if (!ice.getWhoClicked().getGameMode().equals(GameMode.CREATIVE) && !isClickable(item)) {
+        if (!ice.getWhoClicked().getGameMode().equals(GameMode.CREATIVE) && !ItemUtils.isClickable(item)) {
             ice.setCancelled(true);
         }
     }
