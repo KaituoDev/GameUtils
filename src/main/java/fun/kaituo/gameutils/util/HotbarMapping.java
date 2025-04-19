@@ -1,12 +1,16 @@
 package fun.kaituo.gameutils.util;
 
-import lombok.Getter;
-
 import java.util.Arrays;
 
 public class HotbarMapping {
-    @Getter
+
     private final String mapping;
+
+    @SuppressWarnings("unused")
+    public String getMapping() {
+        return mapping;
+    }
+
     public HotbarMapping(String mapping) {
         if (!isValidMapping(mapping)) {
             throw new IllegalArgumentException("Invalid mapping string: " + mapping);

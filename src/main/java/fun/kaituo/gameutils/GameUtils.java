@@ -8,7 +8,6 @@ import fun.kaituo.gameutils.listener.ProtectionListener;
 import fun.kaituo.gameutils.util.HotbarMappingManager;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.PluginCommand;
@@ -32,8 +31,17 @@ public class GameUtils extends JavaPlugin {
         return instance;
     }
 
-    @Getter
     private final Set<Game> games = new HashSet<>();
+
+    /**
+     * Returns registered games.
+     *
+     * @return Registered games.
+     */
+    public Set<Game> getGames() {
+        return games;
+    }
+
     private final Map<UUID, Game> uuidGameMap = new HashMap<>();
 
     private World world;
@@ -42,8 +50,17 @@ public class GameUtils extends JavaPlugin {
         return world;
     }
 
-    @Getter
     private Game lobby;
+
+    /**
+     * Returns the lobby 'game'.
+     *
+     * @see <a href="https://github.com/KaituoDev/Lobby">Lobby</a>
+     * @return The lobby 'game'.
+     */
+    public Game getLobby() {
+        return lobby;
+    }
 
     public @Nonnull Game getGame(Player p) {
         return uuidGameMap.get(p.getUniqueId());
