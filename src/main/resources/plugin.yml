@@ -60,6 +60,9 @@ permissions:
           gameutils.command.maphotbar:
             description: Allow player to use /maphotbar
             default: true
+          gameutils.command.align:
+            description: Allow player to use /align reload
+            default: op
 
 commands:
   join:
@@ -114,3 +117,6 @@ commands:
     description: Set the hotbar mapping for the current player
     usage: /maphotbar <Mapping(eg. 012345678)/reset>
     aliases: [ mhb ]
+  align:
+    description: Align the current position to axis.
+    usage: /align
