@@ -12,17 +12,29 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>Join class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class Join extends GameUtilsCommand implements TabCompleter {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "join";
     }
 
+    /**
+     * <p>getOthersPermissionString.</p>
+     *
+     * @return a {@link java.lang.String} object
+     */
     public String getOthersPermissionString() {
         return getPermissionString() + ".others";
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {
@@ -80,6 +92,7 @@ public class Join extends GameUtilsCommand implements TabCompleter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {

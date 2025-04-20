@@ -16,17 +16,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>ChangeBiome class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
     private final List<String> biomeNames = new ArrayList<>();
     private final List<String> modes = Arrays.asList("circular", "square");
     private final List<String> exampleRadii = Arrays.asList("16", "32", "64", "128", "256");
 
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "changebiome";
     }
 
+    /**
+     * <p>Constructor for ChangeBiome.</p>
+     */
     public ChangeBiome() {
         biomeNames.add("auto");
         for (Biome b : Biome.values()) {
@@ -34,6 +43,7 @@ public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
         }
     }
 
+    /** {@inheritDoc} */
     @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
@@ -133,6 +143,7 @@ public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {

@@ -11,15 +11,28 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>GameInventory class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class GameInventory implements ConfigurationSerializable {
+    /** Constant <code>PLAYER_INVENTORY_SIZE=41</code> */
     public static final int PLAYER_INVENTORY_SIZE = 41;
+    /** Constant <code>HOTBAR_OFFSET=0</code> */
     public static final int HOTBAR_OFFSET = 0;
+    /** Constant <code>STORAGE_OFFSET=9</code> */
     public static final int STORAGE_OFFSET = 9;
+    /** Constant <code>HEAD_SLOT=39</code> */
     public static final int HEAD_SLOT = 39;
+    /** Constant <code>CHEST_SLOT=38</code> */
     public static final int CHEST_SLOT = 38;
+    /** Constant <code>LEGS_SLOT=37</code> */
     public static final int LEGS_SLOT = 37;
+    /** Constant <code>FEET_SLOT=36</code> */
     public static final int FEET_SLOT = 36;
+    /** Constant <code>OFF_HAND_SLOT=40</code> */
     public static final int OFF_HAND_SLOT = 40;
 
     private final ItemStack[] contents = new ItemStack[PLAYER_INVENTORY_SIZE];
@@ -32,9 +45,17 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     @SuppressWarnings("unused")
+    /**
+     * <p>Constructor for GameInventory.</p>
+     */
     public GameInventory() {}
 
     @SuppressWarnings("unused")
+    /**
+     * <p>Constructor for GameInventory.</p>
+     *
+     * @param p a {@link org.bukkit.entity.Player} object
+     */
     public GameInventory(Player p) {
         HotbarMapping mapping = HotbarMappingManager.INSTANCE.getMapping(p.getUniqueId());
         for (int i = 0; i < 9; i += 1) {
@@ -51,10 +72,20 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getHead.</p>
+     *
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getHead() {
         return contents[HEAD_SLOT];
     }
 
+    /**
+     * <p>setHead.</p>
+     *
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setHead(@Nullable ItemStack item) {
         if (isValidItem(item)) {
             contents[HEAD_SLOT] = item.clone();
@@ -63,10 +94,20 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getChest.</p>
+     *
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getChest() {
         return contents[CHEST_SLOT];
     }
 
+    /**
+     * <p>setChest.</p>
+     *
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setChest(@Nullable ItemStack item) {
         if (isValidItem(item)) {
             contents[CHEST_SLOT] = item.clone();
@@ -75,10 +116,20 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getLegs.</p>
+     *
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getLegs() {
         return contents[LEGS_SLOT];
     }
 
+    /**
+     * <p>setLegs.</p>
+     *
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setLegs(@Nullable ItemStack item) {
         if (isValidItem(item)) {
             contents[LEGS_SLOT] = item.clone();
@@ -87,10 +138,20 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getFeet.</p>
+     *
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getFeet() {
         return contents[FEET_SLOT];
     }
 
+    /**
+     * <p>setFeet.</p>
+     *
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setFeet(@Nullable ItemStack item) {
         if (isValidItem(item)) {
             contents[FEET_SLOT] = item.clone();
@@ -99,10 +160,20 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getOffHand.</p>
+     *
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getOffHand() {
         return contents[OFF_HAND_SLOT];
     }
 
+    /**
+     * <p>setOffHand.</p>
+     *
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setOffHand(@Nullable ItemStack item) {
         if (isValidItem(item)) {
             contents[OFF_HAND_SLOT] = item.clone();
@@ -111,6 +182,12 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getHotbar.</p>
+     *
+     * @param index a int
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getHotbar(int index) {
         if (index < 0 || index >= 9) {
             throw new IllegalArgumentException("Hotbar index can only be 0-8");
@@ -118,6 +195,12 @@ public class GameInventory implements ConfigurationSerializable {
         return contents[index + HOTBAR_OFFSET];
     }
 
+    /**
+     * <p>setHotbar.</p>
+     *
+     * @param index a int
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setHotbar(int index, @Nullable ItemStack item) {
         if (index < 0 || index >= 9) {
             throw new IllegalArgumentException("Hotbar index can only be 0-8");
@@ -129,6 +212,12 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>getStorage.</p>
+     *
+     * @param index a int
+     * @return a {@link org.bukkit.inventory.ItemStack} object
+     */
     public @Nullable ItemStack getStorage(int index) {
         if (index < 0 || index >= 27) {
             throw new IllegalArgumentException("Storage index can only be 0-26");
@@ -136,6 +225,12 @@ public class GameInventory implements ConfigurationSerializable {
         return contents[index + STORAGE_OFFSET];
     }
 
+    /**
+     * <p>setStorage.</p>
+     *
+     * @param index a int
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     */
     public void setStorage(int index, @Nullable ItemStack item) {
         if (index < 0 || index >= 27) {
             throw new IllegalArgumentException("Storage index can only be 0-26");
@@ -147,6 +242,11 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * <p>apply.</p>
+     *
+     * @param p a {@link org.bukkit.entity.Player} object
+     */
     @SuppressWarnings("unused")
     public void apply(Player p) {
         HotbarMapping mapping = HotbarMappingManager.INSTANCE.getMapping(p.getUniqueId());
@@ -167,6 +267,7 @@ public class GameInventory implements ConfigurationSerializable {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public @Nonnull Map<String, Object> serialize() {
         Map<String, Object> serialized = new HashMap<>();
@@ -208,6 +309,12 @@ public class GameInventory implements ConfigurationSerializable {
         return serialized;
     }
 
+    /**
+     * <p>deserialize.</p>
+     *
+     * @param serialized a {@link java.util.Map} object
+     * @return a {@link fun.kaituo.gameutils.util.GameInventory} object
+     */
     @SuppressWarnings({"unused"})
     public static GameInventory deserialize(Map<String, Object> serialized) {
         GameInventory deserialized = new GameInventory();

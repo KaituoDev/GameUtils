@@ -8,8 +8,14 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 
+/**
+ * <p>Layout class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class Layout extends GameUtilsCommand {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "layout";
@@ -17,10 +23,14 @@ public class Layout extends GameUtilsCommand {
 
     private final Location LAYOUT_LOCATION;
 
+    /**
+     * <p>Constructor for Layout.</p>
+     */
     public Layout() {
         LAYOUT_LOCATION = new Location(GameUtils.inst().getMainWorld(), -21, 17, 77, 180, 0);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {

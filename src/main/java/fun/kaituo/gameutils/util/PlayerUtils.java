@@ -12,6 +12,12 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * <p>PlayerUtils class.</p>
+ *
+ * @author DELL
+ * @since 2.0.1
+ */
 public class PlayerUtils {
     private static final Random RANDOM = new Random();
     private static final Color[] fireworkColors = {

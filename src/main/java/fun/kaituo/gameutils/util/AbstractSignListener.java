@@ -23,12 +23,20 @@ import java.util.List;
 
 /**
  * Simple wrapper for sign interactions and text alternation.
+ *
+ * @author DELL
  */
 public abstract class AbstractSignListener implements Listener {
     protected final Location location;
     protected final List<String> lines = Arrays.asList("", "", "", "");
     protected final JavaPlugin plugin;
 
+    /**
+     * <p>Constructor for AbstractSignListener.</p>
+     *
+     * @param plugin a {@link org.bukkit.plugin.java.JavaPlugin} object
+     * @param location a {@link org.bukkit.Location} object
+     */
     public AbstractSignListener(JavaPlugin plugin, Location location) {
         this.location = location;
         this.plugin = plugin;
@@ -64,6 +72,11 @@ public abstract class AbstractSignListener implements Listener {
         return lines.get(index);
     }
 
+    /**
+     * <p>onPlayerInteract.</p>
+     *
+     * @param e a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player p = e.getPlayer();
@@ -113,14 +126,14 @@ public abstract class AbstractSignListener implements Listener {
     /**
      * Performs actions when the sign is right-clicked.
      *
-     * @param e The {@link PlayerInteractEvent}.
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent}.
      */
     public abstract void onRightClick(PlayerInteractEvent e);
 
     /**
      * Performs actions when the sign is shift + right-clicked.
      *
-     * @param e The {@link PlayerInteractEvent}.
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent}.
      */
     public abstract void onSneakingRightClick(PlayerInteractEvent e);
 

@@ -11,8 +11,18 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 // Note: This class does not listen for joining or quitting a GAME!
 // It listens for players joining or quitting the SERVER.
+/**
+ * <p>PlayerLogInLogOutListener class.</p>
+ *
+ * @author DELL
+ */
 public class PlayerLogInLogOutListener implements Listener {
 
+    /**
+     * <p>onLogIn.</p>
+     *
+     * @param e a {@link org.bukkit.event.player.PlayerJoinEvent} object
+     */
     @EventHandler
     public void onLogIn(PlayerJoinEvent e) {
         Player p = e.getPlayer();
@@ -32,6 +42,11 @@ public class PlayerLogInLogOutListener implements Listener {
         }, 20);
     }
 
+    /**
+     * <p>onLogOut.</p>
+     *
+     * @param e a {@link org.bukkit.event.player.PlayerQuitEvent} object
+     */
     @EventHandler
     public void onLogOut(PlayerQuitEvent e) {
         Player p = e.getPlayer();

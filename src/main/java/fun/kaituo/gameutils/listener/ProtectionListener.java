@@ -28,14 +28,27 @@ import org.bukkit.inventory.ItemStack;
 
 import static fun.kaituo.gameutils.command.Rotatable.isRotatable;
 
+/**
+ * <p>ProtectionListener class.</p>
+ *
+ * @author DELL
+ */
 public class ProtectionListener implements Listener {
 
     private final FileConfiguration c;
 
+    /**
+     * <p>Constructor for ProtectionListener.</p>
+     */
     public ProtectionListener() {
         this.c = GameUtils.inst().getConfig();
     }
 
+    /**
+     * <p>preventFireworkDamage.</p>
+     *
+     * @param edbee a {@link org.bukkit.event.entity.EntityDamageByEntityEvent} object
+     */
     @EventHandler
     public void preventFireworkDamage(EntityDamageByEntityEvent edbee) {
         if (!c.getBoolean("no-firework-damage")) {
@@ -48,6 +61,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventDestroyingPainting.</p>
+     *
+     * @param hbbee a {@link org.bukkit.event.hanging.HangingBreakByEntityEvent} object
+     */
     @EventHandler
     public void preventDestroyingPainting(HangingBreakByEntityEvent hbbee) {
         if (!c.getBoolean("no-destroy-painting")) {
@@ -61,6 +79,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventManipulatingArmorStand.</p>
+     *
+     * @param pasme a {@link org.bukkit.event.player.PlayerArmorStandManipulateEvent} object
+     */
     @EventHandler
     public void preventManipulatingArmorStand(PlayerArmorStandManipulateEvent pasme) {
         if (!c.getBoolean("no-armourstand-manipulation")) {
@@ -71,6 +94,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventItemFrameRotation.</p>
+     *
+     * @param piee a {@link org.bukkit.event.player.PlayerInteractEntityEvent} object
+     */
     @EventHandler
     public void preventItemFrameRotation(PlayerInteractEntityEvent piee) {
         if (!c.getBoolean("no-item-frame-rotation")) {
@@ -84,6 +112,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventItemDrop.</p>
+     *
+     * @param pdie a {@link org.bukkit.event.player.PlayerDropItemEvent} object
+     */
     @EventHandler
     public void preventItemDrop(PlayerDropItemEvent pdie) {
         if (!c.getBoolean("no-item-drop")) {
@@ -101,6 +134,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventItemClick.</p>
+     *
+     * @param ice a {@link org.bukkit.event.inventory.InventoryClickEvent} object
+     */
     @EventHandler
     public void preventItemClick(InventoryClickEvent ice) {
         if (!c.getBoolean("no-item-click")) {
@@ -121,6 +159,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventSpecialBlockInteraction.</p>
+     *
+     * @param pie a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     */
     @EventHandler
     public void preventSpecialBlockInteraction(PlayerInteractEvent pie) {
         if (!c.getBoolean("no-special-block-interaction")) {
@@ -143,6 +186,11 @@ public class ProtectionListener implements Listener {
     }
 
 
+    /**
+     * <p>invulnerablePainting.</p>
+     *
+     * @param hpe a {@link org.bukkit.event.hanging.HangingPlaceEvent} object
+     */
     @EventHandler
     public void invulnerablePainting(HangingPlaceEvent hpe) {
         if (!c.getBoolean("invulnerable-painting-on-spawn")) {
@@ -153,6 +201,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>invulnerableStand.</p>
+     *
+     * @param ese a {@link org.bukkit.event.entity.EntitySpawnEvent} object
+     */
     @EventHandler
     public void invulnerableStand(EntitySpawnEvent ese) {
         if (!c.getBoolean("invulnerable-armourstand-on-spawn")) {
@@ -163,6 +216,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>invulnerableItemFrame.</p>
+     *
+     * @param ese a {@link org.bukkit.event.entity.EntitySpawnEvent} object
+     */
     @EventHandler
     public void invulnerableItemFrame(EntitySpawnEvent ese) {
         if (!c.getBoolean("invulnerable-item-frame-on-spawn")) {
@@ -175,6 +233,11 @@ public class ProtectionListener implements Listener {
     }
 
 
+    /**
+     * <p>cancelEggSpawn.</p>
+     *
+     * @param cse a {@link org.bukkit.event.entity.CreatureSpawnEvent} object
+     */
     @EventHandler
     public void cancelEggSpawn(CreatureSpawnEvent cse) { //防止鸡蛋生成鸡
         if (!c.getBoolean("no-chicken-from-egg")) {
@@ -185,6 +248,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>preventSnowFormation.</p>
+     *
+     * @param bfe a {@link org.bukkit.event.block.BlockFormEvent} object
+     */
     @EventHandler
     public void preventSnowFormation(BlockFormEvent bfe) {
         if (!c.getBoolean("no-snow-and-ice-formation")) {
@@ -195,6 +263,11 @@ public class ProtectionListener implements Listener {
         }
     }
 
+    /**
+     * <p>noSilverfishBurrow.</p>
+     *
+     * @param ecbe a {@link org.bukkit.event.entity.EntityChangeBlockEvent} object
+     */
     @EventHandler
     public void noSilverfishBurrow(EntityChangeBlockEvent ecbe) {
         if (!c.getBoolean("no-silverfish-burrow")) {

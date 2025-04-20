@@ -12,16 +12,29 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * <p>LayoutSignClickListener class.</p>
+ *
+ * @author DELL
+ */
 public class LayoutSignClickListener implements Listener {
     private static final int MAX_X_OFFSET = 7;
     private static final int MAX_Y_OFFSET = 8;
     private static final int DEFAULT_Y = 100;
     private final Location centerSignLocation;
 
+    /**
+     * <p>Constructor for LayoutSignClickListener.</p>
+     */
     public LayoutSignClickListener() {
         centerSignLocation = new Location(GameUtils.inst().getMainWorld(), -21, 23, 74);
     }
 
+    /**
+     * <p>onLayoutSignCLick.</p>
+     *
+     * @param e a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     */
     @EventHandler
     public void onLayoutSignCLick(PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {

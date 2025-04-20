@@ -5,7 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import java.util.List;
 
 /**
- * An implementation of the {@link CommandExecutor}, with custom permission strings.
+ * An implementation of the {@link org.bukkit.command.CommandExecutor}, with custom permission strings.
+ *
+ * @author DELL
  */
 public abstract class GameUtilsCommand implements CommandExecutor {
     /**
@@ -30,6 +32,14 @@ public abstract class GameUtilsCommand implements CommandExecutor {
         return PERMISSION_PREFIX + getName();
     }
 
+    /**
+     * <p>getMatchingCompletions.</p>
+     *
+     * @param partialArg a {@link java.lang.String} object
+     * @param completions a {@link java.util.List} object
+     * @return a {@link java.util.List} object
+     * @since 2.0.1
+     */
     protected List<String> getMatchingCompletions(String partialArg, List<String> completions) {
         return completions.stream().filter(completion ->
                 completion.toLowerCase().startsWith(partialArg.toLowerCase())).toList();

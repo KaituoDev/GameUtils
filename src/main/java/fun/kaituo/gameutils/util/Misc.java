@@ -17,13 +17,17 @@ import java.util.Set;
  * @see WorldEditUtils
  * @see ItemStackBuilder
  * @see fun.kaituo.gameutils.command.GameUtilsCommand GameUtilsCommand
+ * @author DELL
  */
 @Deprecated
 @SuppressWarnings("unused")
 public class Misc {
 
     /**
-     * @deprecated Use {@link ItemUtils#getMenu()} instead.
+     * <p>getMenu.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#getMenu()} instead.
+     * @return a {@link org.bukkit.inventory.ItemStack} object
      */
     @Deprecated
     public static ItemStack getMenu() {
@@ -31,7 +35,10 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link PlayerUtils#spawnFirework(Player)} instead.
+     * <p>spawnFirework.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#spawnFirework(Player)} instead.
+     * @param p a {@link org.bukkit.entity.Player} object
      */
     @Deprecated
     public static void spawnFirework(Player p) {
@@ -39,7 +46,12 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link PlayerUtils#spawnFireworks(Player, Game)} instead.
+     * <p>spawnFireworks.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#spawnFireworks(Player, Game)} instead.
+     * @param p a {@link org.bukkit.entity.Player} object
+     * @param game a {@link fun.kaituo.gameutils.game.Game} object
+     * @return a {@link java.util.Set} object
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -48,7 +60,15 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link PlayerUtils#displayCountdown(Player, int, String, String, Game)} instead.
+     * <p>displayCountdown.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#displayCountdown(Player, int, String, String, Game)} instead.
+     * @param p a {@link org.bukkit.entity.Player} object
+     * @param countdownSeconds a int
+     * @param countdownTitle a {@link java.lang.String} object
+     * @param finishTitle a {@link java.lang.String} object
+     * @param game a {@link fun.kaituo.gameutils.game.Game} object
+     * @return a {@link java.util.Set} object
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -57,7 +77,13 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link PlayerUtils#displayCountdown(Player, int, Game)} instead.
+     * <p>displayCountdown.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#displayCountdown(Player, int, Game)} instead.
+     * @param p a {@link org.bukkit.entity.Player} object
+     * @param countDownSeconds a int
+     * @param game a {@link fun.kaituo.gameutils.game.Game} object
+     * @return a {@link java.util.Set} object
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -66,7 +92,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link ItemUtils#isDroppable(ItemStack)} instead.
+     * <p>isDroppable.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#isDroppable(ItemStack)} instead.
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @return a boolean
      */
     @Deprecated
     public static boolean isDroppable(ItemStack item) {
@@ -74,7 +104,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link ItemUtils#setDroppable(ItemStack, boolean)} instead.
+     * <p>setDroppable.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#setDroppable(ItemStack, boolean)} instead.
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param droppable a boolean
      */
     @Deprecated
     public static void setDroppable(ItemStack item, boolean droppable) {
@@ -82,7 +116,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link ItemUtils#isClickable(ItemStack)} instead.
+     * <p>isClickable.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#isClickable(ItemStack)} instead.
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @return a boolean
      */
     @Deprecated
     public static boolean isClickable(ItemStack item) {
@@ -90,7 +128,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link ItemUtils#setClickable(ItemStack, boolean)} instead.
+     * <p>setClickable.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#setClickable(ItemStack, boolean)} instead.
+     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param clickable a boolean
      */
     @Deprecated
     public static void setClickable(ItemStack item, boolean clickable) {
@@ -98,7 +140,14 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematic(String, Location, boolean, boolean, boolean)} instead.
+     * <p>pasteSchematic.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean, boolean, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param location a {@link org.bukkit.Location} object
+     * @param ignoreAir a boolean
+     * @param copyEntities a boolean
+     * @param copyBiomes a boolean
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
@@ -106,7 +155,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematic(String, Location)} instead.
+     * <p>pasteSchematic.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param location a {@link org.bukkit.Location} object
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location) {
@@ -114,7 +167,12 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematic(String, Location, boolean)} instead.
+     * <p>pasteSchematic.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param location a {@link org.bukkit.Location} object
+     * @param ignoreAir a boolean
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir) {
@@ -122,7 +180,13 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematic(String, Location, boolean, boolean)} instead.
+     * <p>pasteSchematic.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param location a {@link org.bukkit.Location} object
+     * @param ignoreAir a boolean
+     * @param copyEntities a boolean
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities) {
@@ -130,7 +194,14 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean, boolean)} instead.
+     * <p>pasteSchematicAtOriginalPosition.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param world a {@link org.bukkit.World} object
+     * @param ignoreAir a boolean
+     * @param copyEntities a boolean
+     * @param copyBiomes a boolean
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
@@ -138,7 +209,11 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematicAtOriginalPosition(String, World)} instead.
+     * <p>pasteSchematicAtOriginalPosition.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param world a {@link org.bukkit.World} object
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world) {
@@ -146,7 +221,12 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean)} instead.
+     * <p>pasteSchematicAtOriginalPosition.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param world a {@link org.bukkit.World} object
+     * @param ignoreAir a boolean
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir) {
@@ -154,7 +234,13 @@ public class Misc {
     }
 
     /**
-     * @deprecated Use {@link WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean)} instead.
+     * <p>pasteSchematicAtOriginalPosition.</p>
+     *
+     * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean)} instead.
+     * @param schematicName a {@link java.lang.String} object
+     * @param world a {@link org.bukkit.World} object
+     * @param ignoreAir a boolean
+     * @param copyEntities a boolean
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities) {

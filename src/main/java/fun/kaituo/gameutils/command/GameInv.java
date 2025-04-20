@@ -13,8 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>GameInv class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class GameInv extends GameUtilsCommand implements TabCompleter {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "gameinv";
@@ -22,6 +28,7 @@ public class GameInv extends GameUtilsCommand implements TabCompleter {
 
     private final List<String> actions = Arrays.asList("save", "apply", "remove");
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {
@@ -69,8 +76,8 @@ public class GameInv extends GameUtilsCommand implements TabCompleter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
-
     public List<String> onTabComplete(@Nonnull CommandSender sender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {
             return new ArrayList<>();

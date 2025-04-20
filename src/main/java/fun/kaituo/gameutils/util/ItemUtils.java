@@ -7,14 +7,19 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 
+/**
+ * <p>ItemUtils class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class ItemUtils {
     /**
      * Checks if an inventory contains a certain item, regardless of the amount.
      *
-     * @param inv The {@link Inventory} to check.
-     * @param item The {@link ItemStack} to check for.
-     *             This {@link ItemStack} instance's amount attribute will be ignored.
+     * @param inv The {@link org.bukkit.inventory.Inventory} to check.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to check for.
+     *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      * @return Whether the inventory contains the item.
      */
     public static boolean containsItem(Inventory inv, ItemStack item) {
@@ -36,13 +41,12 @@ public class ItemUtils {
     /**
      * Checks if an inventory contains a certain amount of a certain item.
      *
-     * @param inv The {@link Inventory} to check.
-     * @param item The {@link ItemStack} to check for.
-     *             This {@link ItemStack} instance's amount attribute will be ignored.
+     * @param inv The {@link org.bukkit.inventory.Inventory} to check.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to check for.
+     *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      * @param itemAmount The amount of the item to check for.
      * @return Whether the inventory contains at least the specified amount of the item.
-     *
-     * @apiNote This method serves a different purpose from {@link Inventory#contains(ItemStack, int)}.
+     * @apiNote This method serves a different purpose from {@link org.bukkit.inventory.Inventory#contains(ItemStack, int)}.
      * It does not check for the number of ItemStacks that exactly match the input ItemStack.
      * Instead, it checks for the sum of amount for all ItemStacks that are similar to the input ItemStack.
      */
@@ -69,9 +73,9 @@ public class ItemUtils {
     /**
      * Removes one certain item from an inventory.
      *
-     * @param inv The {@link Inventory} to remove the item from.
-     * @param item The {@link ItemStack} to remove.
-     *             This {@link ItemStack} instance's amount attribute will be ignored.
+     * @param inv The {@link org.bukkit.inventory.Inventory} to remove the item from.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to remove.
+     *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      */
     public static void removeItem(Inventory inv, ItemStack item) {
         removeItem(inv, item, 1);
@@ -80,11 +84,10 @@ public class ItemUtils {
     /**
      * Remove a certain amount of a certain item from an inventory.
      *
-     * @param inv The {@link Inventory} to remove the item from.
-     * @param item The {@link ItemStack} to remove.
-     *             This {@link ItemStack} instance's amount attribute will be ignored.
+     * @param inv The {@link org.bukkit.inventory.Inventory} to remove the item from.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to remove.
+     *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      * @param itemAmount The amount of the item to remove.
-     *
      * @apiNote This method does not remove the given number of ItemStacks that exactly match the input ItemStack.
      * Instead, it removes items that are similar to the input ItemStack until the specified amount is removed.
      */
@@ -124,6 +127,7 @@ public class ItemUtils {
      * Returns a new instance of the menu item.
      *
      * @return A new instance of the menu item.
+     * @since 2.0.1
      */
     public static ItemStack getMenu() {
         return new ItemStackBuilder(Material.CLOCK).setDisplayName("§e● §b§l菜单 §e●").setLore("§f请右键打开!").build();
@@ -132,8 +136,9 @@ public class ItemUtils {
     /**
      * Returns if the item is droppable.
      *
-     * @param item The {@link ItemStack} to be checked.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be checked.
      * @return Whether this item is droppable.
+     * @since 2.0.1
      */
     public static boolean isDroppable(ItemStack item) {
         return NBT.get(item, nbt ->
@@ -144,8 +149,9 @@ public class ItemUtils {
     /**
      * Sets if the item is droppable.
      *
-     * @param item The {@link ItemStack} to be set.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be set.
      * @param droppable Whether this item is droppable.
+     * @since 2.0.1
      */
     public static void setDroppable(ItemStack item, boolean droppable) {
         NBT.modify(item, nbt -> {
@@ -156,8 +162,9 @@ public class ItemUtils {
     /**
      * Returns if the item is clickable.
      *
-     * @param item The {@link ItemStack} to be checked.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be checked.
      * @return Whether this item is clickable.
+     * @since 2.0.1
      */
     public static boolean isClickable(ItemStack item) {
         return NBT.get(item, nbt ->
@@ -168,8 +175,9 @@ public class ItemUtils {
     /**
      * Sets if the item is clickable.
      *
-     * @param item The {@link ItemStack} to be set.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be set.
      * @param clickable Whether this item is clickable.
+     * @since 2.0.1
      */
     public static void setClickable(ItemStack item, boolean clickable) {
         NBT.modify(item, nbt -> {

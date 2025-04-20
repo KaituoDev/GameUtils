@@ -7,14 +7,23 @@ import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 
+/**
+ * <p>Align class.</p>
+ *
+ * @author DELL
+ * @since 2.0.1
+ */
 public class Align extends GameUtilsCommand {
+    /** Constant <code>PITCH_ALIGN_THRESHOLD=20f</code> */
     public static final float PITCH_ALIGN_THRESHOLD = 20f;
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "align";
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {

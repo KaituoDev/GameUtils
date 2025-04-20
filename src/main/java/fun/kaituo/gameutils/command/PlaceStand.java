@@ -14,13 +14,20 @@ import org.bukkit.util.RayTraceResult;
 
 import javax.annotation.Nonnull;
 
+/**
+ * <p>PlaceStand class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class PlaceStand extends GameUtilsCommand {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "placestand";
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {

@@ -23,6 +23,8 @@ import java.util.*;
 
 /**
  * The base toolset for constructing our minigames.
+ *
+ * @author DELL
  */
 public class GameUtils extends JavaPlugin {
     private static GameUtils instance = null;
@@ -31,7 +33,7 @@ public class GameUtils extends JavaPlugin {
      * Returns the GameUtils plugin instance.
      *
      * @return The GameUtils instance.
-     * @throws IllegalStateException If GameUtils hasn't been enabled.
+     * @throws java.lang.IllegalStateException If GameUtils hasn't been enabled.
      */
     public @Nonnull static GameUtils inst() {
         if (instance == null) {
@@ -179,6 +181,7 @@ public class GameUtils extends JavaPlugin {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onEnable() {
         // Prepare the static instance
@@ -206,6 +209,9 @@ public class GameUtils extends JavaPlugin {
         }, 1);
     }
 
+    /**
+     * <p>onDisable.</p>
+     */
     public void onDisable() {
         HotbarMappingManager.INSTANCE.saveMappings(this);
     }

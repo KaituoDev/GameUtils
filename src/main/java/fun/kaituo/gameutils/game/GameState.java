@@ -4,6 +4,8 @@ import org.bukkit.entity.Player;
 
 /**
  * Represents a state that the game can be in.
+ *
+ * @author DELL
  */
 public interface GameState {
 
@@ -11,7 +13,7 @@ public interface GameState {
      * Enters the state.
      * <p>
      * This method is called once automatically when the game enters
-     * the state using {@link Game#setState(GameState)}.
+     * the state using {@link fun.kaituo.gameutils.game.Game#setState(GameState)}.
      */
     void enter();
 
@@ -19,7 +21,7 @@ public interface GameState {
      * Exits from the state.
      * <p>
      * This method is called once automatically when the game exits
-     * from the state using {@link Game#setState(GameState)}.
+     * from the state using {@link fun.kaituo.gameutils.game.Game#setState(GameState)}.
      */
     void exit();
 

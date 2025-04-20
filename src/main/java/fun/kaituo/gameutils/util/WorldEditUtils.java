@@ -17,6 +17,12 @@ import org.bukkit.World;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * <p>WorldEditUtils class.</p>
+ *
+ * @author DELL
+ * @since 2.0.1
+ */
 public class WorldEditUtils {
     private static Clipboard getSchematicClipBoard(String schematicName) {
         File file = new File("plugins/WorldEdit/schematics/" + schematicName + ".schem");

@@ -9,13 +9,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * <p>HotbarMappingManager class.</p>
+ *
+ * @author DELL
+ */
 public class HotbarMappingManager {
+    /** Constant <code>CONFIG_SECTION_NAME="hotbar-mappings"</code> */
     public static final String CONFIG_SECTION_NAME = "hotbar-mappings";
+    /** Constant <code>INSTANCE</code> */
     public static final HotbarMappingManager INSTANCE = new HotbarMappingManager();
     private HotbarMappingManager() {}
 
     private final Map<UUID, HotbarMapping> mappings = new HashMap<>();
 
+    /**
+     * <p>loadMappings.</p>
+     *
+     * @param plugin a {@link fun.kaituo.gameutils.GameUtils} object
+     */
     public void loadMappings(GameUtils plugin) {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection(CONFIG_SECTION_NAME);
         if (section == null) {
@@ -28,6 +40,11 @@ public class HotbarMappingManager {
         }
     }
 
+    /**
+     * <p>saveMappings.</p>
+     *
+     * @param plugin a {@link fun.kaituo.gameutils.GameUtils} object
+     */
     public void saveMappings(GameUtils plugin) {
         FileConfiguration config = plugin.getConfig();
         ConfigurationSection section = config.getConfigurationSection(CONFIG_SECTION_NAME);
@@ -42,15 +59,32 @@ public class HotbarMappingManager {
         plugin.saveConfig();
     }
 
+    /**
+     * <p>setMapping.</p>
+     *
+     * @param id a {@link java.util.UUID} object
+     * @param mappingString a {@link java.lang.String} object
+     */
     public void setMapping(UUID id, String mappingString) {
         HotbarMapping mapping = new HotbarMapping(mappingString);
         mappings.put(id, mapping);
     }
 
+    /**
+     * <p>resetMapping.</p>
+     *
+     * @param id a {@link java.util.UUID} object
+     */
     public void resetMapping(UUID id) {
         mappings.remove(id);
     }
 
+    /**
+     * <p>getMapping.</p>
+     *
+     * @param id a {@link java.util.UUID} object
+     * @return a {@link fun.kaituo.gameutils.util.HotbarMapping} object
+     */
     public @Nonnull HotbarMapping getMapping(UUID id) {
         return mappings.getOrDefault(id, new HotbarMapping("123456789"));
     }

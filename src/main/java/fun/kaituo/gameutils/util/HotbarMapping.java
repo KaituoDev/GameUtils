@@ -2,15 +2,30 @@ package fun.kaituo.gameutils.util;
 
 import java.util.Arrays;
 
+/**
+ * <p>HotbarMapping class.</p>
+ *
+ * @author DELL
+ */
 public class HotbarMapping {
 
     private final String mapping;
 
+    /**
+     * <p>Getter for the field <code>mapping</code>.</p>
+     *
+     * @return a {@link java.lang.String} object
+     */
     @SuppressWarnings("unused")
     public String getMapping() {
         return mapping;
     }
 
+    /**
+     * <p>Constructor for HotbarMapping.</p>
+     *
+     * @param mapping a {@link java.lang.String} object
+     */
     public HotbarMapping(String mapping) {
         if (!isValidMapping(mapping)) {
             throw new IllegalArgumentException("Invalid mapping string: " + mapping);
@@ -65,6 +80,7 @@ public class HotbarMapping {
         return mapping.toCharArray()[slot] - '0' - 1;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return mapping;

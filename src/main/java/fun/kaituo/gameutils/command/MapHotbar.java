@@ -12,15 +12,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>MapHotbar class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class MapHotbar extends GameUtilsCommand implements TabCompleter {
     private final List<String> completions = Arrays.asList("reset", "123456789");
 
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "maphotbar";
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {
@@ -52,6 +59,7 @@ public class MapHotbar extends GameUtilsCommand implements TabCompleter {
         sender.sendMessage("§a成功设置快捷栏映射为" + mapping + "！");
         return true;
     }
+    /** {@inheritDoc} */
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {

@@ -13,8 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>Clickable class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class Clickable extends GameUtilsCommand implements TabCompleter {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "clickable";
@@ -22,6 +28,7 @@ public class Clickable extends GameUtilsCommand implements TabCompleter {
 
     private final List<String> booleans = Arrays.asList("true", "false");
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {
@@ -70,6 +77,7 @@ public class Clickable extends GameUtilsCommand implements TabCompleter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {

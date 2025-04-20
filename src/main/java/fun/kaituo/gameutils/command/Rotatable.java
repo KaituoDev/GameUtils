@@ -14,8 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>Rotatable class.</p>
+ *
+ * @author DELL
+ */
 @SuppressWarnings("unused")
 public class Rotatable extends GameUtilsCommand implements TabCompleter {
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return "rotatable";
@@ -23,16 +29,29 @@ public class Rotatable extends GameUtilsCommand implements TabCompleter {
 
     private final List<String> booleans = Arrays.asList("true", "false");
 
+    /**
+     * <p>isRotatable.</p>
+     *
+     * @param frame a {@link org.bukkit.entity.ItemFrame} object
+     * @return a boolean
+     */
     public static boolean isRotatable(ItemFrame frame) {
         return NBT.getPersistentData(frame, nbt -> nbt.getBoolean("rotatable"));
     }
 
+    /**
+     * <p>setRotatable.</p>
+     *
+     * @param frame a {@link org.bukkit.entity.ItemFrame} object
+     * @param rotatable a boolean
+     */
     public static void setRotatable(ItemFrame frame, boolean rotatable) {
         NBT.modifyPersistentData(frame, nbt -> {
             nbt.setBoolean("rotatable", rotatable);
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean onCommand(@Nonnull CommandSender sender, Command cmd, @Nonnull String label, @Nonnull String[] args) {
         if (!cmd.getName().equalsIgnoreCase(getName())) {
@@ -86,6 +105,7 @@ public class Rotatable extends GameUtilsCommand implements TabCompleter {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<String> onTabComplete(@Nonnull CommandSender commandSender, Command command, @Nonnull String alias, @Nonnull String[] args) {
         if (!command.getName().equalsIgnoreCase(getName())) {

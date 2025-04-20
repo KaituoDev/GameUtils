@@ -15,6 +15,8 @@ import java.util.Set;
 
 /**
  * Represents a minigame.
+ *
+ * @author DELL
  */
 public abstract class Game extends JavaPlugin {
 
@@ -113,6 +115,7 @@ public abstract class Game extends JavaPlugin {
      * Returns the teleport location of the game.
      *
      * @return The teleport location of the game.
+     * @since 2.0.1
      */
     public Location getGameTeleportLocation() {
         return gameTeleportLocation;
@@ -159,10 +162,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Saves the {@link ItemStack} data to the plugin's config file to reuse it.
+     * Saves the {@link org.bukkit.inventory.ItemStack} data to the plugin's config file to reuse it.
      *
-     * @param id The id of the {@link ItemStack} data save.
-     * @param item The {@link ItemStack} to be saved.
+     * @param id The id of the {@link org.bukkit.inventory.ItemStack} data save.
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be saved.
      */
     public void saveItem(String id, ItemStack item) {
         getConfig().createSection(ITEM_SAVE_PATH + id, item.serialize());
@@ -170,10 +173,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns an {@link ItemStack} based on a data save.
+     * Returns an {@link org.bukkit.inventory.ItemStack} based on a data save.
      *
      * @param id The id of the data save to read from.
-     * @return The saved {@link ItemStack}, null if the id is not found.
+     * @return The saved {@link org.bukkit.inventory.ItemStack}, null if the id is not found.
      */
     public @Nullable ItemStack getItem(String id) {
         ConfigurationSection section = getConfig().getConfigurationSection(ITEM_SAVE_PATH + id);
@@ -184,7 +187,7 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Removes an {@link ItemStack} data save from the config file.
+     * Removes an {@link org.bukkit.inventory.ItemStack} data save from the config file.
      *
      * @param id The id of the data save to be removed.
      * @return Whether the id exists in the config file.
@@ -200,9 +203,9 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns the ids of all {@link ItemStack} data saves.
+     * Returns the ids of all {@link org.bukkit.inventory.ItemStack} data saves.
      *
-     * @return The ids of all {@link ItemStack} data saves.
+     * @return The ids of all {@link org.bukkit.inventory.ItemStack} data saves.
      */
     public @Nonnull Set<String> getItemIds() {
         ConfigurationSection section = getConfig().getConfigurationSection(ITEM_SAVE_PATH);
@@ -213,10 +216,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Saves the {@link Location} data to the plugin's config file to reuse it.
+     * Saves the {@link org.bukkit.Location} data to the plugin's config file to reuse it.
      *
-     * @param id The id of the {@link Location} data save.
-     * @param loc The {@link Location} to be saved.
+     * @param id The id of the {@link org.bukkit.Location} data save.
+     * @param loc The {@link org.bukkit.Location} to be saved.
      */
     public void saveLoc(String id, Location loc) {
         getConfig().createSection(LOC_SAVE_PATH + id, loc.serialize());
@@ -224,10 +227,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns an {@link Location} based on a data save.
+     * Returns an {@link org.bukkit.Location} based on a data save.
      *
      * @param id The id of the data save to read from.
-     * @return The saved {@link Location}, null if the id is not found.
+     * @return The saved {@link org.bukkit.Location}, null if the id is not found.
      */
     public @Nullable Location getLoc(String id) {
         ConfigurationSection section = getConfig().getConfigurationSection(LOC_SAVE_PATH + id);
@@ -238,7 +241,7 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Removes an {@link Location} data save from the config file.
+     * Removes an {@link org.bukkit.Location} data save from the config file.
      *
      * @param id The id of the data save to be removed.
      * @return Whether the id exists in the config file.
@@ -254,9 +257,9 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns the ids of all {@link Location} data saves.
+     * Returns the ids of all {@link org.bukkit.Location} data saves.
      *
-     * @return The ids of all {@link Location} data saves.
+     * @return The ids of all {@link org.bukkit.Location} data saves.
      */
     public @Nonnull Set<String> getLocIds() {
         ConfigurationSection section = getConfig().getConfigurationSection(LOC_SAVE_PATH);
@@ -267,10 +270,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Saves the {@link GameInventory} data to the plugin's config file to reuse it.
+     * Saves the {@link fun.kaituo.gameutils.util.GameInventory} data to the plugin's config file to reuse it.
      *
-     * @param id The id of the {@link GameInventory} data save.
-     * @param inv The {@link GameInventory} to be saved.
+     * @param id The id of the {@link fun.kaituo.gameutils.util.GameInventory} data save.
+     * @param inv The {@link fun.kaituo.gameutils.util.GameInventory} to be saved.
      */
     public void saveInv(String id, GameInventory inv) {
         getConfig().createSection(INV_SAVE_PATH + id, inv.serialize());
@@ -278,10 +281,10 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns an {@link GameInventory} based on a data save.
+     * Returns an {@link fun.kaituo.gameutils.util.GameInventory} based on a data save.
      *
      * @param id The id of the data save to read from.
-     * @return The saved {@link GameInventory}, null if the id is not found.
+     * @return The saved {@link fun.kaituo.gameutils.util.GameInventory}, null if the id is not found.
      */
     public @Nullable GameInventory getInv(String id) {
         ConfigurationSection section = getConfig().getConfigurationSection(INV_SAVE_PATH + id);
@@ -292,7 +295,7 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Removes an {@link GameInventory} data save from the config file.
+     * Removes an {@link fun.kaituo.gameutils.util.GameInventory} data save from the config file.
      *
      * @param id The id of the data save to be removed.
      * @return Whether the id exists in the config file.
@@ -308,9 +311,9 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Returns the ids of all {@link GameInventory} data saves.
+     * Returns the ids of all {@link fun.kaituo.gameutils.util.GameInventory} data saves.
      *
-     * @return The ids of all {@link GameInventory} data saves.
+     * @return The ids of all {@link fun.kaituo.gameutils.util.GameInventory} data saves.
      */
     public @Nonnull Set<String> getInvIds() {
         ConfigurationSection section = getConfig().getConfigurationSection(INV_SAVE_PATH);
@@ -320,6 +323,7 @@ public abstract class Game extends JavaPlugin {
         return section.getKeys(false);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onEnable() {
         if (!GameUtils.inst().registerGame(this)) {
@@ -332,6 +336,7 @@ public abstract class Game extends JavaPlugin {
         gameTeleportLocation = new Location(GameUtils.inst().getMainWorld(), 0.5, 89, 0.5, 0, 0);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onDisable() {
         if (!GameUtils.inst().unregisterGame(this)) {
