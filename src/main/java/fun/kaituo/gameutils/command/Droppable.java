@@ -14,12 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>Droppable class.</p>
- *
- * @author DELL
+ * Command class to set the item in hand as droppable or not.
  */
 @SuppressWarnings("unused")
 public class Droppable extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for Droppable command.
+     */
+    public Droppable() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

@@ -12,12 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>TpGame class.</p>
- *
- * @author DELL
+ * Command class to teleport the executor to a game's location.
  */
 @SuppressWarnings("unused")
 public class TpGame extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for TpGame command.
+     */
+    public TpGame() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

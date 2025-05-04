@@ -16,12 +16,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>GameItem class.</p>
- *
- * @author DELL
+ * Command class to manage game items.
  */
 @SuppressWarnings("unused")
 public class GameItem extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for GameItem command.
+     */
+    public GameItem() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

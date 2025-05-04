@@ -10,9 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 /**
- * <p>ItemStackBuilder class.</p>
- *
- * @author DELL
+ * Represents a builder for {@link org.bukkit.inventory.ItemStack} objects.
  */
 @SuppressWarnings("unused")
 public class ItemStackBuilder {
@@ -22,7 +20,7 @@ public class ItemStackBuilder {
     /**
      * <p>Constructor for ItemStackBuilder.</p>
      *
-     * @param material a {@link org.bukkit.Material} object
+     * @param material The {@link org.bukkit.Material} of the item stack.
      */
     public ItemStackBuilder(Material material) {
         stack = new ItemStack(material);
@@ -30,66 +28,64 @@ public class ItemStackBuilder {
     }
     
     /**
-     * <p>setAmount.</p>
+     * Sets the amount of the item stack.
      *
-     * @param amount a int
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param amount The amount to set.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setAmount(int amount) {
         this.stack.setAmount(amount);
         return this;
     }
-    
+
     /**
-     * <p>setDisplayName.</p>
+     * Sets the display name of the item stack.
      *
-     * @param name a {@link java.lang.String} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param name The display name to set.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setDisplayName(String name) {
         this.meta.setDisplayName(name);
         return this;
     }
-    
+
     /**
-     * <p>setLore.</p>
-     *
-     * @param loreText a {@link java.lang.String} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * Sets the lore of the item stack.
+     * @param loreText The lore text to set.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setLore(String... loreText) {
         this.meta.setLore(Arrays.stream(loreText).toList());
         return this;
     }
-    
+
     /**
-     * <p>addEnchantment.</p>
-     *
-     * @param enchantment a {@link org.bukkit.enchantments.Enchantment} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * Adds an enchantment to the item stack.
+     * @param enchantment The enchantment to add.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment) {
         return this.addEnchantment(enchantment, 1);
     }
     
     /**
-     * <p>addEnchantment.</p>
+     * Adds an enchantment to the item stack with a specified level.
      *
-     * @param enchantment a {@link org.bukkit.enchantments.Enchantment} object
-     * @param level a int
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param enchantment The enchantment to add.
+     * @param level The level of the enchantment.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment, int level) {
         return this.addEnchantment(enchantment, level, true);
     }
     
     /**
-     * <p>addEnchantment.</p>
+     * Adds an enchantment to the item stack with a specified level and level restriction.
      *
-     * @param enchantment a {@link org.bukkit.enchantments.Enchantment} object
-     * @param level a int
-     * @param ignoreLevelRestriction a boolean
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param enchantment The enchantment to add.
+     * @param level The level of the enchantment.
+     * @param ignoreLevelRestriction Whether to ignore level restrictions.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
         this.meta.addEnchant(enchantment, level, ignoreLevelRestriction);
@@ -97,10 +93,10 @@ public class ItemStackBuilder {
     }
     
     /**
-     * <p>removeEnchantment.</p>
+     * Removes an enchantment from the item stack.
      *
-     * @param enchantment a {@link org.bukkit.enchantments.Enchantment} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param enchantment The enchantment to remove.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder removeEnchantment(Enchantment enchantment) {
         this.meta.removeEnchant(enchantment);
@@ -108,10 +104,10 @@ public class ItemStackBuilder {
     }
     
     /**
-     * <p>addFlags.</p>
+     * Adds item flags to the item stack.
      *
-     * @param itemFlags a {@link org.bukkit.inventory.ItemFlag} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param itemFlags The item flags to add.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder addFlags(ItemFlag... itemFlags) {
         this.meta.addItemFlags(itemFlags);
@@ -119,10 +115,10 @@ public class ItemStackBuilder {
     }
     
     /**
-     * <p>removeFlags.</p>
+     * Removes item flags from the item stack.
      *
-     * @param itemFlags a {@link org.bukkit.inventory.ItemFlag} object
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param itemFlags The item flags to remove.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder removeFlags(ItemFlag... itemFlags) {
         this.meta.removeItemFlags(itemFlags);
@@ -130,10 +126,10 @@ public class ItemStackBuilder {
     }
     
     /**
-     * <p>setUnbreakable.</p>
+     * Sets if the item stack is unbreakable.
      *
-     * @param unbreakable a boolean
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
+     * @param unbreakable Whether the item stack is unbreakable.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setUnbreakable(boolean unbreakable) {
         this.meta.setUnbreakable(unbreakable);
@@ -141,11 +137,10 @@ public class ItemStackBuilder {
     }
 
     /**
-     * <p>setDroppable.</p>
+     * Sets if the item stack is droppable.
      *
-     * @param droppable a boolean
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
-     * @since 2.0.1
+     * @param droppable Whether the item stack is droppable.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setDroppable(boolean droppable) {
         NBT.modify(this.stack, nbt -> {
@@ -155,11 +150,10 @@ public class ItemStackBuilder {
     }
 
     /**
-     * <p>setClickable.</p>
+     * Sets if the item stack is clickable in the inventory.
      *
-     * @param clickable a boolean
-     * @return a {@link fun.kaituo.gameutils.util.ItemStackBuilder} object
-     * @since 2.0.1
+     * @param clickable Whether the item stack is clickable.
+     * @return this {@link fun.kaituo.gameutils.util.ItemStackBuilder} instance.
      */
     public ItemStackBuilder setClickable(boolean clickable) {
         NBT.modify(this.stack, nbt -> {
@@ -169,9 +163,9 @@ public class ItemStackBuilder {
     }
 
     /**
-     * <p>build.</p>
+     * Builds the item stack and returns it.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The built {@link org.bukkit.inventory.ItemStack}.
      */
     public ItemStack build() {
         stack.setItemMeta(meta);

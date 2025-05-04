@@ -13,13 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>JoinAll class.</p>
- *
- * @author DELL
- * @since 2.0.1
+ * Command class to join all players to a specified game.
  */
 @SuppressWarnings("unused")
 public class JoinAll extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for JoinAll command.
+     */
+    public JoinAll() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

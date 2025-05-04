@@ -22,12 +22,19 @@ import java.util.Set;
 @Deprecated
 @SuppressWarnings("unused")
 public class Misc {
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private Misc() {
+
+    }
+
 
     /**
-     * <p>getMenu.</p>
+     * Returns a new instance of the menu item.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#getMenu()} instead.
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return A new instance of the menu item.
      */
     @Deprecated
     public static ItemStack getMenu() {
@@ -35,10 +42,10 @@ public class Misc {
     }
 
     /**
-     * <p>spawnFirework.</p>
+     * Spawns fireworks around a player.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#spawnFirework(Player)} instead.
-     * @param p a {@link org.bukkit.entity.Player} object
+     * @param p The player to spawn fireworks around.
      */
     @Deprecated
     public static void spawnFirework(Player p) {
@@ -46,12 +53,12 @@ public class Misc {
     }
 
     /**
-     * <p>spawnFireworks.</p>
+     * Spawns fireworks around a player from the perspective of a game.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#spawnFireworks(Player, Game)} instead.
-     * @param p a {@link org.bukkit.entity.Player} object
-     * @param game a {@link fun.kaituo.gameutils.game.Game} object
-     * @return a {@link java.util.Set} object
+     * @param p The player to spawn fireworks around.
+     * @param game The game responsible for the fireworks.
+     * @return The scheduled firework detonating task ids.
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -60,15 +67,15 @@ public class Misc {
     }
 
     /**
-     * <p>displayCountdown.</p>
+     * Display a countdown for the player with given title and subtitle.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#displayCountdown(Player, int, String, String, Game)} instead.
-     * @param p a {@link org.bukkit.entity.Player} object
-     * @param countdownSeconds a int
-     * @param countdownTitle a {@link java.lang.String} object
-     * @param finishTitle a {@link java.lang.String} object
-     * @param game a {@link fun.kaituo.gameutils.game.Game} object
-     * @return a {@link java.util.Set} object
+     * @param p The player to display the countdown to.
+     * @param countdownSeconds The number of seconds to count down.
+     * @param countdownTitle The title when the countdown is running. Use %time% as a placeholder for the time left.
+     * @param finishTitle The title when the countdown finishes.
+     * @param game The game instance that should schedule the countdown tasks.
+     * @return A set of task ids that can be used to cancel the countdown display.
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -77,13 +84,13 @@ public class Misc {
     }
 
     /**
-     * <p>displayCountdown.</p>
+     * Display a countdown for the player with given title and subtitle.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.PlayerUtils#displayCountdown(Player, int, Game)} instead.
-     * @param p a {@link org.bukkit.entity.Player} object
-     * @param countDownSeconds a int
-     * @param game a {@link fun.kaituo.gameutils.game.Game} object
-     * @return a {@link java.util.Set} object
+     * @param p The player to display the countdown to.
+     * @param countDownSeconds The number of seconds to count down.
+     * @param game The game responsible for the countdown.
+     * @return The scheduled countdown task ids.
      */
     @Deprecated
     @SuppressWarnings("unused")
@@ -92,11 +99,11 @@ public class Misc {
     }
 
     /**
-     * <p>isDroppable.</p>
+     * Returns if the item is droppable.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#isDroppable(ItemStack)} instead.
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
-     * @return a boolean
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be checked.
+     * @return Whether this item is droppable.
      */
     @Deprecated
     public static boolean isDroppable(ItemStack item) {
@@ -104,11 +111,11 @@ public class Misc {
     }
 
     /**
-     * <p>setDroppable.</p>
+     * Sets if the item is droppable.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#setDroppable(ItemStack, boolean)} instead.
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
-     * @param droppable a boolean
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be set.
+     * @param droppable Whether this item is droppable.
      */
     @Deprecated
     public static void setDroppable(ItemStack item, boolean droppable) {
@@ -116,11 +123,11 @@ public class Misc {
     }
 
     /**
-     * <p>isClickable.</p>
+     * Returns if the item is clickable.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#isClickable(ItemStack)} instead.
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
-     * @return a boolean
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be checked.
+     * @return Whether this item is clickable.
      */
     @Deprecated
     public static boolean isClickable(ItemStack item) {
@@ -128,11 +135,11 @@ public class Misc {
     }
 
     /**
-     * <p>setClickable.</p>
+     * Sets if the item is clickable.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.ItemUtils#setClickable(ItemStack, boolean)} instead.
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
-     * @param clickable a boolean
+     * @param item The {@link org.bukkit.inventory.ItemStack} to be set.
+     * @param clickable Whether this item is clickable.
      */
     @Deprecated
     public static void setClickable(ItemStack item, boolean clickable) {
@@ -140,26 +147,27 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematic.</p>
+     * Pastes a schematic at the specified location.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean, boolean, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param location a {@link org.bukkit.Location} object
-     * @param ignoreAir a boolean
-     * @param copyEntities a boolean
-     * @param copyBiomes a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param location Where its origin is.
+     * @param ignoreAir Whether to ignore air when pasting.
+     * @param copyEntities Whether to copy entities.
+     * @param copyBiomes Whether to copy biomes.
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
         WorldEditUtils.pasteSchematic(schematicName, location, ignoreAir, copyEntities, copyBiomes);
     }
 
+
     /**
-     * <p>pasteSchematic.</p>
+     * Pastes a schematic at the specified location, ignoring air and copying entities and biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param location a {@link org.bukkit.Location} object
+     * @param schematicName The name of the schematic to be pasted.
+     * @param location Where its origin is.
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location) {
@@ -167,12 +175,12 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematic.</p>
+     * Pastes a schematic at the specified location, copying entities and biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param location a {@link org.bukkit.Location} object
-     * @param ignoreAir a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param location Where its origin is.
+     * @param ignoreAir Whether to ignore air when pasting.
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir) {
@@ -180,13 +188,13 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematic.</p>
+     * Pastes a schematic at the specified location, copying biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematic(String, Location, boolean, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param location a {@link org.bukkit.Location} object
-     * @param ignoreAir a boolean
-     * @param copyEntities a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param location Where its origin is.
+     * @param ignoreAir Whether to ignore air when pasting.
+     * @param copyEntities Whether to copy entities.
      */
     @Deprecated
     public static void pasteSchematic(String schematicName, Location location, boolean ignoreAir, boolean copyEntities) {
@@ -194,14 +202,14 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematicAtOriginalPosition.</p>
+     * Pastes a schematic in a world at where it was copied.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param world a {@link org.bukkit.World} object
-     * @param ignoreAir a boolean
-     * @param copyEntities a boolean
-     * @param copyBiomes a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param world Which world to paste into.
+     * @param ignoreAir Whether to ignore air when pasting.
+     * @param copyEntities Whether to copy entities.
+     * @param copyBiomes Whether to copy biomes.
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities, boolean copyBiomes) {
@@ -209,11 +217,11 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematicAtOriginalPosition.</p>
+     * Pastes a schematic in a world at where it was copied, ignoring air and copying entities and biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param world a {@link org.bukkit.World} object
+     * @param schematicName The name of the schematic to be pasted.
+     * @param world Which world to paste into.
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world) {
@@ -221,12 +229,12 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematicAtOriginalPosition.</p>
+     * Pastes a schematic in a world at where it was copied, copying entities and biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param world a {@link org.bukkit.World} object
-     * @param ignoreAir a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param world Which world to paste into.
+     * @param ignoreAir Whether to ignore air when pasting.
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir) {
@@ -234,13 +242,13 @@ public class Misc {
     }
 
     /**
-     * <p>pasteSchematicAtOriginalPosition.</p>
+     * Pastes a schematic in a world at where it was copied, copying biomes.
      *
      * @deprecated Use {@link fun.kaituo.gameutils.util.WorldEditUtils#pasteSchematicAtOriginalPosition(String, World, boolean, boolean)} instead.
-     * @param schematicName a {@link java.lang.String} object
-     * @param world a {@link org.bukkit.World} object
-     * @param ignoreAir a boolean
-     * @param copyEntities a boolean
+     * @param schematicName The name of the schematic to be pasted.
+     * @param world Which world to paste into.
+     * @param ignoreAir Whether to ignore air when pasting.
+     * @param copyEntities Whether to copy entities.
      */
     @Deprecated
     public static void pasteSchematicAtOriginalPosition(String schematicName, World world, boolean ignoreAir, boolean copyEntities) {

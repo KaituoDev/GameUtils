@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * <p>PlayerUtils class.</p>
+ * Helper class for player-related utilities.
  *
  * @author DELL
  * @since 2.0.1
@@ -25,6 +25,13 @@ public class PlayerUtils {
             Color.NAVY, Color.OLIVE, Color.ORANGE, Color.PURPLE, Color.RED, Color.SILVER,
             Color.TEAL, Color.WHITE, Color.YELLOW
     };
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private PlayerUtils() {
+
+    }
 
     /**
      * Spawns fireworks around a player.

@@ -13,13 +13,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>MapHotbar class.</p>
- *
- * @author DELL
+ * Command class to let the executor set their hotbar mapping.
  */
 @SuppressWarnings("unused")
 public class MapHotbar extends GameUtilsCommand implements TabCompleter {
     private final List<String> completions = Arrays.asList("reset", "123456789");
+
+    /**
+     * Constructor for MapHotbar command.
+     */
+    public MapHotbar() {
+
+    }
 
     /** {@inheritDoc} */
     @Override

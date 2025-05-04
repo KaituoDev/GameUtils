@@ -15,10 +15,14 @@ import java.util.Set;
 
 /**
  * Represents a minigame.
- *
- * @author DELL
  */
 public abstract class Game extends JavaPlugin {
+    /**
+     * Constructor for Game.
+     */
+    public Game() {
+        super();
+    }
 
     /**
      * The default path where item data are stored in the config.
@@ -33,8 +37,17 @@ public abstract class Game extends JavaPlugin {
      */
     public static final String INV_SAVE_PATH = "inventories.";
 
+    /**
+     * The display name of the game.
+     */
     protected String displayName;
+    /**
+     * The teleport location of the game.
+     */
     protected Location gameTeleportLocation;
+    /**
+     * The state this game is in.
+     */
     protected GameState state;
 
     /**
@@ -42,7 +55,7 @@ public abstract class Game extends JavaPlugin {
      * <p>
      * This method will be called automatically when a player
      * executes the <code>/join</code> command, is invited through
-     * <code>/joinall</code>, or rejoins the game.
+     * <code>/joinall</code>, or rejoins the game when reconnecting.
      *
      * @param p The player joining the game.
      */
@@ -80,7 +93,7 @@ public abstract class Game extends JavaPlugin {
     }
 
     /**
-     * Performs the per tick action of the state.
+     * Performs the per tick action of the game.
      * <p>
      * This method is called every tick automatically.
      */

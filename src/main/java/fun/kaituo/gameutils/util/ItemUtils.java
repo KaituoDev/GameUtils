@@ -8,12 +8,17 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 
 /**
- * <p>ItemUtils class.</p>
- *
- * @author DELL
+ * Helper class for item operations.
  */
 @SuppressWarnings("unused")
 public class ItemUtils {
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private ItemUtils() {
+
+    }
+
     /**
      * Checks if an inventory contains a certain item, regardless of the amount.
      *
@@ -40,15 +45,15 @@ public class ItemUtils {
 
     /**
      * Checks if an inventory contains a certain amount of a certain item.
-     *
+     * <p>
+     * Note: This method serves a different purpose from {@link org.bukkit.inventory.Inventory#contains(ItemStack, int)}.
+     * It does not check for the number of ItemStacks that exactly match the input ItemStack.
+     * Instead, it checks for the sum of amount for all ItemStacks that are similar to the input ItemStack.
      * @param inv The {@link org.bukkit.inventory.Inventory} to check.
      * @param item The {@link org.bukkit.inventory.ItemStack} to check for.
      *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      * @param itemAmount The amount of the item to check for.
      * @return Whether the inventory contains at least the specified amount of the item.
-     * @apiNote This method serves a different purpose from {@link org.bukkit.inventory.Inventory#contains(ItemStack, int)}.
-     * It does not check for the number of ItemStacks that exactly match the input ItemStack.
-     * Instead, it checks for the sum of amount for all ItemStacks that are similar to the input ItemStack.
      */
     public static boolean containsItem(Inventory inv, ItemStack item, int itemAmount) {
         if (itemAmount <= 0) {
@@ -83,13 +88,13 @@ public class ItemUtils {
 
     /**
      * Remove a certain amount of a certain item from an inventory.
-     *
+     * <p>
+     * Note: This method does not remove the given number of ItemStacks that exactly match the input ItemStack.
+     * Instead, it removes items that are similar to the input ItemStack until the specified amount is removed.
      * @param inv The {@link org.bukkit.inventory.Inventory} to remove the item from.
      * @param item The {@link org.bukkit.inventory.ItemStack} to remove.
      *             This {@link org.bukkit.inventory.ItemStack} instance's amount attribute will be ignored.
      * @param itemAmount The amount of the item to remove.
-     * @apiNote This method does not remove the given number of ItemStacks that exactly match the input ItemStack.
-     * Instead, it removes items that are similar to the input ItemStack until the specified amount is removed.
      */
     public static void removeItem(Inventory inv, @Nonnull ItemStack item, int itemAmount) {
         if (itemAmount <= 0) {

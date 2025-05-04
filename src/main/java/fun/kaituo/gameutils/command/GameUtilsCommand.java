@@ -5,11 +5,14 @@ import org.bukkit.command.CommandExecutor;
 import java.util.List;
 
 /**
- * An implementation of the {@link org.bukkit.command.CommandExecutor}, with custom permission strings.
- *
- * @author DELL
+ * Abstract parent class for all GameUtils commands.
  */
 public abstract class GameUtilsCommand implements CommandExecutor {
+    /**
+     * Constructor for GameUtilsCommand.
+     */
+    public GameUtilsCommand() {}
+
     /**
      * The global permission prefix for GameUtils commands.
      */
@@ -24,7 +27,7 @@ public abstract class GameUtilsCommand implements CommandExecutor {
     public abstract String getName();
 
     /**
-     * Returns the permission required to execute the command based on its name.
+     * Returns the permission required to execute the command based on its name, as a string.
      *
      * @return The command's required permission string.
      */
@@ -33,11 +36,11 @@ public abstract class GameUtilsCommand implements CommandExecutor {
     }
 
     /**
-     * <p>getMatchingCompletions.</p>
+     * Returns the matching completions for a given partial argument from a list of completions.
      *
-     * @param partialArg a {@link java.lang.String} object
-     * @param completions a {@link java.util.List} object
-     * @return a {@link java.util.List} object
+     * @param partialArg The partial argument to match against.
+     * @param completions A list of possible completions.
+     * @return A list of completions that match the partial argument.
      * @since 2.0.1
      */
     protected List<String> getMatchingCompletions(String partialArg, List<String> completions) {

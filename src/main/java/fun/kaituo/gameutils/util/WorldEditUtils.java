@@ -18,12 +18,19 @@ import java.io.File;
 import java.io.FileInputStream;
 
 /**
- * <p>WorldEditUtils class.</p>
+ * Helper class for WorldEdit related operations.
  *
  * @author DELL
  * @since 2.0.1
  */
 public class WorldEditUtils {
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private WorldEditUtils() {
+
+    }
+
     private static Clipboard getSchematicClipBoard(String schematicName) {
         File file = new File("plugins/WorldEdit/schematics/" + schematicName + ".schem");
         ClipboardFormat format = ClipboardFormats.findByFile(file);

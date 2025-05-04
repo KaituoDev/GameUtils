@@ -12,12 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>ForceStop class.</p>
- *
- * @author DELL
+ * Command class to force stop a game.
  */
 @SuppressWarnings("unused")
 public class ForceStop extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for ForceStop command.
+     */
+    public ForceStop() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

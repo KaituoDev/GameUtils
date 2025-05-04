@@ -15,12 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>Rotatable class.</p>
- *
- * @author DELL
+ * Command class to set an item frame as rotatable or not.
  */
 @SuppressWarnings("unused")
 public class Rotatable extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for Rotatable command.
+     */
+    public Rotatable() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

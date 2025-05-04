@@ -23,19 +23,26 @@ import java.util.List;
 
 /**
  * Simple wrapper for sign interactions and text alternation.
- *
- * @author DELL
  */
 public abstract class AbstractSignListener implements Listener {
+    /**
+     * The location of the sign.
+     */
     protected final Location location;
+    /**
+     * The lines of text on the sign.
+     */
     protected final List<String> lines = Arrays.asList("", "", "", "");
+    /**
+     * The {@link org.bukkit.plugin.java.JavaPlugin} to be used to run tasks.
+     */
     protected final JavaPlugin plugin;
 
     /**
      * <p>Constructor for AbstractSignListener.</p>
      *
-     * @param plugin a {@link org.bukkit.plugin.java.JavaPlugin} object
-     * @param location a {@link org.bukkit.Location} object
+     * @param plugin The {@link org.bukkit.plugin.java.JavaPlugin} to be used to run tasks.
+     * @param location The {@link org.bukkit.Location} of the sign.
      */
     public AbstractSignListener(JavaPlugin plugin, Location location) {
         this.location = location;
@@ -73,9 +80,9 @@ public abstract class AbstractSignListener implements Listener {
     }
 
     /**
-     * <p>onPlayerInteract.</p>
+     * Handles when a player interacts with the sign.
      *
-     * @param e a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent} to handle.
      */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -126,14 +133,14 @@ public abstract class AbstractSignListener implements Listener {
     /**
      * Performs actions when the sign is right-clicked.
      *
-     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent}.
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent} as a reference.
      */
     public abstract void onRightClick(PlayerInteractEvent e);
 
     /**
      * Performs actions when the sign is shift + right-clicked.
      *
-     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent}.
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent} as a reference.
      */
     public abstract void onSneakingRightClick(PlayerInteractEvent e);
 

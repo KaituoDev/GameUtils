@@ -4,8 +4,6 @@ import org.bukkit.entity.Player;
 
 /**
  * Represents a state that the game can be in.
- *
- * @author DELL
  */
 public interface GameState {
 

@@ -9,19 +9,24 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-// Note: This class does not listen for joining or quitting a GAME!
-// It listens for players joining or quitting the SERVER.
 /**
- * <p>PlayerLogInLogOutListener class.</p>
- *
- * @author DELL
+ * Represents a listener that handles {@link PlayerJoinEvent} and {@link PlayerQuitEvent}.
+ * <p>
+ * This class does not listen for players joining or quitting a {@link Game}!
+ * It listens for players joining or quitting the server.
  */
 public class PlayerLogInLogOutListener implements Listener {
+    /**
+     * Constructor for PlayerLogInLogOutListener.
+     */
+    public PlayerLogInLogOutListener() {
+
+    }
 
     /**
-     * <p>onLogIn.</p>
+     * Handles the {@link PlayerJoinEvent} when a player joins the server.
      *
-     * @param e a {@link org.bukkit.event.player.PlayerJoinEvent} object
+     * @param e The {@link org.bukkit.event.player.PlayerJoinEvent} to handle.
      */
     @EventHandler
     public void onLogIn(PlayerJoinEvent e) {
@@ -43,9 +48,9 @@ public class PlayerLogInLogOutListener implements Listener {
     }
 
     /**
-     * <p>onLogOut.</p>
+     * Handles the {@link PlayerQuitEvent} when a player quits the server.
      *
-     * @param e a {@link org.bukkit.event.player.PlayerQuitEvent} object
+     * @param e The {@link org.bukkit.event.player.PlayerQuitEvent} to handle.
      */
     @EventHandler
     public void onLogOut(PlayerQuitEvent e) {

@@ -17,9 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>ChangeBiome class.</p>
- *
- * @author DELL
+ * Command class to change biome around the player.
  */
 @SuppressWarnings("unused")
 public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
@@ -34,7 +32,7 @@ public class ChangeBiome extends GameUtilsCommand implements TabCompleter {
     }
 
     /**
-     * <p>Constructor for ChangeBiome.</p>
+     * Constructor for ChangeBiome command.
      */
     public ChangeBiome() {
         biomeNames.add("auto");

@@ -29,25 +29,23 @@ import org.bukkit.inventory.ItemStack;
 import static fun.kaituo.gameutils.command.Rotatable.isRotatable;
 
 /**
- * <p>ProtectionListener class.</p>
- *
- * @author DELL
+ * Represents a listener for various events for protection purposes.
  */
 public class ProtectionListener implements Listener {
 
     private final FileConfiguration c;
 
     /**
-     * <p>Constructor for ProtectionListener.</p>
+     * The constructor for the ProtectionListener class.
      */
     public ProtectionListener() {
         this.c = GameUtils.inst().getConfig();
     }
 
     /**
-     * <p>preventFireworkDamage.</p>
+     * Prevents firework damage.
      *
-     * @param edbee a {@link org.bukkit.event.entity.EntityDamageByEntityEvent} object
+     * @param edbee The {@link org.bukkit.event.entity.EntityDamageByEntityEvent} to handle.
      */
     @EventHandler
     public void preventFireworkDamage(EntityDamageByEntityEvent edbee) {
@@ -62,9 +60,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventDestroyingPainting.</p>
+     * Prevents destroying paintings unless in creative mode.
      *
-     * @param hbbee a {@link org.bukkit.event.hanging.HangingBreakByEntityEvent} object
+     * @param hbbee The {@link org.bukkit.event.hanging.HangingBreakByEntityEvent} to handle.
      */
     @EventHandler
     public void preventDestroyingPainting(HangingBreakByEntityEvent hbbee) {
@@ -80,9 +78,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventManipulatingArmorStand.</p>
+     * Prevents manipulating armor stands unless in creative mode.
      *
-     * @param pasme a {@link org.bukkit.event.player.PlayerArmorStandManipulateEvent} object
+     * @param pasme The {@link org.bukkit.event.player.PlayerArmorStandManipulateEvent} to handle.
      */
     @EventHandler
     public void preventManipulatingArmorStand(PlayerArmorStandManipulateEvent pasme) {
@@ -95,9 +93,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventItemFrameRotation.</p>
+     * Prevents rotating item frames unless in creative mode.
      *
-     * @param piee a {@link org.bukkit.event.player.PlayerInteractEntityEvent} object
+     * @param piee The {@link org.bukkit.event.player.PlayerInteractEntityEvent} to handle.
      */
     @EventHandler
     public void preventItemFrameRotation(PlayerInteractEntityEvent piee) {
@@ -113,9 +111,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventItemDrop.</p>
+     * Prevents dropping items unless the item is droppable or the player is in creative mode.
      *
-     * @param pdie a {@link org.bukkit.event.player.PlayerDropItemEvent} object
+     * @param pdie The {@link org.bukkit.event.player.PlayerDropItemEvent} to handle.
      */
     @EventHandler
     public void preventItemDrop(PlayerDropItemEvent pdie) {
@@ -135,9 +133,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventItemClick.</p>
+     * Prevents clicking on items in inventories unless the item is clickable or the player is in creative mode.
      *
-     * @param ice a {@link org.bukkit.event.inventory.InventoryClickEvent} object
+     * @param ice The {@link org.bukkit.event.inventory.InventoryClickEvent} to handle.
      */
     @EventHandler
     public void preventItemClick(InventoryClickEvent ice) {
@@ -160,9 +158,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventSpecialBlockInteraction.</p>
+     * Prevents interaction with flower pots and composters unless the player is in creative mode.
      *
-     * @param pie a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     * @param pie The {@link org.bukkit.event.player.PlayerInteractEvent} to handle.
      */
     @EventHandler
     public void preventSpecialBlockInteraction(PlayerInteractEvent pie) {
@@ -187,9 +185,9 @@ public class ProtectionListener implements Listener {
 
 
     /**
-     * <p>invulnerablePainting.</p>
+     * Sets a painting to be invulnerable when placed.
      *
-     * @param hpe a {@link org.bukkit.event.hanging.HangingPlaceEvent} object
+     * @param hpe The {@link org.bukkit.event.hanging.HangingPlaceEvent} to handle.
      */
     @EventHandler
     public void invulnerablePainting(HangingPlaceEvent hpe) {
@@ -202,9 +200,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>invulnerableStand.</p>
+     * Sets an armor stand to be invulnerable when placed.
      *
-     * @param ese a {@link org.bukkit.event.entity.EntitySpawnEvent} object
+     * @param ese The {@link org.bukkit.event.entity.EntitySpawnEvent} to handle.
      */
     @EventHandler
     public void invulnerableStand(EntitySpawnEvent ese) {
@@ -217,9 +215,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>invulnerableItemFrame.</p>
+     * Sets an item frame to be invulnerable when placed.
      *
-     * @param ese a {@link org.bukkit.event.entity.EntitySpawnEvent} object
+     * @param ese The {@link org.bukkit.event.entity.EntitySpawnEvent} to handle.
      */
     @EventHandler
     public void invulnerableItemFrame(EntitySpawnEvent ese) {
@@ -234,9 +232,9 @@ public class ProtectionListener implements Listener {
 
 
     /**
-     * <p>cancelEggSpawn.</p>
+     * Prevents chickens spawning from eggs.
      *
-     * @param cse a {@link org.bukkit.event.entity.CreatureSpawnEvent} object
+     * @param cse The {@link org.bukkit.event.entity.CreatureSpawnEvent} to handle.
      */
     @EventHandler
     public void cancelEggSpawn(CreatureSpawnEvent cse) { //防止鸡蛋生成鸡
@@ -249,9 +247,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>preventSnowFormation.</p>
+     * Prevents snow and ice formation.
      *
-     * @param bfe a {@link org.bukkit.event.block.BlockFormEvent} object
+     * @param bfe The {@link org.bukkit.event.block.BlockFormEvent} to handle.
      */
     @EventHandler
     public void preventSnowFormation(BlockFormEvent bfe) {
@@ -264,9 +262,9 @@ public class ProtectionListener implements Listener {
     }
 
     /**
-     * <p>noSilverfishBurrow.</p>
+     * Prevents silver fish from burrowing into blocks.
      *
-     * @param ecbe a {@link org.bukkit.event.entity.EntityChangeBlockEvent} object
+     * @param ecbe The {@link org.bukkit.event.entity.EntityChangeBlockEvent} to handle.
      */
     @EventHandler
     public void noSilverfishBurrow(EntityChangeBlockEvent ecbe) {

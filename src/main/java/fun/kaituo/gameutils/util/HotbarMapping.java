@@ -3,18 +3,27 @@ package fun.kaituo.gameutils.util;
 import java.util.Arrays;
 
 /**
- * <p>HotbarMapping class.</p>
+ * Represents a mapping of hotbar slots to game inventory slots.
+ * <p>
+ * For example, if player A has the default hotbar mapping "123456789"
+ * and saves his inventory containing the following items in the hotbar:
+ * <p>
+ * (1)Sword, (2)Bow, (3)Food, (4)Arrow, (5)Air, (6)Air, (7)Air, (8)Air, (9)Air
+ * <p>
+ * Then, when another player B with a hotbar mapping "512367894" applies this inventory,
+ * The items will be in the following order:
+ * <p>
+ * (5)Air, (1)Sword, (2)Bow, (3)Food, (6)Air, (7)Air, (8)Air, (9)Air, (4)Arrow
  *
- * @author DELL
  */
 public class HotbarMapping {
 
     private final String mapping;
 
     /**
-     * <p>Getter for the field <code>mapping</code>.</p>
+     * Gets the mapping as a string.
      *
-     * @return a {@link java.lang.String} object
+     * @return The mapping string.
      */
     @SuppressWarnings("unused")
     public String getMapping() {
@@ -22,9 +31,9 @@ public class HotbarMapping {
     }
 
     /**
-     * <p>Constructor for HotbarMapping.</p>
+     * Constructs a HotbarMapping object with the given mapping string.
      *
-     * @param mapping a {@link java.lang.String} object
+     * @param mapping The mapping string.
      */
     public HotbarMapping(String mapping) {
         if (!isValidMapping(mapping)) {
@@ -41,6 +50,7 @@ public class HotbarMapping {
      * @param mapping The mapping string to check.
      * @return True if the mapping is valid, false otherwise.
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isValidMapping(String mapping) {
         if (mapping.length() != 9) {
             return false;

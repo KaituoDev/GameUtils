@@ -14,12 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>Clickable class.</p>
- *
- * @author DELL
+ * Command class to set the item in hand as clickable or not.
  */
 @SuppressWarnings("unused")
 public class Clickable extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for Clickable command.
+     */
+    public Clickable() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

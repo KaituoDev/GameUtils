@@ -10,23 +10,25 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * <p>HotbarMappingManager class.</p>
- *
- * @author DELL
+ * Represents a manager for hotbar mappings.
  */
 public class HotbarMappingManager {
-    /** Constant <code>CONFIG_SECTION_NAME="hotbar-mappings"</code> */
+    /**
+     * The name of the configuration section for hotbar mappings.
+     */
     public static final String CONFIG_SECTION_NAME = "hotbar-mappings";
-    /** Constant <code>INSTANCE</code> */
+    /**
+     * The singleton instance of the HotbarMappingManager.
+     */
     public static final HotbarMappingManager INSTANCE = new HotbarMappingManager();
     private HotbarMappingManager() {}
 
     private final Map<UUID, HotbarMapping> mappings = new HashMap<>();
 
     /**
-     * <p>loadMappings.</p>
+     * Loads the hotbar mappings from the configuration file.
      *
-     * @param plugin a {@link fun.kaituo.gameutils.GameUtils} object
+     * @param plugin The GameUtils plugin instance to load mappings from.
      */
     public void loadMappings(GameUtils plugin) {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection(CONFIG_SECTION_NAME);
@@ -41,9 +43,9 @@ public class HotbarMappingManager {
     }
 
     /**
-     * <p>saveMappings.</p>
+     * Saves the hotbar mappings to the configuration file.
      *
-     * @param plugin a {@link fun.kaituo.gameutils.GameUtils} object
+     * @param plugin The GameUtils plugin instance to save mappings to.
      */
     public void saveMappings(GameUtils plugin) {
         FileConfiguration config = plugin.getConfig();
@@ -60,10 +62,10 @@ public class HotbarMappingManager {
     }
 
     /**
-     * <p>setMapping.</p>
+     * Sets the hotbar mapping for a player with the given UUID.
      *
-     * @param id a {@link java.util.UUID} object
-     * @param mappingString a {@link java.lang.String} object
+     * @param id The UUID of the player.
+     * @param mappingString The mapping string to set.
      */
     public void setMapping(UUID id, String mappingString) {
         HotbarMapping mapping = new HotbarMapping(mappingString);
@@ -71,19 +73,19 @@ public class HotbarMappingManager {
     }
 
     /**
-     * <p>resetMapping.</p>
+     * Resets the hotbar mapping for a player with the given UUID.
      *
-     * @param id a {@link java.util.UUID} object
+     * @param id The UUID of the player.
      */
     public void resetMapping(UUID id) {
         mappings.remove(id);
     }
 
     /**
-     * <p>getMapping.</p>
+     * Gets the hotbar mapping for a player with the given UUID.
      *
-     * @param id a {@link java.util.UUID} object
-     * @return a {@link fun.kaituo.gameutils.util.HotbarMapping} object
+     * @param id The UUID of the player.
+     * @return The hotbar mapping for the player.
      */
     public @Nonnull HotbarMapping getMapping(UUID id) {
         return mappings.getOrDefault(id, new HotbarMapping("123456789"));

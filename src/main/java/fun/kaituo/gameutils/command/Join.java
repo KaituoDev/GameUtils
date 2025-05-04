@@ -13,12 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>Join class.</p>
- *
- * @author DELL
+ * Command class to join a game.
  */
 @SuppressWarnings("unused")
 public class Join extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for Join command.
+     */
+    public Join() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {
@@ -26,9 +31,9 @@ public class Join extends GameUtilsCommand implements TabCompleter {
     }
 
     /**
-     * <p>getOthersPermissionString.</p>
+     * Returns the permission required to join other players to games, as a string.
      *
-     * @return a {@link java.lang.String} object
+     * @return The permission string required to join other players to games.
      */
     public String getOthersPermissionString() {
         return getPermissionString() + ".others";

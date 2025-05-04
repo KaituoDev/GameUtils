@@ -8,14 +8,23 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nonnull;
 
 /**
- * <p>Align class.</p>
- *
- * @author DELL
- * @since 2.0.1
+ * Command class to align the player's location to center and line of view to axis.
  */
+@SuppressWarnings("unused")
 public class Align extends GameUtilsCommand {
-    /** Constant <code>PITCH_ALIGN_THRESHOLD=20f</code> */
+    /**
+     * If the angle between the player's pitch and the vertical axis is less than this value,
+     * the player's pitch will be aligned to the vertical axis. (Either up or down)
+     */
     public static final float PITCH_ALIGN_THRESHOLD = 20f;
+
+    /**
+     * Constructor for Align command.
+     */
+    public Align() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

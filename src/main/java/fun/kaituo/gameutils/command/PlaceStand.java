@@ -15,12 +15,17 @@ import org.bukkit.util.RayTraceResult;
 import javax.annotation.Nonnull;
 
 /**
- * <p>PlaceStand class.</p>
- *
- * @author DELL
+ * Command class to place an armor stand in front of start buttons.
  */
 @SuppressWarnings("unused")
 public class PlaceStand extends GameUtilsCommand {
+    /**
+     * Constructor for PlaceStand command.
+     */
+    public PlaceStand() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

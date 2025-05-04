@@ -23,11 +23,16 @@ import java.util.*;
 
 /**
  * The base toolset for constructing our minigames.
- *
- * @author DELL
  */
 public class GameUtils extends JavaPlugin {
     private static GameUtils instance = null;
+
+    /**
+     * Constructor for GameUtils.
+     */
+    public GameUtils() {
+        super();
+    }
 
     /**
      * Returns the GameUtils plugin instance.
@@ -209,9 +214,7 @@ public class GameUtils extends JavaPlugin {
         }, 1);
     }
 
-    /**
-     * <p>onDisable.</p>
-     */
+    /** {@inheritDoc} */
     public void onDisable() {
         HotbarMappingManager.INSTANCE.saveMappings(this);
     }

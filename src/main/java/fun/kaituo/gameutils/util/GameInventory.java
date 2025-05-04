@@ -12,27 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>GameInventory class.</p>
- *
- * @author DELL
+ * Represents a player's inventory.
  */
 @SuppressWarnings("unused")
 public class GameInventory implements ConfigurationSerializable {
-    /** Constant <code>PLAYER_INVENTORY_SIZE=41</code> */
+    /** Size of a player's inventory. */
     public static final int PLAYER_INVENTORY_SIZE = 41;
-    /** Constant <code>HOTBAR_OFFSET=0</code> */
+    /** Starting index of hotbar slots. */
     public static final int HOTBAR_OFFSET = 0;
-    /** Constant <code>STORAGE_OFFSET=9</code> */
+    /** Starting index of storage slots. */
     public static final int STORAGE_OFFSET = 9;
-    /** Constant <code>HEAD_SLOT=39</code> */
+    /** Index of the head slot. */
     public static final int HEAD_SLOT = 39;
-    /** Constant <code>CHEST_SLOT=38</code> */
+    /** Index of the chest slot. */
     public static final int CHEST_SLOT = 38;
-    /** Constant <code>LEGS_SLOT=37</code> */
+    /** Index of the legs slot. */
     public static final int LEGS_SLOT = 37;
-    /** Constant <code>FEET_SLOT=36</code> */
+    /** Index of the feet slots. */
     public static final int FEET_SLOT = 36;
-    /** Constant <code>OFF_HAND_SLOT=40</code> */
+    /** Index of the off-hand slot. */
     public static final int OFF_HAND_SLOT = 40;
 
     private final ItemStack[] contents = new ItemStack[PLAYER_INVENTORY_SIZE];
@@ -44,18 +42,18 @@ public class GameInventory implements ConfigurationSerializable {
         return !item.getType().equals(Material.AIR);
     }
 
-    @SuppressWarnings("unused")
     /**
-     * <p>Constructor for GameInventory.</p>
+     * Constructs a new instance of GameInventory with empty contents.
      */
+    @SuppressWarnings("unused")
     public GameInventory() {}
 
-    @SuppressWarnings("unused")
     /**
-     * <p>Constructor for GameInventory.</p>
+     * Constructs a new instance of GameInventory from a Player in game.
      *
-     * @param p a {@link org.bukkit.entity.Player} object
+     * @param p The {@link org.bukkit.entity.Player} from which to construct the inventory.
      */
+    @SuppressWarnings("unused")
     public GameInventory(Player p) {
         HotbarMapping mapping = HotbarMappingManager.INSTANCE.getMapping(p.getUniqueId());
         for (int i = 0; i < 9; i += 1) {
@@ -73,18 +71,18 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getHead.</p>
+     * Gets the {@link ItemStack} in the head slot of the inventory.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The {@link org.bukkit.inventory.ItemStack} in the head slot, or null if empty.
      */
     public @Nullable ItemStack getHead() {
         return contents[HEAD_SLOT];
     }
 
     /**
-     * <p>setHead.</p>
+     * Sets the {@link ItemStack} in the head slot of the inventory.
      *
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the head slot.
      */
     public void setHead(@Nullable ItemStack item) {
         if (isValidItem(item)) {
@@ -95,18 +93,18 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getChest.</p>
+     * Gets the {@link ItemStack} in the chest slot of the inventory.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The {@link org.bukkit.inventory.ItemStack} in the chest slot, or null if empty.
      */
     public @Nullable ItemStack getChest() {
         return contents[CHEST_SLOT];
     }
 
     /**
-     * <p>setChest.</p>
+     * Sets the {@link ItemStack} in the chest slot of the inventory.
      *
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the chest slot.
      */
     public void setChest(@Nullable ItemStack item) {
         if (isValidItem(item)) {
@@ -117,18 +115,18 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getLegs.</p>
+     * Gets the {@link ItemStack} in the legs slot of the inventory.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The {@link org.bukkit.inventory.ItemStack} in the legs slot, or null if empty.
      */
     public @Nullable ItemStack getLegs() {
         return contents[LEGS_SLOT];
     }
 
     /**
-     * <p>setLegs.</p>
+     * Sets the {@link ItemStack} in the legs slot of the inventory.
      *
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the legs slot.
      */
     public void setLegs(@Nullable ItemStack item) {
         if (isValidItem(item)) {
@@ -139,18 +137,18 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getFeet.</p>
+     * Gets the {@link ItemStack} in the feet slot of the inventory.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The {@link org.bukkit.inventory.ItemStack} in the feet slot, or null if empty.
      */
     public @Nullable ItemStack getFeet() {
         return contents[FEET_SLOT];
     }
 
     /**
-     * <p>setFeet.</p>
+     * Sets the {@link ItemStack} in the feet slot of the inventory.
      *
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the feet slot.
      */
     public void setFeet(@Nullable ItemStack item) {
         if (isValidItem(item)) {
@@ -161,18 +159,18 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getOffHand.</p>
+     * Gets the {@link ItemStack} in the off-hand slot of the inventory.
      *
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @return The {@link org.bukkit.inventory.ItemStack} in the off-hand slot, or null if empty.
      */
     public @Nullable ItemStack getOffHand() {
         return contents[OFF_HAND_SLOT];
     }
 
     /**
-     * <p>setOffHand.</p>
+     * Sets the {@link ItemStack} in the off-hand slot of the inventory.
      *
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the off-hand slot.
      */
     public void setOffHand(@Nullable ItemStack item) {
         if (isValidItem(item)) {
@@ -183,10 +181,10 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getHotbar.</p>
+     * Gets the {@link ItemStack} in the hotbar slot at the given index of the inventory.
      *
-     * @param index a int
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @param index The index of the hotbar slot (0-8).
+     * @return The {@link org.bukkit.inventory.ItemStack} in the hotbar slot, or null if empty.
      */
     public @Nullable ItemStack getHotbar(int index) {
         if (index < 0 || index >= 9) {
@@ -196,10 +194,10 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>setHotbar.</p>
+     * Sets the {@link ItemStack} in the hotbar slot at the given index of the inventory.
      *
-     * @param index a int
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param index The index of the hotbar slot (0-8).
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the hotbar slot.
      */
     public void setHotbar(int index, @Nullable ItemStack item) {
         if (index < 0 || index >= 9) {
@@ -213,10 +211,10 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>getStorage.</p>
+     * Gets the {@link ItemStack} in the storage slot at the given index of the inventory.
      *
-     * @param index a int
-     * @return a {@link org.bukkit.inventory.ItemStack} object
+     * @param index The index of the storage slot (0-26).
+     * @return The {@link org.bukkit.inventory.ItemStack} in the storage slot, or null if empty.
      */
     public @Nullable ItemStack getStorage(int index) {
         if (index < 0 || index >= 27) {
@@ -226,10 +224,10 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>setStorage.</p>
+     * Sets the {@link ItemStack} in the storage slot at the given index of the inventory.
      *
-     * @param index a int
-     * @param item a {@link org.bukkit.inventory.ItemStack} object
+     * @param index The index of the storage slot (0-26).
+     * @param item The {@link org.bukkit.inventory.ItemStack} to set in the storage slot.
      */
     public void setStorage(int index, @Nullable ItemStack item) {
         if (index < 0 || index >= 27) {
@@ -243,9 +241,9 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>apply.</p>
+     * Applies this inventory to the target player.
      *
-     * @param p a {@link org.bukkit.entity.Player} object
+     * @param p The {@link org.bukkit.entity.Player} to apply the inventory to.
      */
     @SuppressWarnings("unused")
     public void apply(Player p) {
@@ -310,10 +308,10 @@ public class GameInventory implements ConfigurationSerializable {
     }
 
     /**
-     * <p>deserialize.</p>
+     * Deserializes a {@link GameInventory} object from a {@link java.util.Map} object.
      *
-     * @param serialized a {@link java.util.Map} object
-     * @return a {@link fun.kaituo.gameutils.util.GameInventory} object
+     * @param serialized The {@link java.util.Map} object to deserialize from.
+     * @return The deserialized {@link GameInventory} object.
      */
     @SuppressWarnings({"unused"})
     public static GameInventory deserialize(Map<String, Object> serialized) {

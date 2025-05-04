@@ -14,12 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>GameInv class.</p>
- *
- * @author DELL
+ * Command class to manage game inventories. {@see GameInventory}
  */
 @SuppressWarnings("unused")
 public class GameInv extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for GameInv command.
+     */
+    public GameInv() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

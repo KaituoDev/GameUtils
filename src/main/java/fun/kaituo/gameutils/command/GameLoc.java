@@ -15,12 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>GameLoc class.</p>
- *
- * @author DELL
+ * Command class to manage game locations.
  */
 @SuppressWarnings("unused")
 public class GameLoc extends GameUtilsCommand implements TabCompleter {
+    /**
+     * Constructor for GameLoc command.
+     */
+    public GameLoc() {
+
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getName() {

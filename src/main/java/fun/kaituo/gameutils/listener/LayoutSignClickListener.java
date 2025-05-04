@@ -13,9 +13,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * <p>LayoutSignClickListener class.</p>
- *
- * @author DELL
+ * Represents a listener for clicks on layout signs.
  */
 public class LayoutSignClickListener implements Listener {
     private static final int MAX_X_OFFSET = 7;
@@ -24,16 +22,16 @@ public class LayoutSignClickListener implements Listener {
     private final Location centerSignLocation;
 
     /**
-     * <p>Constructor for LayoutSignClickListener.</p>
+     * Constructor for LayoutSignClickListener.
      */
     public LayoutSignClickListener() {
         centerSignLocation = new Location(GameUtils.inst().getMainWorld(), -21, 23, 74);
     }
 
     /**
-     * <p>onLayoutSignCLick.</p>
+     * Handles player interactions with layout signs.
      *
-     * @param e a {@link org.bukkit.event.player.PlayerInteractEvent} object
+     * @param e The {@link org.bukkit.event.player.PlayerInteractEvent} to handle.
      */
     @EventHandler
     public void onLayoutSignCLick(PlayerInteractEvent e) {

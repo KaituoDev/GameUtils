@@ -9,9 +9,7 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nonnull;
 
 /**
- * <p>Layout class.</p>
- *
- * @author DELL
+ * Command class to teleport the executor to the layout room.
  */
 @SuppressWarnings("unused")
 public class Layout extends GameUtilsCommand {
@@ -24,7 +22,7 @@ public class Layout extends GameUtilsCommand {
     private final Location LAYOUT_LOCATION;
 
     /**
-     * <p>Constructor for Layout.</p>
+     * Constructor for Layout command.
      */
     public Layout() {
         LAYOUT_LOCATION = new Location(GameUtils.inst().getMainWorld(), -21, 17, 77, 180, 0);
