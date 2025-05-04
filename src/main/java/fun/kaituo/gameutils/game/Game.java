@@ -19,7 +19,22 @@ import java.util.Set;
 public abstract class Game extends JavaPlugin {
     /**
      * Constructor for Game.
+     *
+     * @param displayName The display name of the game.
+     * @param gameTeleportLocation The teleport location of the game.
      */
+    public Game(String displayName, Location gameTeleportLocation) {
+        super();
+        this.displayName = displayName;
+        this.gameTeleportLocation = gameTeleportLocation;
+    }
+
+    /**
+     * Default constructor for Game.
+     *
+     * @deprecated Use {@link #Game(String, Location)} to update the display name and teleport location.
+     */
+    @Deprecated
     public Game() {
         super();
     }

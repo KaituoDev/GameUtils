@@ -2,6 +2,9 @@ api-version: 1.21.4
 name: GameUtils
 main: fun.kaituo.gameutils.GameUtils
 version: ${project.version}
+depend:
+  - NBTAPI
+  - WorldEdit
 libraries:
   - io.github.classgraph:classgraph:4.8.179
 authors: [ YFshadaow, LeChocolatChaud ]
