@@ -43,7 +43,7 @@ public abstract class GameUtilsCommand implements CommandExecutor {
      * @return A list of completions that match the partial argument.
      * @since 2.0.1
      */
-    protected List<String> getMatchingCompletions(String partialArg, List<String> completions) {
+    public static List<String> getMatchingCompletions(String partialArg, List<String> completions) {
         return completions.stream().filter(completion ->
                 completion.toLowerCase().startsWith(partialArg.toLowerCase())).toList();
     }
